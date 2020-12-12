@@ -56,7 +56,7 @@ public class LoginDAO {
         } catch (SQLException sqle) {
             throw new Exception(sqle);
         } finally {
-            Conexao.fecharConexao(conn, ps, rs);
+            //Conexao.fecharConexao(conn, ps, rs);
         }
     }
 
@@ -106,7 +106,7 @@ public class LoginDAO {
         } catch (SQLException sqle) {
             throw new Exception("Erro ao atualizar dados: " + sqle);
         } finally {
-            Conexao.fecharConexao(conn, ps);
+            //Conexao.fecharConexao(conn, ps);
         }
     }
 
@@ -123,7 +123,7 @@ public class LoginDAO {
         } catch (SQLException sqle) {
             throw new Exception("Erro ao excluir dados:" + sqle);
         } finally {
-            Conexao.fecharConexao(conn, ps);
+            //Conexao.fecharConexao(conn, ps);
         }
     }
 }
