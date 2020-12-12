@@ -1,4 +1,4 @@
-package br.ufes.sgi.Principal;
+package br.ufes.sgi.principal;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,18 +14,23 @@ public class Main {
         try {
             // create a database connection
             connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
+            
+            // para utilizar banco de dados em memória, sem escrever nada em arquivo
+            //connection = DriverManager.getConnection("jdbc:sqlite::memory:");
+            
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
-
-            statement.executeUpdate("drop table if exists person");
-            statement.executeUpdate("create table person (id integer, name string)");
-            statement.executeUpdate("insert into person values(1, 'leo')");
-            statement.executeUpdate("insert into person values(2, 'yui')");
             
-            ResultSet rs = statement.executeQuery("select * from person");
+            statement.executeUpdate("drop table if exists person");
+            statement.executeUpdate("drop table if exists pessoa");
+            statement.executeUpdate("create table pessoa (id integer, nome string)");
+            statement.executeUpdate("insert into pessoa values(1, 'gabriel')");
+            statement.executeUpdate("insert into pessoa values(2, 'willian')");
+            
+            ResultSet rs = statement.executeQuery("select * from pessoa");
             while (rs.next()) {
                 // read the result set
-                System.out.println("name = " + rs.getString("name"));
+                System.out.println("nome = " + rs.getString("nome"));
                 System.out.println("id = " + rs.getInt("id"));
             }
         } catch (SQLException e) {
