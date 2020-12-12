@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import br.ufes.sgi.model.UsuarioLogin;
+import br.ufes.sgi.model.Usuario;
 
 /**
  *
@@ -32,7 +32,7 @@ public class LoginDAO {
         this.conn = conn;
     }
 
-    public ArrayList<UsuarioLogin> getAll() throws Exception {
+    public ArrayList<Usuario> getAll() throws Exception {
         PreparedStatement ps = null;
 
         ResultSet rs = null;
@@ -41,7 +41,7 @@ public class LoginDAO {
             ps = conn.prepareStatement("select * from UsuarioLogin");
             rs = ps.executeQuery();
 
-            ArrayList<UsuarioLogin> list = new ArrayList<>();
+            ArrayList<Usuario> list = new ArrayList<>();
 
             while (rs.next()) {
                 int idUsuarioLogin = rs.getInt(1);
@@ -50,7 +50,7 @@ public class LoginDAO {
                 String nome = rs.getString(4);
                 boolean admin = rs.getBoolean(5);
 
-                list.add(new UsuarioLogin(idUsuarioLogin, usuario, senha, nome, admin));
+                list.add(new Usuario(idUsuarioLogin, usuario, senha, nome, admin));
             }
             return list;
         } catch (SQLException sqle) {
@@ -60,7 +60,7 @@ public class LoginDAO {
         }
     }
 
-    public void salvar(UsuarioLogin usuarioLogin) throws Exception {
+    public void salvar(Usuario usuarioLogin) throws Exception {
         PreparedStatement ps = null;
 
         if (usuarioLogin == null) {
@@ -85,7 +85,7 @@ public class LoginDAO {
         }
     }
 
-    public void atualizar(UsuarioLogin usuarioLogin) throws Exception {
+    public void atualizar(Usuario usuarioLogin) throws Exception {
         PreparedStatement ps = null;
 
         if (usuarioLogin == null) {
@@ -110,7 +110,7 @@ public class LoginDAO {
         }
     }
 
-    public void excluir(UsuarioLogin usuarioLogin) throws Exception {
+    public void excluir(Usuario usuarioLogin) throws Exception {
         PreparedStatement ps = null;
 
         if (usuarioLogin == null) {

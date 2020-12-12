@@ -9,7 +9,7 @@ package br.ufes.sgi.model;
  *
  * @author 55289
  */
-public class UsuarioLogin {
+public class Usuario {
 
     private int id;
     private String usuario;
@@ -17,7 +17,7 @@ public class UsuarioLogin {
     private String nome;
     private boolean admin;
 
-    public UsuarioLogin(int id, String usuario, String senha, String nome, boolean admin) {
+    public Usuario(int id, String usuario, String senha, String nome, boolean admin) {
         this.id = id;
         this.usuario = usuario;
         this.senha = senha;

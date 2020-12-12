@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Main {
 
@@ -17,34 +19,38 @@ public class Main {
 
         try {
             Statement statement = connection.createStatement();
-            statement.setQueryTimeout(30);  // set timeout to 30 sec.
+            statement.setQueryTimeout(30);
 
-            File batch = new File("../batch.sql");
-            
-            try {
-                Scanner scan = new Scanner(batch);
+            File arquivo = new File("configuracao-banco.sql");
 
-                while (scan.hasNextLine()) {
-                    String linha = scan.nextLine();
+            Scanner scanner = new Scanner(arquivo);
+
+            while (scanner.hasNextLine()) {
+                String linha = scanner.nextLine();
+                if (!linha.isBlank()) {
                     statement.addBatch(linha);
                 }
-
-            } catch (FileNotFoundException ex) {
-                System.out.println("Erro " + ex.getMessage());
             }
 
             statement.executeBatch();
 
-            ResultSet rs = statement.executeQuery("select * from pessoa");
+            // Verifica as informações adicionadas --> FIX-ME: REMOVER ESSA PARTE APÓS A FINALIZAÇÃO
+            ResultSet rs = statement.executeQuery("select * from usuario");
+
             while (rs.next()) {
-                // read the result set
+                System.out.println("id = " + rs.getInt("idUsuario"));
                 System.out.println("nome = " + rs.getString("nome"));
-                System.out.println("id = " + rs.getInt("id"));
+                System.out.println("usuario = " + rs.getString("usuario"));
+                System.out.println("senha = " + rs.getString("senha"));
+                System.out.println("admin = " + rs.getString("admin"));
             }
-            System.out.println("asd-----");
 
         } catch (SQLException e) {
             System.err.println(e.getMessage());
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            
         } finally {
             try {
                 if (connection != null) {
@@ -54,7 +60,5 @@ public class Main {
                 System.err.println(e.getMessage());
             }
         }
-
     }
-
 }

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 
-    private static final String URL = "jdbc:sqlite:banco.db"; 
+    private static final String URL = "jdbc:sqlite:banco-dados.db"; 
     //para usar banco em memória: "jdbc:sqlite::memory:"
 
     public static Connection getConnection() {
