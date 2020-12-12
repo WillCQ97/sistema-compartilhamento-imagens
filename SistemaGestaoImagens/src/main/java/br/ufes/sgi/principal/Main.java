@@ -1,6 +1,7 @@
 package br.ufes.sgi.principal;
 
 import br.ufes.sgi.connection.ConnectionFactory;
+import br.ufes.sgi.presenter.LoginPresenter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -14,7 +15,8 @@ import java.util.logging.Logger;
 public class Main {
 
     public static void main(String[] args) {
-
+        
+        /*
         Connection connection = ConnectionFactory.getConnection();
 
         try {
@@ -60,5 +62,7 @@ public class Main {
                 System.err.println(e.getMessage());
             }
         }
+        */
+        LoginPresenter pLogin = new LoginPresenter();
     }
 }
