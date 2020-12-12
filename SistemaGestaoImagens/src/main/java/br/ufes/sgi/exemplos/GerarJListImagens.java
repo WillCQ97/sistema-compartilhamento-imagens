@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufes.sgi.model;
+package br.ufes.sgi.exemplos;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -22,7 +22,7 @@ public class GerarJListImagens {
     private GerarJListImagens gerarJListImgagens;
     
     public GerarJListImagens(String path){
-        path = "C:\\Users\\55289\\Pictures\\dogs"; //código do banco para pegar todas imagens do diretório
+        //path = "C:\\Users\\55289\\Pictures\\dogs"; //código do banco para pegar todas imagens do diretório
         JFrame frame=new JFrame();
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 

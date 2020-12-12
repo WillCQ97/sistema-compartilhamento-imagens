@@ -15,7 +15,7 @@ public class ConnectionFactory {
         try {
             return DriverManager.getConnection(URL);
         } catch (SQLException ex) {
-            throw new RuntimeException("Não foi possível efetuar a conexão: ", ex);
+            throw new RuntimeException("Não foi possível obter a conexão: ", ex);
         }
     }
 
