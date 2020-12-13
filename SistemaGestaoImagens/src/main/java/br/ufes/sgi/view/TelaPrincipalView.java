@@ -1,5 +1,7 @@
 package br.ufes.sgi.view;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -157,8 +159,14 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItemManterUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemManterUsuarioActionPerformed
-        ListarUsuariosView l = new ListarUsuariosView();
-        l.setVisible(true);
+        ListarUsuariosView l;
+        try {
+            l = new ListarUsuariosView();
+            l.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(TelaPrincipalView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jMenuItemManterUsuarioActionPerformed
 
     /**
