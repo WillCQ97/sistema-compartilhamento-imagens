@@ -45,7 +45,7 @@ public class UsuarioRepository {
         dao.excluir(usuario);
     }
 
-    public Usuario getByID(int idUsuario) throws Exception {
-        return dao.getByID(idUsuario);
+    public Usuario getById(int idUsuario) throws Exception {
+        return dao.getById(idUsuario);
     }
 }

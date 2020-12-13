@@ -56,78 +56,83 @@ public class Main {
 
         try {
 
-            //testarCRUDUsuarioService();
-            //testarCRUDImagem();
-            testarPermissao();
-            
+            testarDAO();
+
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }
 
-    private static void testarCRUDUsuarioService() throws Exception {
-        //teste listagem usuarios
-        UsuarioService servicoUsuario = new UsuarioService();
+    private static void testarDAO() throws Exception {
+        
+        // USUARIO DAO
+        UsuarioService sUsuario = new UsuarioService();
 
-        for (Usuario usuario : servicoUsuario.getAll()) {
+        for (Usuario usuario : sUsuario.getAll()) {
             System.out.println(usuario.toString());
         }
         System.out.println("--\n");
 
         //teste salvamento usuario
         Usuario lupita = new Usuario(3, "la_lupita", "senha-forte", "Lupita", false);
-        servicoUsuario.salvar(lupita);
+        sUsuario.salvar(lupita);
 
-        for (Usuario usuario : servicoUsuario.getAll()) {
+        for (Usuario usuario : sUsuario.getAll()) {
             System.out.println(usuario.toString());
         }
         System.out.println("--\n");
 
         //atualização usuario
         lupita.setSenha("senha-fraca");
-        servicoUsuario.atualizar(lupita);
+        sUsuario.atualizar(lupita);
 
-        for (Usuario usuario : servicoUsuario.getAll()) {
+        for (Usuario usuario : sUsuario.getAll()) {
             System.out.println(usuario.toString());
         }
         System.out.println("--\n");
 
         //remoção usuario
-        servicoUsuario.excluir(lupita);
+        sUsuario.excluir(lupita);
 
-        for (Usuario usuario : servicoUsuario.getAll()) {
+        for (Usuario usuario : sUsuario.getAll()) {
             System.out.println(usuario.toString());
         }
         System.out.println("--\n");
+        
+        
+        //TESTANDO IMAGEM
+        ImagemService sImagem = new ImagemService();
 
-    }
-
-    private static void testarCRUDImagem() throws Exception {
-
-        ImagemService servico = new ImagemService();
-
-        for (Imagem imagem : servico.getAll()) {
+        for (Imagem imagem : sImagem.getAll()) {
             System.out.println(imagem.toString());
         }
         System.out.println("--\n");
 
         Imagem img = new Imagem(2, "caminho-comprido/imagem.jpg");
 
-        servico.salvar(img);
-        for (Imagem imagem : servico.getAll()) {
+        sImagem.salvar(img);
+        for (Imagem imagem : sImagem.getAll()) {
             System.out.println(imagem.toString());
         }
+        
+        //TESTANDO PERMISSAO
+        var sPermissao = new PermissaoService();
+        
+        var uGabriel = sUsuario.getById(1);
+        System.out.println(uGabriel.toString());
+
+        Permissao permissao = sPermissao.getPermissaoByUsuario(uGabriel);
+        System.out.println(permissao.toString());
+        
+        // TESTANDO COMPARTILHAMENTO 
+        var uWillian = sUsuario.getById(2);
+        System.out.println(uWillian.toString());
+        
+        var pWillian = new Permissao(uWillian, img, true, false, false);
+        sPermissao.gerarCompartilhamento(pWillian);
+        
+        System.out.println(sPermissao.getPermissaoByUsuario(uWillian).toString());
 
     }
-    
-    private static void testarPermissao() throws Exception {
-        var servicoP = new PermissaoService();
-        var servicoU = new UsuarioService();
-        
-        var usuario = servicoU.getByID(1);
-        System.out.println(usuario.toString());
-        
-        Permissao permissao = servicoP.getPermissaoByUsuario(usuario);
-        System.out.println(permissao.toString());
-    }
+
 }

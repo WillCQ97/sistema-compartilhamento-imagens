@@ -126,7 +126,7 @@ public class PermissaoDAO {
             boolean visualizar = rs.getBoolean(6);
 
             UsuarioDAO usuarioDAO = new UsuarioDAO();
-            Usuario user = usuarioDAO.getByID(idUsuario); //não compreendi isto, o método recebe um user
+            Usuario user = usuarioDAO.getById(idUsuario); //não compreendi isto, o método recebe um user
 
             ImagemDAO imagemDAO = new ImagemDAO();
             Imagem img = imagemDAO.getImagemById(idImagem);

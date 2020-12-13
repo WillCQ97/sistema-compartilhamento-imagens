@@ -113,14 +113,15 @@ public class UsuarioDAO {
         }
     }
 
-    public Usuario getByID(int idUsuario) throws Exception {
+    public Usuario getById(int idUsuario) throws Exception {
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
 
         try {
 
-            ps = conn.prepareStatement("select * from usuario");
+            ps = conn.prepareStatement("select * from usuario where idUsuario = ?;");
+            ps.setInt(1, idUsuario);
             rs = ps.executeQuery();
 
             String usuario = rs.getString(2);
@@ -128,11 +129,11 @@ public class UsuarioDAO {
             String nome = rs.getString(4);
             boolean admin = rs.getBoolean(5);
 
-            Usuario user = new Usuario(idUsuario, usuario, senha, nome, admin);
+            return new Usuario(idUsuario, usuario, senha, nome, admin);
 
-            return user;
         } catch (SQLException sqle) {
             throw new Exception(sqle);
+
         } finally {
             ConnectionFactory.closeConnection(conn, ps, rs);
         }

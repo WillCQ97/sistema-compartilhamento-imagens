@@ -30,10 +30,11 @@ public class UsuarioService {
         repository.excluir(usuario);
     }
 
-    public Usuario getByID(int idUsuario) throws Exception {
-        return repository.getByID(idUsuario);
+    public Usuario getById(int idUsuario) throws Exception {
+        return repository.getById(idUsuario);
     }
-
+    
+    //DESSE MODO APENAS O ADMINISTRADOR PODE COMPARTILHAR
     public void compartilharImagem(Usuario usuario, Permissao permissao) throws Exception {
         if (usuario.isAdmin()) {
             repositoryPermissao.gerarCompartilhamento(permissao);

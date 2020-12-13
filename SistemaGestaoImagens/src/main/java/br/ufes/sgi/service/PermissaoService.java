@@ -6,7 +6,7 @@ import br.ufes.sgi.model.Usuario;
 
 public class PermissaoService {
 
-    public PermissaoRepository repository;
+    private final PermissaoRepository repository;
 
     public PermissaoService() throws Exception {
         this.repository = new PermissaoRepository();
