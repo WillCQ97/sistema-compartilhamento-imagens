@@ -2,11 +2,15 @@ package br.ufes.sgi.model;
 
 public class Imagem {
 
-    public int id;
-    public String caminho;
+    private int id;
+    private String caminho;
 
     public Imagem(int id, String caminho) {
         this.id = id;
+        this.caminho = caminho;
+    }
+
+    public Imagem(String caminho) {
         this.caminho = caminho;
     }
 

@@ -56,4 +56,7 @@ public class PermissaoRepository {
         return dao.getPermissaoByUsuario(usuario);
     }
 
+    public void gerarPedidoPermissao(Permissao permissao) throws Exception{
+        dao.gerarPedidoPermissao(permissao);
+    }
 }

@@ -9,7 +9,10 @@ public class Usuario {
     private boolean admin;
 
     public Usuario() {
+    }
 
+    public Usuario(int id) {
+        this.id = id;
     }
 
     public Usuario(int id, String usuario, String senha, String nome, boolean admin) {

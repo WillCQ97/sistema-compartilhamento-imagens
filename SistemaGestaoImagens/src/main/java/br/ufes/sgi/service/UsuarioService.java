@@ -47,5 +47,9 @@ public class UsuarioService {
             throw new Exception("O usuário não é administrador!");
         }
     }
+    
+    public Usuario getByName(String nome) throws Exception{
+        return usuarioRepository.getByName(nome);
+    }
 
 }

@@ -36,4 +36,8 @@ public class PermissaoService {
     public Permissao getPermissaoByUsuario(Usuario usuario) throws Exception {
         return repository.getPermissaoByUsuario(usuario);
     }
+
+    public void gerarPedidoPermissao(Permissao permissao) throws Exception {
+        repository.gerarPedidoPermissao(permissao);
+    }
 }

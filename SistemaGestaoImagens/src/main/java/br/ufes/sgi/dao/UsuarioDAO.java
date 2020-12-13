@@ -137,6 +137,33 @@ public class UsuarioDAO {
         } finally {
             ConnectionFactory.closeConnection(conn, ps, rs);
         }
+    }
+
+    public Usuario getByName(String nome) throws Exception {
+        Connection conn = ConnectionFactory.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            ps = conn.prepareStatement("select * from usuario where nome = ?");
+            ps.setString(1, nome);
+            rs = ps.executeQuery();
+
+            int idUsuario = rs.getInt(1);
+            String usuario = rs.getString(2);
+            String senha = rs.getString(3);
+            String nome1 = rs.getString(4);
+            boolean admin = rs.getBoolean(5);
+
+            Usuario user = new Usuario(idUsuario, usuario, senha, nome1, admin);
+
+            return user;
+        } catch (SQLException sqle) {
+            throw new Exception(sqle);
+        } finally {
+            ConnectionFactory.closeConnection(conn, ps, rs);
+        }
 
     }
 

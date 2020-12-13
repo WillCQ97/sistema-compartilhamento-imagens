@@ -1,18 +1,58 @@
 package br.ufes.sgi.view;
 
+import br.ufes.sgi.exemplos.ManipularImagem;
+import br.ufes.sgi.model.Imagem;
+import br.ufes.sgi.service.ImagemService;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JTextField;
 
 public class TelaPrincipalView extends javax.swing.JFrame {
-    
-    public TelaPrincipalView() {
+
+    DefaultListModel listModel;
+
+    public TelaPrincipalView() throws Exception {
         initComponents();
+        this.listModel = new DefaultListModel();
+        jList1 = new JList(modeloJlist("caminho da pasta onde tem todas as imagens"));
     }
-    
+
+    private DefaultListModel modeloJlist(String path) throws Exception {
+        File folder = new File(path);
+        File[] listOfFiles = folder.listFiles();
+        DefaultListModel listModel = new DefaultListModel();
+        ImagemService serviceImagem = new ImagemService();
+        int count = 0;
+        for (int i = 0; i < listOfFiles.length; i++) {
+
+            String name = listOfFiles[i].toString();
+            serviceImagem.salvar(new Imagem(name));//adiciona todas as imagens da pasta no banco
+
+            System.out.println(name);
+
+            if (name.endsWith("jpg") || name.endsWith("png") || name.endsWith("jpeg")) {
+                ManipularImagem manipulador = new ManipularImagem();
+                
+                
+                BufferedImage imagem;
+                imagem = ManipularImagem.setImagemDimensao(listOfFiles[i].getAbsolutePath(), 60, 60);
+                
+                
+                ImageIcon ii = new ImageIcon(imagem);
+                listModel.add(count++, ii);
+            }
+        }
+        return listModel;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -57,10 +97,13 @@ public class TelaPrincipalView extends javax.swing.JFrame {
 
         jLabel4.setText("jLabel4");
 
+        jButton1.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jButton1.setText("Compartilhar");
 
+        jButton2.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jButton2.setText("Excluir");
 
+        jButton3.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jButton3.setText("Visualizar");
 
         jDesktopPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -74,34 +117,40 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addComponent(jButton3)
-                .addGap(110, 110, 110)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(67, 67, 67))
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addGap(106, 106, 106)
+                        .addComponent(jButton1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(19, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2)
+                        .addGap(71, 71, 71))))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
-                .addGap(0, 23, Short.MAX_VALUE))
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addGap(0, 17, Short.MAX_VALUE))
         );
 
         tbRodape.setFloatable(false);
 
+        jLabel1.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel1.setText("Usuário:");
         tbRodape.add(jLabel1);
         tbRodape.add(jSeparator7);
@@ -110,6 +159,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         tbRodape.add(txtNomeUsuario);
         tbRodape.add(jSeparator3);
 
+        jLabel2.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel2.setText("Tipo:");
         tbRodape.add(jLabel2);
         tbRodape.add(jSeparator6);
@@ -120,6 +170,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jSeparator2.setSeparatorSize(new java.awt.Dimension(100, 10));
         tbRodape.add(jSeparator2);
 
+        jLabel3.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel3.setText("Novas Notificações:");
         tbRodape.add(jLabel3);
         tbRodape.add(jSeparator5);
@@ -194,6 +245,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(TelaPrincipalView.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }//GEN-LAST:event_jMenuItemManterUsuarioActionPerformed
 
     /**
@@ -227,27 +279,31 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaPrincipalView().setVisible(true);
+                try {
+                    new TelaPrincipalView().setVisible(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(TelaPrincipalView.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
-    
+
     public JButton getBtnNotificacoes() {
         return this.btnNotificacao;
     }
-    
+
     public JMenu getMenuAdministrador() {
         return this.menuAdministrador;
     }
-    
+
     public JMenuItem getMenuItemSair() {
         return this.menuItemSair;
     }
-    
+
     public JTextField getTxtNomeUsuario() {
         return this.txtNomeUsuario;
     }
-    
+
     public JTextField getTxtTipoUsuario() {
         return this.txtTipoUsuario;
     }

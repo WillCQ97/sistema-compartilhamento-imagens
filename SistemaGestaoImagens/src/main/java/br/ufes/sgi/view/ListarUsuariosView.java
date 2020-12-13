@@ -193,7 +193,7 @@ public class ListarUsuariosView extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jRadioButtonAdministradorActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        DefaultTableModel modelo = (DefaultTableModel) this.jTable1.getModel();
+          DefaultTableModel modelo = (DefaultTableModel) this.jTable1.getModel();
         String admin = "Administrador";
         String comum = "Comum";
         try {
