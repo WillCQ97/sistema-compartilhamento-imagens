@@ -32,6 +32,9 @@ public class LoginPresenter {
         }
         
         //em seguida validar no banco de dados o usuário informado
+        
+        //caso esteja, ele entra na tela inicial do sistema
+        
     }
     
 }
