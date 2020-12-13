@@ -19,7 +19,7 @@ public class PermissaoDAO {
             throw new Exception("Permissao não pode ser nulo!");
         }
         try {
-            String SQL = "INSERT INTO permissao (idUsuario,idImagem,compartilhar,"
+            String SQL = "INSERT INTO permissao (idUsuario, idImagem, compartilhar,"
                     + " excluir, visualizar)"
                     + " values (?,?,?,?,?);";
 
@@ -66,7 +66,7 @@ public class PermissaoDAO {
         try {
             String SQL = "UPDATE permissao SET compartilhar=?,"
                     + " visualizar=?, excluir = ?"
-                    + "where idUsuarioLogin = ?;";
+                    + "where idUsuario = ?;"; //essa query não vai atualizar todas as imagens desse user???
 
             ps = conn.prepareStatement(SQL);
             ps.setBoolean(1, permissao.isCompartilhar());
@@ -108,24 +108,25 @@ public class PermissaoDAO {
     public Permissao getPermissaoByUsuario(Usuario usuario) throws Exception {
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
-
         ResultSet rs = null;
+        
         try {
-
-            ps = conn.prepareStatement("select idUsuario, idPermissao, idImagem, compartilhar"
-                    + "visualizar, excluir"
+            ps = conn.prepareStatement("select idPermissao, idUsuario, idImagem, compartilhar, "
+                    + "excluir, visualizar "
                     + "from permissao where permissao.idUsuario = ? ;");
+            
             ps.setInt(1, usuario.getId());
             rs = ps.executeQuery();
-            int idUsuario = rs.getInt(1);
-            int idPermissao = rs.getInt(2);
+            
+            int idPermissao = rs.getInt(1);
+            int idUsuario = rs.getInt(2);
             int idImagem = rs.getInt(3);
             boolean compartilhar = rs.getBoolean(4);
-            boolean visualizar = rs.getBoolean(5);
-            boolean excluir = rs.getBoolean(6);
+            boolean excluir = rs.getBoolean(5);
+            boolean visualizar = rs.getBoolean(6);
 
             UsuarioDAO usuarioDAO = new UsuarioDAO();
-            Usuario user = usuarioDAO.getByID(idUsuario);
+            Usuario user = usuarioDAO.getByID(idUsuario); //não compreendi isto, o método recebe um user
 
             ImagemDAO imagemDAO = new ImagemDAO();
             Imagem img = imagemDAO.getImagemById(idImagem);

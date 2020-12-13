@@ -50,7 +50,7 @@ public class PermissaoRepository {
 
     public Permissao getPermissaoByUsuario(Usuario usuario) throws Exception {
         if (usuario == null) {
-            throw new Exception("Usuario não pode estar com o caminho nulo!");
+            throw new Exception("Usuario não pode ser nulo!");
         }
         return dao.getPermissaoByUsuario(usuario);
     }

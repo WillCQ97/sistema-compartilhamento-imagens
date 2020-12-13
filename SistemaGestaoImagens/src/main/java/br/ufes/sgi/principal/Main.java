@@ -58,6 +58,8 @@ public class Main {
 
             //testarCRUDUsuarioService();
             //testarCRUDImagem();
+            testarPermissao();
+            
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -117,5 +119,15 @@ public class Main {
         }
 
     }
-
+    
+    private static void testarPermissao() throws Exception {
+        var servicoP = new PermissaoService();
+        var servicoU = new UsuarioService();
+        
+        var usuario = servicoU.getByID(1);
+        System.out.println(usuario.toString());
+        
+        Permissao permissao = servicoP.getPermissaoByUsuario(usuario);
+        System.out.println(permissao.toString());
+    }
 }
