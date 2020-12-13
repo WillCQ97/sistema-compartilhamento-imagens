@@ -33,6 +33,10 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         menuAdministrador = new javax.swing.JMenu();
         menuOpcoes = new javax.swing.JMenu();
+        jMenuVisualizarImagem = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItemManterUsuario = new javax.swing.JMenuItem();
         menuItemSair = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -85,6 +89,30 @@ public class TelaPrincipalView extends javax.swing.JFrame {
 
         menuOpcoes.setText("Opções");
 
+        jMenuVisualizarImagem.setText("Imagens");
+
+        jMenuItem2.setText("Visualizar Imagens");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenuVisualizarImagem.add(jMenuItem2);
+
+        menuOpcoes.add(jMenuVisualizarImagem);
+
+        jMenu2.setText("Usuário");
+
+        jMenuItemManterUsuario.setText("Manter Usuário");
+        jMenuItemManterUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemManterUsuarioActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItemManterUsuario);
+
+        menuOpcoes.add(jMenu2);
+
         menuItemSair.setText("Sair");
         menuItemSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,6 +150,16 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     private void menuItemSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSairActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_menuItemSairActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        ListaImagensView listaImagens = new ListaImagensView();
+        listaImagens.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItemManterUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemManterUsuarioActionPerformed
+        ListarUsuariosView l= new ListarUsuariosView();
+        l.setVisible(true);
+    }//GEN-LAST:event_jMenuItemManterUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -185,7 +223,11 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItemManterUsuario;
+    private javax.swing.JMenu jMenuVisualizarImagem;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;

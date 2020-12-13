@@ -44,8 +44,9 @@ public class UsuarioService {
     public Usuario getByID(int idUsuario) throws Exception {
         return repository.getByID(idUsuario);
     }
-    public void compartilharImagem(Usuario usuario,Permissao permissao) throws Exception{
-        if(usuario.isAdmin()){
+
+    public void compartilharImagem(Usuario usuario, Permissao permissao) throws Exception {
+        if (usuario.isAdmin()) {
             repositoryPermissao.gerarCompartilhamento(permissao);
         }
         throw new Exception("O usuário não é administrador!");
