@@ -31,7 +31,8 @@ public class PermissaoService {
     public boolean verificaPermissao(Permissao permissao) throws Exception {
         return repository.verificaPermissao(permissao) == null;
     }
-
+    
+    // entretanto um usuário pode ter mais de uma permissão... aliás terá
     public Permissao getPermissaoByUsuario(Usuario usuario) throws Exception {
         return repository.getPermissaoByUsuario(usuario);
     }

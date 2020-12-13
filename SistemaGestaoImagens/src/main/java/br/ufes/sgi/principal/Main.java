@@ -59,7 +59,7 @@ public class Main {
             testarDAO();
 
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("ERRO: " + ex.getMessage());
         }
     }
 
@@ -116,7 +116,7 @@ public class Main {
         }
         
         //TESTANDO PERMISSAO
-        var sPermissao = new PermissaoService();
+        PermissaoService sPermissao = new PermissaoService();
         
         var uGabriel = sUsuario.getById(1);
         System.out.println(uGabriel.toString());
@@ -125,13 +125,22 @@ public class Main {
         System.out.println(permissao.toString());
         
         // TESTANDO COMPARTILHAMENTO 
+        System.out.println("\n------------------------------");
+        
         var uWillian = sUsuario.getById(2);
         System.out.println(uWillian.toString());
         
         var pWillian = new Permissao(uWillian, img, true, false, false);
-        sPermissao.gerarCompartilhamento(pWillian);
+        System.out.println("Adicionar a " + pWillian.toString());        
         
+        System.out.println("----------------------------------");
+        sUsuario.compartilharImagem(uGabriel, pWillian); //dono da imagem, permissao pro outro user
+        
+        System.out.println("-------------------------------");
+        System.out.println(sPermissao.getPermissaoByUsuario(uGabriel).toString());
         System.out.println(sPermissao.getPermissaoByUsuario(uWillian).toString());
+        System.out.println("-------------------------------");
+        
 
     }
 

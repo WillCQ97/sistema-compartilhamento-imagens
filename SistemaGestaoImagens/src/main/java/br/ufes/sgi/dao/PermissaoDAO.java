@@ -18,6 +18,7 @@ public class PermissaoDAO {
         if (permissao == null) {
             throw new Exception("Permissao não pode ser nulo!");
         }
+        
         try {
             String SQL = "INSERT INTO permissao (idUsuario, idImagem, compartilhar,"
                     + " excluir, visualizar)"
@@ -113,7 +114,7 @@ public class PermissaoDAO {
         try {
             ps = conn.prepareStatement("select idPermissao, idUsuario, idImagem, compartilhar, "
                     + "excluir, visualizar "
-                    + "from permissao where permissao.idUsuario = ? ;");
+                    + "from permissao where idUsuario = ? ;");
             
             ps.setInt(1, usuario.getId());
             rs = ps.executeQuery();

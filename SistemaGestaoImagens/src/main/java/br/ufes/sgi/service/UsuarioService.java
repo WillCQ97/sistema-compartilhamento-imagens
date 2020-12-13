@@ -3,43 +3,49 @@ package br.ufes.sgi.service;
 import br.ufes.sgi.model.Permissao;
 import br.ufes.sgi.repository.UsuarioRepository;
 import br.ufes.sgi.model.Usuario;
+import br.ufes.sgi.repository.PermissaoRepository;
 import java.util.ArrayList;
 
 public class UsuarioService {
 
-    private final UsuarioRepository repository;
-    private PermissaoService repositoryPermissao;
+    private final UsuarioRepository usuarioRepository;
+    private final PermissaoRepository permissaoRepository;
 
     public UsuarioService() throws Exception {
-        this.repository = new UsuarioRepository();
+        this.usuarioRepository = new UsuarioRepository();
+        this.permissaoRepository = new PermissaoRepository();
     }
 
     public ArrayList<Usuario> getAll() throws Exception {
-        return repository.getAll();
+        return usuarioRepository.getAll();
     }
 
     public void salvar(Usuario usuario) throws Exception {
-        repository.salvar(usuario);
+        usuarioRepository.salvar(usuario);
     }
 
     public void atualizar(Usuario usuario) throws Exception {
-        repository.atualizar(usuario);
+        usuarioRepository.atualizar(usuario);
     }
 
     public void excluir(Usuario usuario) throws Exception {
-        repository.excluir(usuario);
+        usuarioRepository.excluir(usuario);
     }
 
     public Usuario getById(int idUsuario) throws Exception {
-        return repository.getById(idUsuario);
+        return usuarioRepository.getById(idUsuario);
     }
-    
+
     //DESSE MODO APENAS O ADMINISTRADOR PODE COMPARTILHAR
+    //A verificação correta é se o usuário pode compartilhar a imagem em questão
+    //compartilhar imagem, deveria receber uma imagem, usuario dono, usuario recebedor
+    //essa classe instancia a permissao
     public void compartilharImagem(Usuario usuario, Permissao permissao) throws Exception {
         if (usuario.isAdmin()) {
-            repositoryPermissao.gerarCompartilhamento(permissao);
+            permissaoRepository.gerarCompartilhamento(permissao);
+        } else {
+            throw new Exception("O usuário não é administrador!");
         }
-        throw new Exception("O usuário não é administrador!");
     }
 
 }
