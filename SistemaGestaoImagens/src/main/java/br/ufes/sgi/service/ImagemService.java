@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufes.sgi.service;
 
 import br.ufes.sgi.model.Imagem;
@@ -12,14 +7,10 @@ import br.ufes.sgi.repository.ImagemRepository;
 import br.ufes.sgi.repository.PermissaoRepository;
 import java.util.ArrayList;
 
-/**
- *
- * @author 55289
- */
 public class ImagemService {
 
-    public ImagemRepository repository;
-    public PermissaoRepository permissaoRepository;
+    private final ImagemRepository repository;
+    private PermissaoRepository permissaoRepository;
 
     public ImagemService() throws Exception {
         repository = new ImagemRepository();
@@ -37,15 +28,16 @@ public class ImagemService {
         if (!permissao.isExcluir()) {
             throw new Exception("Não tem permissão para excluir");
         }
+
         repository.excluir(permissao.getImagem());
         permissaoRepository.excluir(permissao);
-
     }
 
     public ArrayList<Imagem> getImagensByIdUsuario(Usuario usuario) throws Exception {
         if (permissaoRepository.getPermissaoByUsuario(usuario).isVisualizar()) {
             return repository.getImagensByIdUsuario(usuario.getId());
         }
+        
         throw new Exception("Não tem permissão para visualizar");
     }
 
