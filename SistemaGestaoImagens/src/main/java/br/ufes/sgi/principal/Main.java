@@ -1,7 +1,12 @@
 package br.ufes.sgi.principal;
 
 import br.ufes.sgi.connection.ConnectionFactory;
-import br.ufes.sgi.presenter.LoginPresenter;
+import br.ufes.sgi.model.Imagem;
+import br.ufes.sgi.model.Permissao;
+import br.ufes.sgi.model.Usuario;
+import br.ufes.sgi.service.ImagemService;
+import br.ufes.sgi.service.PermissaoService;
+import br.ufes.sgi.service.UsuarioService;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -10,12 +15,8 @@ import java.sql.Statement;
 import java.util.Scanner;
 
 public class Main {
-    
-    public Main(){
-        this.inicializarBancoDados("configuracao-banco.sql");
-    }
-    
-    private void inicializarBancoDados(String caminhoArquivoConfiguracao) {
+
+    private static void inicializarBancoDados(String caminhoArquivoConfiguracao) {
         Connection connection = ConnectionFactory.getConnection();
 
         try {
@@ -50,7 +51,83 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        LoginPresenter pLogin = new LoginPresenter();
+        inicializarBancoDados("configuracao-banco.sql");
+        //LoginPresenter pLogin = new LoginPresenter();
+
+        try {
+
+            //testarCRUDUsuarioService();
+            //testarCRUDImagem();
+            testarPermissao();
+            
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
+    private static void testarCRUDUsuarioService() throws Exception {
+        //teste listagem usuarios
+        UsuarioService servicoUsuario = new UsuarioService();
+
+        for (Usuario usuario : servicoUsuario.getAll()) {
+            System.out.println(usuario.toString());
+        }
+        System.out.println("--\n");
+
+        //teste salvamento usuario
+        Usuario lupita = new Usuario(3, "la_lupita", "senha-forte", "Lupita", false);
+        servicoUsuario.salvar(lupita);
+
+        for (Usuario usuario : servicoUsuario.getAll()) {
+            System.out.println(usuario.toString());
+        }
+        System.out.println("--\n");
+
+        //atualização usuario
+        lupita.setSenha("senha-fraca");
+        servicoUsuario.atualizar(lupita);
+
+        for (Usuario usuario : servicoUsuario.getAll()) {
+            System.out.println(usuario.toString());
+        }
+        System.out.println("--\n");
+
+        //remoção usuario
+        servicoUsuario.excluir(lupita);
+
+        for (Usuario usuario : servicoUsuario.getAll()) {
+            System.out.println(usuario.toString());
+        }
+        System.out.println("--\n");
+
+    }
+
+    private static void testarCRUDImagem() throws Exception {
+
+        ImagemService servico = new ImagemService();
+
+        for (Imagem imagem : servico.getAll()) {
+            System.out.println(imagem.toString());
+        }
+        System.out.println("--\n");
+
+        Imagem img = new Imagem(2, "caminho-comprido/imagem.jpg");
+
+        servico.salvar(img);
+        for (Imagem imagem : servico.getAll()) {
+            System.out.println(imagem.toString());
+        }
+
+    }
+    
+    private static void testarPermissao() throws Exception {
+        var servicoP = new PermissaoService();
+        var servicoU = new UsuarioService();
+        
+        var usuario = servicoU.getByID(1);
+        System.out.println(usuario.toString());
+        
+        Permissao permissao = servicoP.getPermissaoByUsuario(usuario);
+        System.out.println(permissao.toString());
+    }
 }

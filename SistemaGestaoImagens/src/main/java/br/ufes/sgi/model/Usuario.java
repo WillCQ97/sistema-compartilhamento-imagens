@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufes.sgi.model;
 
-/**
- *
- * @author 55289
- */
 public class Usuario {
 
     private int id;
@@ -65,4 +56,8 @@ public class Usuario {
         this.admin = admin;
     }
 
+    @Override
+    public String toString() {
+        return "Usuario{" + "id=" + id + ", nome=" + nome + ", usuario=" + usuario + ", senha=" + senha + ", admin=" + admin + '}';
+    }
 }

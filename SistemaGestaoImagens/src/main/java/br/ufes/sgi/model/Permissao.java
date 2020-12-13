@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufes.sgi.model;
 
-/**
- *
- * @author 55289
- */
 public class Permissao {
 
     public int id;
@@ -18,7 +9,8 @@ public class Permissao {
     public boolean excluir;
     public boolean compartilhar;
 
-    public Permissao(int id, Usuario Usuario, Imagem Imagem, boolean visualizar, boolean excluir, boolean compartilhar) {
+    public Permissao(int id, Usuario Usuario, Imagem Imagem, boolean visualizar, 
+            boolean excluir, boolean compartilhar) {
         this.id = id;
         this.Usuario = Usuario;
         this.Imagem = Imagem;
@@ -73,6 +65,12 @@ public class Permissao {
 
     public void setCompartilhar(boolean compartilhar) {
         this.compartilhar = compartilhar;
+    }
+
+    @Override
+    public String toString() {
+        return "Permissao{" + "id=" + id + ", Usuario=" + Usuario + ", Imagem=" + Imagem +
+                ", visualizar=" + visualizar + ", excluir=" + excluir + ", compartilhar=" + compartilhar + '}';
     }
 
 }

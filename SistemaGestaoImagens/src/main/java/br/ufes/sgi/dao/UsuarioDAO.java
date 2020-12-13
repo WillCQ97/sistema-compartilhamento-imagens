@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufes.sgi.dao;
 
 import br.ufes.sgi.connection.ConnectionFactory;
@@ -13,45 +8,28 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import br.ufes.sgi.model.Usuario;
 
-/**
- *
- * @author 55289
- */
 public class UsuarioDAO {
 
-    private Connection conn;
-
-    public UsuarioDAO() throws Exception {
-        try {
-            this.conn = ConnectionFactory.getConnection();
-        } catch (Exception e) {
-            throw new Exception("Erro: \n" + e.getMessage());
-        }
-    }
-
-    public UsuarioDAO(Connection conn) {
-        this.conn = conn;
-    }
-
     public ArrayList<Usuario> getAll() throws Exception {
+        Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
-
         ResultSet rs = null;
+
         try {
 
-            ps = conn.prepareStatement("select * from UsuarioLogin");
+            ps = conn.prepareStatement("select * from usuario");
             rs = ps.executeQuery();
 
             ArrayList<Usuario> list = new ArrayList<>();
 
             while (rs.next()) {
-                int idUsuarioLogin = rs.getInt(1);
+                int idUsuario = rs.getInt(1);
                 String usuario = rs.getString(2);
                 String senha = rs.getString(3);
                 String nome = rs.getString(4);
                 boolean admin = rs.getBoolean(5);
 
-                list.add(new Usuario(idUsuarioLogin, usuario, senha, nome, admin));
+                list.add(new Usuario(idUsuario, usuario, senha, nome, admin));
             }
             return list;
         } catch (SQLException sqle) {
@@ -61,22 +39,24 @@ public class UsuarioDAO {
         }
     }
 
-    public void salvar(Usuario usuarioLogin) throws Exception {
+    public void salvar(Usuario usuario) throws Exception {
+        Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
 
-        if (usuarioLogin == null) {
-            throw new Exception("UsuarioLogin não pode ser nulo!");
+        if (usuario == null) {
+            throw new Exception("Usuario não pode ser nulo!");
         }
+
         try {
-            String SQL = "INSERT INTO usuariologin (usuario, senha, nome, admin)"
+            String SQL = "INSERT INTO usuario (usuario, senha, nome, admin)"
                     + " values (?, ?, ?,?);";
 
             ps = conn.prepareStatement(SQL);
 
-            ps.setString(1, usuarioLogin.getUsuario());
-            ps.setString(2, usuarioLogin.getSenha());
-            ps.setString(3, usuarioLogin.getNome());
-            ps.setBoolean(4, usuarioLogin.isAdmin());
+            ps.setString(1, usuario.getUsuario());
+            ps.setString(2, usuario.getSenha());
+            ps.setString(3, usuario.getNome());
+            ps.setBoolean(4, usuario.isAdmin());
             ps.executeUpdate();
 
         } catch (SQLException sqle) {
@@ -86,40 +66,45 @@ public class UsuarioDAO {
         }
     }
 
-    public void atualizar(Usuario usuarioLogin) throws Exception {
+    public void atualizar(Usuario usuario) throws Exception {
+        Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
 
-        if (usuarioLogin == null) {
-            throw new Exception("UsuarioLogin não pode ser nulo!");
+        if (usuario == null) {
+            throw new Exception("Usuario não pode ser nulo!");
         }
+
         try {
-            String SQL = "UPDATE usuarioLogin SET usuario=?, senha=?, nome = ?, admin=?"
-                    + "where idUsuarioLogin = ?;";
+            String SQL = "UPDATE usuario SET usuario=?, senha=?, nome = ?, admin=?"
+                    + "where idUsuario = ?;";
 
             ps = conn.prepareStatement(SQL);
-            ps.setString(1, usuarioLogin.getUsuario());
-            ps.setString(2, usuarioLogin.getSenha());
-            ps.setString(3, usuarioLogin.getNome());
-            ps.setBoolean(4, usuarioLogin.isAdmin());
-            ps.setInt(5, usuarioLogin.getId());
+            ps.setString(1, usuario.getUsuario());
+            ps.setString(2, usuario.getSenha());
+            ps.setString(3, usuario.getNome());
+            ps.setBoolean(4, usuario.isAdmin());
+            ps.setInt(5, usuario.getId());
             ps.executeUpdate();
 
         } catch (SQLException sqle) {
             throw new Exception("Erro ao atualizar dados: " + sqle);
+
         } finally {
             ConnectionFactory.closeConnection(conn, ps);
         }
     }
 
-    public void excluir(Usuario usuarioLogin) throws Exception {
+    public void excluir(Usuario usuario) throws Exception {
+        Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
 
-        if (usuarioLogin == null) {
-            throw new Exception("UsuarioLogin não pode ser nulo!");
+        if (usuario == null) {
+            throw new Exception("Usuario não pode ser nulo!");
         }
+
         try {
-            ps = conn.prepareStatement("delete from usuarioLogin where idUsuarioLogin = ?");
-            ps.setInt(1, usuarioLogin.getId());
+            ps = conn.prepareStatement("delete from usuario where idUsuario = ?");
+            ps.setInt(1, usuario.getId());
             ps.executeUpdate();
         } catch (SQLException sqle) {
             throw new Exception("Erro ao excluir dados:" + sqle);
@@ -129,15 +114,15 @@ public class UsuarioDAO {
     }
 
     public Usuario getByID(int idUsuario) throws Exception {
+        Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
-
         ResultSet rs = null;
+
         try {
 
-            ps = conn.prepareStatement("select * from UsuarioLogin");
+            ps = conn.prepareStatement("select * from usuario");
             rs = ps.executeQuery();
 
-            int idUsuarioLogin = rs.getInt(1);
             String usuario = rs.getString(2);
             String senha = rs.getString(3);
             String nome = rs.getString(4);
@@ -153,5 +138,5 @@ public class UsuarioDAO {
         }
 
     }
-    
+
 }
