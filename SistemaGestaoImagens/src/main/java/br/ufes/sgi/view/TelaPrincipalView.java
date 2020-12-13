@@ -1,6 +1,6 @@
 package br.ufes.sgi.view;
 
-import br.ufes.sgi.exemplos.ManipularImagem;
+import br.ufes.sgi.view.imagem.ManipuladorImagem;
 import br.ufes.sgi.model.Imagem;
 import br.ufes.sgi.service.ImagemService;
 import java.awt.image.BufferedImage;
@@ -39,11 +39,11 @@ public class TelaPrincipalView extends javax.swing.JFrame {
             System.out.println(name);
 
             if (name.endsWith("jpg") || name.endsWith("png") || name.endsWith("jpeg")) {
-                ManipularImagem manipulador = new ManipularImagem();
+                ManipuladorImagem manipulador = new ManipuladorImagem();
                 
                 
                 BufferedImage imagem;
-                imagem = ManipularImagem.setImagemDimensao(listOfFiles[i].getAbsolutePath(), 60, 60);
+                imagem = ManipuladorImagem.setImagemDimensao(listOfFiles[i].getAbsolutePath(), 60, 60);
                 
                 
                 ImageIcon ii = new ImageIcon(imagem);

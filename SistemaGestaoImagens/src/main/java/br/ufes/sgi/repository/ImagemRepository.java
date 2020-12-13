@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class ImagemRepository {
 
-    public ImagemDAO dao;
+    private final ImagemDAO dao;
 
     public ImagemRepository() throws Exception {
         this.dao = new ImagemDAO();
