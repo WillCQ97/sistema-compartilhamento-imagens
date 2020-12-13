@@ -10,6 +10,10 @@ public class Imagem {
         this.caminho = caminho;
     }
 
+    public Imagem(String caminho) {
+        this.caminho = caminho;
+    }
+
     public int getId() {
         return id;
     }

@@ -109,15 +109,15 @@ public class PermissaoDAO {
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
-        
+
         try {
             ps = conn.prepareStatement("select idPermissao, idUsuario, idImagem, compartilhar, "
                     + "excluir, visualizar "
                     + "from permissao where permissao.idUsuario = ? ;");
-            
+
             ps.setInt(1, usuario.getId());
             rs = ps.executeQuery();
-            
+
             int idPermissao = rs.getInt(1);
             int idUsuario = rs.getInt(2);
             int idImagem = rs.getInt(3);
@@ -138,6 +138,30 @@ public class PermissaoDAO {
             throw new Exception(sqle);
         } finally {
             ConnectionFactory.closeConnection(conn, ps, rs);
+        }
+    }
+
+    public void gerarPedidoPermissao(Permissao permissao) throws Exception {
+        Connection conn = ConnectionFactory.getConnection();
+        PreparedStatement ps = null;
+
+        if (permissao == null) {
+            throw new Exception("Permissao não pode ser nulo!");
+        }
+        try {
+            String SQL = "INSERT INTO permissao (idUsuario, idImagem)"
+                    + " values (?,?);";
+
+            ps = conn.prepareStatement(SQL);
+
+            ps.setInt(1, permissao.getUsuario().getId());
+            ps.setInt(2, permissao.getImagem().getId());
+            ps.executeUpdate();
+
+        } catch (SQLException sqle) {
+            throw new Exception("Erro ao inserir dados " + sqle);
+        } finally {
+            ConnectionFactory.closeConnection(conn, ps);
         }
     }
 

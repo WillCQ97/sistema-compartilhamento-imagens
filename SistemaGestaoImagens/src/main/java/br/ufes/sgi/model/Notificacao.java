@@ -15,9 +15,14 @@ public class Notificacao {
     public Usuario usuario;
     public String descricao;
 
-    public Notificacao(int id, Usuario idUsuario, String descricao) {
+    public Notificacao(int id, Usuario Usuario, String descricao) {
         this.id = id;
-        this.usuario = idUsuario;
+        this.usuario = Usuario;
+        this.descricao = descricao;
+    }
+
+    public Notificacao(Usuario Usuario, String descricao) {
+        this.usuario = Usuario;
         this.descricao = descricao;
     }
 

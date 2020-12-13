@@ -48,4 +48,10 @@ public class UsuarioRepository {
     public Usuario getByID(int idUsuario) throws Exception {
         return dao.getByID(idUsuario);
     }
+    public Usuario getByName(String nome) throws Exception{
+        if(nome == null){
+         throw new Exception("nome fornecido é nulo");   
+        }
+        return dao.getByName(nome);
+    }
 }

@@ -5,17 +5,27 @@
  */
 package br.ufes.sgi.view;
 
+import br.ufes.sgi.model.Usuario;
+import br.ufes.sgi.service.UsuarioService;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author 55289
  */
 public class EditarUsuarioView extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form EditarUsuarioView
-     */
-    public EditarUsuarioView() {
+    
+    public UsuarioService serviceUsuario;
+    public Usuario user;
+    
+    public EditarUsuarioView(Usuario user) throws Exception {
         initComponents();
+        this.serviceUsuario = new UsuarioService();
+        this.user = user;
+        jPFSenha.setText(user.getSenha());
+        jTFNome.setText(user.getNome());
+        jRbAdmin.setSelected(user.isAdmin());
     }
 
     /**
@@ -29,32 +39,37 @@ public class EditarUsuarioView extends javax.swing.JInternalFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jTFNome = new javax.swing.JTextField();
+        jBtNome = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jPasswordField2 = new javax.swing.JPasswordField();
+        jPFConfirmarSenha = new javax.swing.JPasswordField();
+        jPFSenha = new javax.swing.JPasswordField();
         jButton2 = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        jRbAdmin = new javax.swing.JRadioButton();
 
         setTitle("Editar Usuário");
 
         jLabel1.setText("Nome:");
 
-        jButton1.setText("Alterar");
+        jBtNome.setText("Alterar");
+        jBtNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtNomeActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Senha:");
 
         jLabel4.setText("Confirmar Senha:");
 
-        jPasswordField1.setText("jPasswordField1");
+        jPFConfirmarSenha.setText("jPasswordField1");
 
-        jPasswordField2.setText("jPasswordField2");
+        jPFSenha.setText("jPasswordField2");
 
         jButton2.setText("Cancelar");
 
-        jRadioButton1.setText("Administrador");
+        jRbAdmin.setText("Administrador");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -67,7 +82,7 @@ public class EditarUsuarioView extends javax.swing.JInternalFrame {
                             .addContainerGap()
                             .addComponent(jButton2)
                             .addGap(76, 76, 76)
-                            .addComponent(jButton1))
+                            .addComponent(jBtNome))
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
@@ -82,12 +97,12 @@ public class EditarUsuarioView extends javax.swing.JInternalFrame {
                                         .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField1)
-                                .addComponent(jPasswordField2, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
-                                .addComponent(jPasswordField1))))
+                                .addComponent(jTFNome)
+                                .addComponent(jPFSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                                .addComponent(jPFConfirmarSenha))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(61, 61, 61)
-                        .addComponent(jRadioButton1)))
+                        .addComponent(jRbAdmin)))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -96,21 +111,21 @@ public class EditarUsuarioView extends javax.swing.JInternalFrame {
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTFNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
-                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPFSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPFConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton1)
+                .addComponent(jRbAdmin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(jBtNome)
                     .addComponent(jButton2))
                 .addGap(16, 16, 16))
         );
@@ -118,17 +133,38 @@ public class EditarUsuarioView extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jBtNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtNomeActionPerformed
+        if (jPFSenha.getText().equals(jPFConfirmarSenha.getText())) {
+            user.setSenha(jPFSenha.getText());
+            user.setNome(jTFNome.getText());
+            user.setAdmin(jRbAdmin.isSelected());
+            try {
+                serviceUsuario.atualizar(user);
+            } catch (Exception ex) {
+                Logger.getLogger(EditarUsuarioView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                throw new Exception("As senhas devem ser iguais!");
+            } catch (Exception ex) {
+                Logger.getLogger(EditarUsuarioView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+
+    }//GEN-LAST:event_jBtNomeActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jBtNome;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JPasswordField jPFConfirmarSenha;
+    private javax.swing.JPasswordField jPFSenha;
+    private javax.swing.JRadioButton jRbAdmin;
+    private javax.swing.JTextField jTFNome;
     // End of variables declaration//GEN-END:variables
 }
