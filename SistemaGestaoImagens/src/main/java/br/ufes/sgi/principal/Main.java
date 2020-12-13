@@ -1,7 +1,8 @@
 package br.ufes.sgi.principal;
 
 import br.ufes.sgi.connection.ConnectionFactory;
-import br.ufes.sgi.presenter.LoginPresenter;
+import br.ufes.sgi.model.Usuario;
+import br.ufes.sgi.service.UsuarioService;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -10,12 +11,8 @@ import java.sql.Statement;
 import java.util.Scanner;
 
 public class Main {
-    
-    public Main(){
-        this.inicializarBancoDados("configuracao-banco.sql");
-    }
-    
-    private void inicializarBancoDados(String caminhoArquivoConfiguracao) {
+
+    private static void inicializarBancoDados(String caminhoArquivoConfiguracao) {
         Connection connection = ConnectionFactory.getConnection();
 
         try {
@@ -50,7 +47,53 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        LoginPresenter pLogin = new LoginPresenter();
+        inicializarBancoDados("configuracao-banco.sql");
+        //LoginPresenter pLogin = new LoginPresenter();
+        
+        try {
+            
+            testarCRUDUsuarioService();
+
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    private static void testarCRUDUsuarioService() throws Exception {
+        //teste listagem usuarios
+        UsuarioService servicoUsuario = new UsuarioService();
+
+        for (Usuario usuario : servicoUsuario.getAll()) {
+            System.out.println(usuario.toString());
+        }
+        System.out.println("--\n");
+
+        //teste salvamento usuario
+        Usuario lupita = new Usuario(3, "la_lupita", "senha-forte", "Lupita", false);
+        servicoUsuario.salvar(lupita);
+
+        for (Usuario usuario : servicoUsuario.getAll()) {
+            System.out.println(usuario.toString());
+        }
+        System.out.println("--\n");
+
+        //atualização usuario
+        lupita.setSenha("senha-fraca");
+        servicoUsuario.atualizar(lupita);
+
+        for (Usuario usuario : servicoUsuario.getAll()) {
+            System.out.println(usuario.toString());
+        }
+        System.out.println("--\n");
+
+        //remoção usuario
+        servicoUsuario.excluir(lupita);
+
+        for (Usuario usuario : servicoUsuario.getAll()) {
+            System.out.println(usuario.toString());
+        }
+        System.out.println("--\n");
+        
     }
 
 }

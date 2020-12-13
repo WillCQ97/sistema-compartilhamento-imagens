@@ -1,28 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufes.sgi.repository;
 
 import br.ufes.sgi.dao.UsuarioDAO;
 import br.ufes.sgi.model.Usuario;
 import java.util.ArrayList;
 
-/**
- *
- * @author 55289
- */
 public class UsuarioRepository {
 
-    private UsuarioDAO daoLogin;
+    private final UsuarioDAO usuarioDao;
 
     public UsuarioRepository() throws Exception {
-        this.daoLogin = new UsuarioDAO();
+        this.usuarioDao = new UsuarioDAO();
     }
 
     public ArrayList<Usuario> getAll() throws Exception {
-        return daoLogin.getAll();
+        return usuarioDao.getAll();
     }
 
     public void salvar(Usuario usuario) throws Exception {
@@ -35,7 +26,7 @@ public class UsuarioRepository {
             if (usuario.getSenha() == null || usuario.getSenha().isBlank()) {
                 throw new Exception("Senha fornecida é inválida");
             }
-            daoLogin.salvar(usuario);
+            usuarioDao.salvar(usuario);
         }
     }
 
@@ -47,14 +38,14 @@ public class UsuarioRepository {
                 throw new Exception("Senha fornecida é inválida");
             }
         }
-        daoLogin.atualizar(usuario);
+        usuarioDao.atualizar(usuario);
     }
 
-    public void excluir(Usuario usuarioLogin) throws Exception {
-        daoLogin.excluir(usuarioLogin);
+    public void excluir(Usuario usuario) throws Exception {
+        usuarioDao.excluir(usuario);
     }
 
     public Usuario getByID(int idUsuario) throws Exception {
-        return daoLogin.getByID(idUsuario);
+        return usuarioDao.getByID(idUsuario);
     }
 }

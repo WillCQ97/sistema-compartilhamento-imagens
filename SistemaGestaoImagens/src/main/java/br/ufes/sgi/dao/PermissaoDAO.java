@@ -143,7 +143,7 @@ public class PermissaoDAO {
             boolean visualizar = rs.getBoolean(5);
             boolean excluir = rs.getBoolean(6);
 
-            UsuarioDAO usuarioDAO = new UsuarioDAO(conn);
+            UsuarioDAO usuarioDAO = new UsuarioDAO();
             Usuario user = usuarioDAO.getByID(idUsuario);
 
             ImagemDAO imagemDAO = new ImagemDAO(conn);
