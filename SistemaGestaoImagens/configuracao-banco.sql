@@ -8,6 +8,8 @@ CREATE TABLE notificacao (idNotificacao INTEGER PRIMARY KEY AUTOINCREMENT, descr
 
 DROP TABLE IF EXISTS imagem;
 CREATE TABLE imagem (idImagem INTEGER PRIMARY KEY AUTOINCREMENT, caminho STRING);
+INSERT INTO imagem VALUES (1, '~/Imagens/papéis-de-parede/amazing-space-nasa.jpg');
 
 DROP TABLE IF EXISTS permissao;
-CREATE TABLE permissao (idUsuario INTEGER, idImagem INTEGER, visualizar BOOLEAN, excluir BOOLEAN, compartilhar BOOLEAN);
+CREATE TABLE permissao (idUsuario INTEGER, idImagem INTEGER, compartilhar BOOLEAN, excluir BOOLEAN, visualizar BOOLEAN);
+INSERT INTO permissao (1, 1, 1, 1, 1)

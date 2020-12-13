@@ -1,7 +1,11 @@
 package br.ufes.sgi.principal;
 
 import br.ufes.sgi.connection.ConnectionFactory;
+import br.ufes.sgi.model.Imagem;
+import br.ufes.sgi.model.Permissao;
 import br.ufes.sgi.model.Usuario;
+import br.ufes.sgi.service.ImagemService;
+import br.ufes.sgi.service.PermissaoService;
 import br.ufes.sgi.service.UsuarioService;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -49,11 +53,11 @@ public class Main {
     public static void main(String[] args) {
         inicializarBancoDados("configuracao-banco.sql");
         //LoginPresenter pLogin = new LoginPresenter();
-        
-        try {
-            
-            testarCRUDUsuarioService();
 
+        try {
+
+            //testarCRUDUsuarioService();
+            //testarCRUDImagem();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
@@ -93,7 +97,25 @@ public class Main {
             System.out.println(usuario.toString());
         }
         System.out.println("--\n");
-        
+
+    }
+
+    private static void testarCRUDImagem() throws Exception {
+
+        ImagemService servico = new ImagemService();
+
+        for (Imagem imagem : servico.getAll()) {
+            System.out.println(imagem.toString());
+        }
+        System.out.println("--\n");
+
+        Imagem img = new Imagem(2, "caminho-comprido/imagem.jpg");
+
+        servico.salvar(img);
+        for (Imagem imagem : servico.getAll()) {
+            System.out.println(imagem.toString());
+        }
+
     }
 
 }

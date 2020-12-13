@@ -1,22 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufes.sgi.model;
 
-/**
- *
- * @author 55289
- */
 public class Imagem {
 
     public int id;
-    public String path;
+    public String caminho;
 
-    public Imagem(int id, String path) {
+    public Imagem(int id, String caminho) {
         this.id = id;
-        this.path = path;
+        this.caminho = caminho;
     }
 
     public int getId() {
@@ -27,12 +18,17 @@ public class Imagem {
         this.id = id;
     }
 
-    public String getPath() {
-        return path;
+    public String getCaminho() {
+        return caminho;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setCaminho(String caminho) {
+        this.caminho = caminho;
+    }
+
+    @Override
+    public String toString() {
+        return "Imagem{" + "id=" + id + ", caminho=" + caminho + '}';
     }
 
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufes.sgi.dao;
 
 import br.ufes.sgi.connection.ConnectionFactory;
@@ -13,33 +8,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-/**
- *
- * @author 55289
- */
 public class ImagemDAO {
 
-    private Connection conn;
-
-    public ImagemDAO() throws Exception {
-        try {
-            this.conn = ConnectionFactory.getConnection();
-        } catch (Exception e) {
-            throw new Exception("Erro: \n" + e.getMessage());
-        }
-    }
-
-    public ImagemDAO(Connection conn) {
-        this.conn = conn;
-    }
-
     public ArrayList<Imagem> getAll() throws Exception {
+        Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
 
         ResultSet rs = null;
         try {
 
-            ps = conn.prepareStatement("select * from Imagem");
+            ps = conn.prepareStatement("select * from imagem");
             rs = ps.executeQuery();
 
             ArrayList<Imagem> list = new ArrayList<>();
@@ -59,18 +37,19 @@ public class ImagemDAO {
     }
 
     public void salvar(Imagem imagem) throws Exception {
+        Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
 
         if (imagem == null) {
             throw new Exception("Imagem não pode ser nulo!");
         }
         try {
-            String SQL = "INSERT INTO Imagem (path)"
+            String SQL = "INSERT INTO imagem (caminho)"
                     + " values (?);";
 
             ps = conn.prepareStatement(SQL);
 
-            ps.setString(1, imagem.getPath());
+            ps.setString(1, imagem.getCaminho());
 
             ps.executeUpdate();
 
@@ -82,6 +61,7 @@ public class ImagemDAO {
     }
 
     public void excluir(Imagem imagem) throws Exception {
+        Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
 
         if (imagem == null) {
@@ -100,13 +80,14 @@ public class ImagemDAO {
     }
 
     public ArrayList<Imagem> getImagensByIdUsuario(int id) throws Exception {
+        Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
-
         ResultSet rs = null;
+
         try {
 
-            ps = conn.prepareStatement("select idImagem, path from Imagem inner join Permissao "
-                    + "on (Permissao.idImagem = Imagem.idImagem) where Permissao.idUsuarioLogin = ?");
+            ps = conn.prepareStatement("select idImagem, caminho from imagem inner join permissao "
+                    + "on (permissao.idImagem = Imagem.idImagem) where permissao.idUsuario = ?");
             ps.setInt(1, id);
             rs = ps.executeQuery();
 
@@ -114,9 +95,9 @@ public class ImagemDAO {
 
             while (rs.next()) {
                 int idImagem = rs.getInt(1);
-                String path = rs.getString(2);
+                String caminho = rs.getString(2);
 
-                list.add(new Imagem(id, path));
+                list.add(new Imagem(idImagem, caminho));
             }
             return list;
         } catch (SQLException sqle) {
@@ -127,20 +108,21 @@ public class ImagemDAO {
     }
 
     public Imagem getImagemById(int id) throws Exception {
+        Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
 
         ResultSet rs = null;
         try {
 
-            ps = conn.prepareStatement("select Imagem.idImagem, Imagem.path from permissao "
-                    + "inner join imagem on (Imagem.idImagem = ?)");
+            ps = conn.prepareStatement("select Imagem.idImagem, imagem.caminho from permissao "
+                    + "inner join imagem on (imagem.idImagem = ?)");
             ps.setInt(1, id);
             rs = ps.executeQuery();
             int idImagem = rs.getInt(1);
-            String path = rs.getString(2);
+            String caminho = rs.getString(2);
 
-            Imagem img = new Imagem(idImagem, path);
-            
+            Imagem img = new Imagem(idImagem, caminho);
+
             return img;
         } catch (SQLException sqle) {
             throw new Exception(sqle);
@@ -148,5 +130,5 @@ public class ImagemDAO {
             ConnectionFactory.closeConnection(conn, ps, rs);
         }
     }
-    
+
 }

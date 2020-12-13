@@ -6,14 +6,14 @@ import java.util.ArrayList;
 
 public class UsuarioRepository {
 
-    private final UsuarioDAO usuarioDao;
+    private final UsuarioDAO dao;
 
     public UsuarioRepository() throws Exception {
-        this.usuarioDao = new UsuarioDAO();
+        this.dao = new UsuarioDAO();
     }
 
     public ArrayList<Usuario> getAll() throws Exception {
-        return usuarioDao.getAll();
+        return dao.getAll();
     }
 
     public void salvar(Usuario usuario) throws Exception {
@@ -26,7 +26,7 @@ public class UsuarioRepository {
             if (usuario.getSenha() == null || usuario.getSenha().isBlank()) {
                 throw new Exception("Senha fornecida é inválida");
             }
-            usuarioDao.salvar(usuario);
+            dao.salvar(usuario);
         }
     }
 
@@ -38,14 +38,14 @@ public class UsuarioRepository {
                 throw new Exception("Senha fornecida é inválida");
             }
         }
-        usuarioDao.atualizar(usuario);
+        dao.atualizar(usuario);
     }
 
     public void excluir(Usuario usuario) throws Exception {
-        usuarioDao.excluir(usuario);
+        dao.excluir(usuario);
     }
 
     public Usuario getByID(int idUsuario) throws Exception {
-        return usuarioDao.getByID(idUsuario);
+        return dao.getByID(idUsuario);
     }
 }
