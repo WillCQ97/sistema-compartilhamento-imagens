@@ -13,5 +13,7 @@ public class TelaPrincipalPresenter {
         view.getTxtTipoUsuario().setText(tipoUsuario);
         
         view.setVisible(true);
+        
+        
     }
 }
