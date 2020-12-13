@@ -5,17 +5,37 @@
  */
 package br.ufes.sgi.view;
 
+import br.ufes.sgi.model.Usuario;
+import br.ufes.sgi.service.UsuarioService;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author 55289
  */
 public class ListarUsuariosView extends javax.swing.JInternalFrame {
 
+    public UsuarioService service;
+
     /**
      * Creates new form ListarUsuariosView
      */
-    public ListarUsuariosView() {
+    public ListarUsuariosView() throws Exception {
         initComponents();
+        jButtonAlterarCargo.setEnabled(false);
+        jButtonEditar.setEnabled(false);
+        jButtonExcluir.setEnabled(false);
+        service = new UsuarioService();
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabelaMouseClicked(evt);
+            }
+        });
     }
 
     /**
@@ -29,14 +49,13 @@ public class ListarUsuariosView extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        jButtonExcluir = new javax.swing.JButton();
+        jButtonEditar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        jRadioButtonAdministrador = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
-        jRadioButton2 = new javax.swing.JRadioButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jButtonAlterarCargo = new javax.swing.JButton();
 
         setTitle("Manter Usuários");
 
@@ -74,28 +93,30 @@ public class ListarUsuariosView extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        jButton1.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        jButton1.setText("Excluir");
+        jButtonExcluir.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        jButtonExcluir.setText("Excluir");
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExcluirActionPerformed(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        jButton2.setText("Editar");
+        jButtonEditar.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        jButtonEditar.setText("Editar");
 
         jButton3.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jButton3.setText("Novo");
 
-        jRadioButton1.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        jRadioButton1.setText("Administrador");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        jRadioButtonAdministrador.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        jRadioButtonAdministrador.setText("Administrador");
+        jRadioButtonAdministrador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                jRadioButtonAdministradorActionPerformed(evt);
             }
         });
 
         jLabel1.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel1.setText("Buscar por:");
-
-        jRadioButton2.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        jRadioButton2.setText("Usuario Comum");
 
         jButton4.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jButton4.setText("Buscar");
@@ -105,8 +126,8 @@ public class ListarUsuariosView extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton5.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        jButton5.setText("Alterar Cargo");
+        jButtonAlterarCargo.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        jButtonAlterarCargo.setText("Alterar Cargo");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -117,22 +138,19 @@ public class ListarUsuariosView extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
-                        .addComponent(jButton5)
+                        .addComponent(jButtonAlterarCargo)
                         .addGap(47, 47, 47)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jRadioButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jRadioButton2)
-                        .addGap(30, 30, 30)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jRadioButtonAdministrador)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -141,42 +159,87 @@ public class ListarUsuariosView extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
+                    .addComponent(jRadioButtonAdministrador)
                     .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1)
+                    .addComponent(jButtonEditar)
+                    .addComponent(jButtonExcluir)
                     .addComponent(jButton3)
-                    .addComponent(jButton5))
+                    .addComponent(jButtonAlterarCargo))
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void jTabelaMouseClicked(java.awt.event.MouseEvent evt) {
+        if (jTable1.getSelectedRow() != -1) {
+            jButtonAlterarCargo.setEnabled(true);
+            jButtonEditar.setEnabled(true);
+            jButtonExcluir.setEnabled(true);
+        } else {
+            jButtonAlterarCargo.setEnabled(false);
+            jButtonEditar.setEnabled(false);
+            jButtonExcluir.setEnabled(false);
+        }
+    }
+
+
+    private void jRadioButtonAdministradorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonAdministradorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_jRadioButtonAdministradorActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        
+        DefaultTableModel modelo = (DefaultTableModel) this.jTable1.getModel();
+        String admin = "Administrador";
+        String comum = "Comum";
+        try {
+            ArrayList<Usuario> usuarios = service.getAll();
+
+            for (Usuario users : usuarios) {
+                if (users.isAdmin() && jRadioButtonAdministrador.isSelected()) {
+                    modelo.addRow(new Object[]{users.getId(), users.getUsuario(), users.getNome(), admin});
+                } else if (!users.isAdmin() && !jRadioButtonAdministrador.isSelected()) {
+                    modelo.addRow(new Object[]{users.getId(), users.getUsuario(), users.getNome(), comum});
+                }
+
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(ListarUsuariosView.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
+        int select = jTable1.getSelectedRow();
+        int id = (int) jTable1.getModel().getValueAt(select, 0);
+        Usuario user = new Usuario();
+        int resposta = JOptionPane.showConfirmDialog( null,"Confirma a exclusão", "Exclusão",JOptionPane.YES_NO_OPTION);
+        if (resposta > 0) {
+            user.setId(id);
+            try {
+                service.excluir(user);
+            } catch (Exception ex) {
+                Logger.getLogger(ListarUsuariosView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }//GEN-LAST:event_jButtonExcluirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButtonAlterarCargo;
+    private javax.swing.JButton jButtonEditar;
+    private javax.swing.JButton jButtonExcluir;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JRadioButton jRadioButtonAdministrador;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
 }

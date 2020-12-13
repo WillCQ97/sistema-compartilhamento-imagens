@@ -6,11 +6,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JTextField;
 
 public class TelaPrincipalView extends javax.swing.JFrame {
-
+    
     public TelaPrincipalView() {
         initComponents();
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -157,7 +157,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItemManterUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemManterUsuarioActionPerformed
-        ListarUsuariosView l= new ListarUsuariosView();
+        ListarUsuariosView l = new ListarUsuariosView();
         l.setVisible(true);
     }//GEN-LAST:event_jMenuItemManterUsuarioActionPerformed
 
@@ -197,23 +197,23 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         });
     }
     
-    public JButton getBtnNotificacoes(){
+    public JButton getBtnNotificacoes() {
         return this.btnNotificacao;
     }
     
-    public JMenu getMenuAdministrador(){
+    public JMenu getMenuAdministrador() {
         return this.menuAdministrador;
     }
     
-    public JMenuItem getMenuItemSair(){
+    public JMenuItem getMenuItemSair() {
         return this.menuItemSair;
     }
     
-    public JTextField getTxtNomeUsuario(){
+    public JTextField getTxtNomeUsuario() {
         return this.txtNomeUsuario;
     }
     
-    public JTextField getTxtTipoUsuario(){
+    public JTextField getTxtTipoUsuario() {
         return this.txtTipoUsuario;
     }
 

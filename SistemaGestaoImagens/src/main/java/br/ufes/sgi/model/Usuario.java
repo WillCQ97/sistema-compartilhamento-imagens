@@ -8,6 +8,10 @@ public class Usuario {
     private String nome;
     private boolean admin;
 
+    public Usuario() {
+
+    }
+
     public Usuario(int id, String usuario, String senha, String nome, boolean admin) {
         this.id = id;
         this.usuario = usuario;
