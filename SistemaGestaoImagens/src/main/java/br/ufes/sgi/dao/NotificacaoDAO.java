@@ -75,7 +75,7 @@ public class NotificacaoDAO {
                 int idUsuario = rs.getInt(2);
                 String descricao = rs.getString(3);
                 
-                LoginDAO usuarioDAO = new LoginDAO(conn);
+                UsuarioDAO usuarioDAO = new UsuarioDAO(conn);
                 Usuario usuario = usuarioDAO.getByID(idUsuario);
                 
 

@@ -5,9 +5,12 @@
  */
 package br.ufes.sgi.dao;
 
+import br.ufes.sgi.model.Imagem;
 import br.ufes.sgi.model.Permissao;
+import br.ufes.sgi.model.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -30,7 +33,7 @@ public class PermissaoDAO {
         this.conn = conn;
     }
 
-    public void salvarByIds(Permissao permissao) throws Exception {
+    public void gerarCompartilhamento(Permissao permissao) throws Exception {
         PreparedStatement ps = null;
 
         if (permissao == null) {
@@ -96,6 +99,62 @@ public class PermissaoDAO {
             throw new Exception("Erro ao atualizar dados: " + sqle);
         } finally {
             Conexao.fecharConexao(conn, ps);
+        }
+    }
+
+    public long verificaPermissao(Permissao permissao) throws Exception {
+        PreparedStatement ps = null;
+
+        ResultSet rs = null;
+        try {
+
+            ps = conn.prepareStatement("select idPermissao"
+                    + "from Permissao where Permissao.idUsuario = ? "
+                    + "and Permissao.idImagem = ?;");
+            ps.setInt(1, permissao.getId());
+            rs = ps.executeQuery();
+            int idPermissao = rs.getInt(1);
+            Long idPermissaoFormatado = (long) idPermissao;
+
+            return idPermissaoFormatado;
+        } catch (SQLException sqle) {
+            throw new Exception(sqle);
+        } finally {
+            Conexao.fecharConexao(conn, ps, rs);
+        }
+    }
+
+    public Permissao getPermissaoByUsuario(Usuario usuario) throws Exception {
+        PreparedStatement ps = null;
+
+        ResultSet rs = null;
+        try {
+
+            ps = conn.prepareStatement("select idUsuario, idPermissao, idImagem, compartilhar"
+                    + "visualizar, excluir"
+                    + "from Permissao where Permissao.idUsuario = ? ;");
+            ps.setInt(1, usuario.getId());
+            rs = ps.executeQuery();
+            int idUsuario = rs.getInt(1);
+            int idPermissao = rs.getInt(2);
+            int idImagem = rs.getInt(3);
+            boolean compartilhar = rs.getBoolean(4);
+            boolean visualizar = rs.getBoolean(5);
+            boolean excluir = rs.getBoolean(6);
+
+            UsuarioDAO usuarioDAO = new UsuarioDAO(conn);
+            Usuario user = usuarioDAO.getByID(idUsuario);
+
+            ImagemDAO imagemDAO = new ImagemDAO(conn);
+            Imagem img = imagemDAO.getImagemById(idImagem);
+
+            Permissao permissao = new Permissao(idPermissao, user, img, visualizar, excluir, compartilhar);
+
+            return permissao;
+        } catch (SQLException sqle) {
+            throw new Exception(sqle);
+        } finally {
+            Conexao.fecharConexao(conn, ps, rs);
         }
     }
 

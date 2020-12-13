@@ -98,7 +98,7 @@ public class ImagemDAO {
 
     }
 
-    public ArrayList<Imagem> getImagensById(int id) throws Exception {
+    public ArrayList<Imagem> getImagensByIdUsuario(int id) throws Exception {
         PreparedStatement ps = null;
 
         ResultSet rs = null;
@@ -124,4 +124,28 @@ public class ImagemDAO {
             Conexao.fecharConexao(conn, ps, rs);
         }
     }
+
+    public Imagem getImagemById(int id) throws Exception {
+        PreparedStatement ps = null;
+
+        ResultSet rs = null;
+        try {
+
+            ps = conn.prepareStatement("select Imagem.idImagem, Imagem.path from permissao "
+                    + "inner join imagem on (Imagem.idImagem = ?)");
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            int idImagem = rs.getInt(1);
+            String path = rs.getString(2);
+
+            Imagem img = new Imagem(idImagem, path);
+            
+            return img;
+        } catch (SQLException sqle) {
+            throw new Exception(sqle);
+        } finally {
+            Conexao.fecharConexao(conn, ps, rs);
+        }
+    }
+    
 }

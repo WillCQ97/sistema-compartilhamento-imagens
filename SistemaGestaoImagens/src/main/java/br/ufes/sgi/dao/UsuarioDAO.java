@@ -5,6 +5,7 @@
  */
 package br.ufes.sgi.dao;
 
+import br.ufes.sgi.model.Imagem;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,11 +17,11 @@ import br.ufes.sgi.model.Usuario;
  *
  * @author 55289
  */
-public class LoginDAO {
+public class UsuarioDAO {
 
     private Connection conn;
 
-    public LoginDAO() throws Exception {
+    public UsuarioDAO() throws Exception {
         try {
             this.conn = Conexao.getConexao();
         } catch (Exception e) {
@@ -28,7 +29,7 @@ public class LoginDAO {
         }
     }
 
-    public LoginDAO(Connection conn) {
+    public UsuarioDAO(Connection conn) {
         this.conn = conn;
     }
 
@@ -152,5 +153,5 @@ public class LoginDAO {
         }
 
     }
-
+    
 }

@@ -5,7 +5,8 @@
  */
 package br.ufes.sgi.service;
 
-import br.ufes.sgi.business.UsuarioBusiness;
+import br.ufes.sgi.model.Permissao;
+import br.ufes.sgi.repository.UsuarioRepository;
 import br.ufes.sgi.model.Usuario;
 import java.util.ArrayList;
 
@@ -15,28 +16,39 @@ import java.util.ArrayList;
  */
 public class UsuarioService {
 
-    UsuarioBusiness business;
+    UsuarioRepository repository;
+    PermissaoService repositoryPermissao;
 
     public UsuarioService() throws Exception {
-        this.business = new UsuarioBusiness();
+        this.repository = new UsuarioRepository();
     }
 
     public ArrayList<Usuario> getAll() throws Exception {
-        return business.getAll();
+        return repository.getAll();
     }
 
     public void salvar(Usuario usuario) throws Exception {
 
-        business.salvar(usuario);
+        repository.salvar(usuario);
 
     }
 
     public void atualizar(Usuario usuario) throws Exception {
-        business.atualizar(usuario);
+        repository.atualizar(usuario);
     }
 
     public void excluir(Usuario usuarioLogin) throws Exception {
-        business.excluir(usuarioLogin);
+        repository.excluir(usuarioLogin);
+    }
+
+    public Usuario getByID(int idUsuario) throws Exception {
+        return repository.getByID(idUsuario);
+    }
+    public void compartilharImagem(Usuario usuario,Permissao permissao) throws Exception{
+        if(usuario.isAdmin()){
+            repositoryPermissao.gerarCompartilhamento(permissao);
+        }
+        throw new Exception("O usuário não é administrador!");
     }
 
 }

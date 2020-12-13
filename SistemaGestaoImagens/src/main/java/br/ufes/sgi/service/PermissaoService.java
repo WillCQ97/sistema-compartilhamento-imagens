@@ -5,8 +5,9 @@
  */
 package br.ufes.sgi.service;
 
-import br.ufes.sgi.business.PermissaoBusiness;
+import br.ufes.sgi.repository.PermissaoRepository;
 import br.ufes.sgi.model.Permissao;
+import br.ufes.sgi.model.Usuario;
 
 /**
  *
@@ -14,29 +15,33 @@ import br.ufes.sgi.model.Permissao;
  */
 public class PermissaoService {
 
-    public PermissaoBusiness business;
+    public PermissaoRepository repository;
 
     public PermissaoService() throws Exception {
-        this.business = new PermissaoBusiness();
+        this.repository = new PermissaoRepository();
     }
 
-    public void salvarByIds(Permissao permissao) throws Exception {
-        business.salvarByIds(permissao);
+    public void gerarCompartilhamento(Permissao permissao) throws Exception {
+        repository.gerarCompartilhamento(permissao);
     }
 
     public void excluir(Permissao permissao) throws Exception {
-        if(permissao.getUsuario().isAdmin()){
-         business.excluir(permissao);   
-        } 
-        else{
+        if (permissao.getUsuario().isAdmin()) {
+            repository.excluir(permissao);
+        } else {
             throw new Exception("O usuário não é administrador!");
         }
     }
 
     public void atualizarById(Permissao permissao) throws Exception {
-        business.atualizarById(permissao);
+        repository.atualizarById(permissao);
     }
-    
-    //asdfaasdfasdfsadfasdfasdf
 
+    public boolean verificaPermissao(Permissao permissao) throws Exception {
+        return repository.verificaPermissao(permissao) == null;
+    }
+
+    public Permissao getPermissaoByUsuario(Usuario usuario) throws Exception {
+        return repository.getPermissaoByUsuario(usuario);
+    }
 }
