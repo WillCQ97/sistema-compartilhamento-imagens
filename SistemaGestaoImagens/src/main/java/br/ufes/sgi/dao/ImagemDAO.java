@@ -5,6 +5,7 @@
  */
 package br.ufes.sgi.dao;
 
+import br.ufes.sgi.connection.ConnectionFactory;
 import br.ufes.sgi.model.Imagem;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,7 +23,7 @@ public class ImagemDAO {
 
     public ImagemDAO() throws Exception {
         try {
-            this.conn = Conexao.getConexao();
+            this.conn = ConnectionFactory.getConnection();
         } catch (Exception e) {
             throw new Exception("Erro: \n" + e.getMessage());
         }
@@ -53,7 +54,7 @@ public class ImagemDAO {
         } catch (SQLException sqle) {
             throw new Exception(sqle);
         } finally {
-            Conexao.fecharConexao(conn, ps, rs);
+            ConnectionFactory.closeConnection(conn, ps, rs);
         }
     }
 
@@ -76,7 +77,7 @@ public class ImagemDAO {
         } catch (SQLException sqle) {
             throw new Exception("Erro ao inserir dados " + sqle);
         } finally {
-            Conexao.fecharConexao(conn, ps);
+            ConnectionFactory.closeConnection(conn, ps);
         }
     }
 
@@ -93,7 +94,7 @@ public class ImagemDAO {
         } catch (SQLException sqle) {
             throw new Exception("Erro ao excluir dados:" + sqle);
         } finally {
-            Conexao.fecharConexao(conn, ps);
+            ConnectionFactory.closeConnection(conn, ps);
         }
 
     }
@@ -121,7 +122,7 @@ public class ImagemDAO {
         } catch (SQLException sqle) {
             throw new Exception(sqle);
         } finally {
-            Conexao.fecharConexao(conn, ps, rs);
+            ConnectionFactory.closeConnection(conn, ps, rs);
         }
     }
 
@@ -144,7 +145,7 @@ public class ImagemDAO {
         } catch (SQLException sqle) {
             throw new Exception(sqle);
         } finally {
-            Conexao.fecharConexao(conn, ps, rs);
+            ConnectionFactory.closeConnection(conn, ps, rs);
         }
     }
     

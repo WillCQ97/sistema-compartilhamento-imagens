@@ -5,6 +5,7 @@
  */
 package br.ufes.sgi.dao;
 
+import br.ufes.sgi.connection.ConnectionFactory;
 import br.ufes.sgi.model.Imagem;
 import br.ufes.sgi.model.Permissao;
 import br.ufes.sgi.model.Usuario;
@@ -23,7 +24,7 @@ public class PermissaoDAO {
 
     public PermissaoDAO() throws Exception {
         try {
-            this.conn = Conexao.getConexao();
+            this.conn = ConnectionFactory.getConnection();
         } catch (Exception e) {
             throw new Exception("Erro: \n" + e.getMessage());
         }
@@ -57,7 +58,7 @@ public class PermissaoDAO {
         } catch (SQLException sqle) {
             throw new Exception("Erro ao inserir dados " + sqle);
         } finally {
-            Conexao.fecharConexao(conn, ps);
+            ConnectionFactory.closeConnection(conn, ps);
         }
     }
 
@@ -74,7 +75,7 @@ public class PermissaoDAO {
         } catch (SQLException sqle) {
             throw new Exception("Erro ao excluir dados:" + sqle);
         } finally {
-            Conexao.fecharConexao(conn, ps);
+            ConnectionFactory.closeConnection(conn, ps);
         }
 
     }
@@ -98,7 +99,7 @@ public class PermissaoDAO {
         } catch (SQLException sqle) {
             throw new Exception("Erro ao atualizar dados: " + sqle);
         } finally {
-            Conexao.fecharConexao(conn, ps);
+            ConnectionFactory.closeConnection(conn, ps);
         }
     }
 
@@ -120,7 +121,7 @@ public class PermissaoDAO {
         } catch (SQLException sqle) {
             throw new Exception(sqle);
         } finally {
-            Conexao.fecharConexao(conn, ps, rs);
+            ConnectionFactory.closeConnection(conn, ps, rs);
         }
     }
 
@@ -154,7 +155,7 @@ public class PermissaoDAO {
         } catch (SQLException sqle) {
             throw new Exception(sqle);
         } finally {
-            Conexao.fecharConexao(conn, ps, rs);
+            ConnectionFactory.closeConnection(conn, ps, rs);
         }
     }
 

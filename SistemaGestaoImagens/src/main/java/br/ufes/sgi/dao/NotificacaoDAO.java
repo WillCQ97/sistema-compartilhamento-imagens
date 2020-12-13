@@ -5,6 +5,7 @@
  */
 package br.ufes.sgi.dao;
 
+import br.ufes.sgi.connection.ConnectionFactory;
 import br.ufes.sgi.model.Notificacao;
 import br.ufes.sgi.model.Usuario;
 import java.sql.Connection;
@@ -23,7 +24,7 @@ public class NotificacaoDAO {
 
     public NotificacaoDAO() throws Exception {
         try {
-            this.conn = Conexao.getConexao();
+            this.conn = ConnectionFactory.getConnection();
         } catch (Exception e) {
             throw new Exception("Erro: \n" + e.getMessage());
         }
@@ -53,7 +54,7 @@ public class NotificacaoDAO {
         } catch (SQLException sqle) {
             throw new Exception("Erro ao inserir dados " + sqle);
         } finally {
-            Conexao.fecharConexao(conn, ps);
+            ConnectionFactory.closeConnection(conn, ps);
         }
     }
 
@@ -85,7 +86,7 @@ public class NotificacaoDAO {
         } catch (SQLException sqle) {
             throw new Exception(sqle);
         } finally {
-            Conexao.fecharConexao(conn, ps, rs);
+            ConnectionFactory.closeConnection(conn, ps, rs);
         }
         
          }
@@ -103,7 +104,7 @@ public class NotificacaoDAO {
         } catch (SQLException sqle) {
             throw new Exception("Erro ao excluir dados:" + sqle);
         } finally {
-            Conexao.fecharConexao(conn, ps);
+            ConnectionFactory.closeConnection(conn, ps);
         }
         
     }
