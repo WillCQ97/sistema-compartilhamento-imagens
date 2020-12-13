@@ -4,8 +4,10 @@
     <name>SistemaGestaoImagens</name>
     <groupId>br.ufes</groupId>
     <artifactId>SistemaGestaoImagens</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <description>SistemaGestaoImagens</description>
+    <version>1.2-SNAPSHOT</version>
     <packaging>jar</packaging>
+    
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
@@ -20,5 +22,5 @@
             <version>3.34.0</version>
         </dependency>
     </dependencies>
-    
+
 </project>

@@ -10,15 +10,17 @@ package br.ufes.sgi.model;
  * @author 55289
  */
 public class Notificacao {
+
     public int id;
-    public int idUsuario;
+    public Usuario usuario;
     public String descricao;
 
-    public Notificacao(int id, int idUsuario) {
+    public Notificacao(int id, Usuario idUsuario, String descricao) {
         this.id = id;
-        this.idUsuario = idUsuario;
+        this.usuario = idUsuario;
+        this.descricao = descricao;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -27,13 +29,20 @@ public class Notificacao {
         this.id = id;
     }
 
-    public int getIdUsuario() {
-        return idUsuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setIdUsuario(Usuario idUsuario) {
+        this.usuario = idUsuario;
     }
-    
-    
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
 }
