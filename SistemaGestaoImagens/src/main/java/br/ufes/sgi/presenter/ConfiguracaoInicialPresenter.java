@@ -91,6 +91,7 @@ public class ConfiguracaoInicialPresenter {
                 
                 // AINDA TEM QUE SALVAR OS CAMINHOS DAS IMAGENS COM PERMISSAO TOTAL PARA ESSE USUÁRIO
                 
+                
                 view.setVisible(false);
                 view.dispose();
                 
