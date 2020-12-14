@@ -5,17 +5,25 @@
  */
 package br.ufes.sgi.view;
 
+import br.ufes.sgi.model.Imagem;
+import br.ufes.sgi.model.Usuario;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author 55289
  */
 public class AcessoNegadoView extends javax.swing.JInternalFrame {
-
+    private Usuario user;
+    private Imagem img;
     /**
      * Creates new form AcessoNegadoView
      */
-    public AcessoNegadoView() {
+    public AcessoNegadoView(Usuario user, Imagem img) {
         initComponents();
+        this.user = user;
+        this.img = img;
     }
 
     /**
@@ -36,6 +44,11 @@ public class AcessoNegadoView extends javax.swing.JInternalFrame {
         jButton1.setText("Cancelar");
 
         jButton2.setText("Solicitar Permissão");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel1.setText("Você não tem permissão para executar essa ação. Deseja solicitar uma permissão?");
@@ -69,6 +82,14 @@ public class AcessoNegadoView extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            new CompartilharImagemView(img,user).setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(AcessoNegadoView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

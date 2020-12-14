@@ -13,11 +13,14 @@ public class PermissaoService {
     }
 
     public void gerarCompartilhamento(Permissao permissao) throws Exception {
-        repository.gerarCompartilhamento(permissao);
+        if(permissao.isCompartilhar()){
+          repository.gerarCompartilhamento(permissao);  
+        }
+        
     }
 
     public void excluir(Permissao permissao) throws Exception {
-        if (permissao.getUsuario().isAdmin()) {
+        if (permissao.isExcluir()) {
             repository.excluir(permissao);
         } else {
             throw new Exception("O usuário não é administrador!");

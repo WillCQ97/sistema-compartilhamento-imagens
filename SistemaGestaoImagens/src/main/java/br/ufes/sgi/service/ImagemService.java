@@ -38,12 +38,16 @@ public class ImagemService {
         if (permissaoRepository.getPermissaoByUsuario(usuario).isVisualizar()) {
             return imagemRepository.getImagensByIdUsuario(usuario.getId());
         }
-        
+
         throw new Exception("Não tem permissão para visualizar");
     }
 
     public Imagem getImagemById(int id) throws Exception {
         return imagemRepository.getImagemById(id);
+    }
+
+    public boolean isNull() throws Exception {
+        return imagemRepository.isNull();
     }
 
 }

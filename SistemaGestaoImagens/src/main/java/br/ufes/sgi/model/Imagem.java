@@ -9,6 +9,9 @@ public class Imagem {
         this.id = id;
         this.caminho = caminho;
     }
+    public Imagem(){
+        
+    }
 
     public Imagem(String caminho) {
         this.caminho = caminho;

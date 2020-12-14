@@ -36,15 +36,9 @@ public class UsuarioService {
         return usuarioRepository.getById(idUsuario);
     }
 
-    //DESSE MODO APENAS O ADMINISTRADOR PODE COMPARTILHAR
-    //A verificação correta é se o usuário pode compartilhar a imagem em questão
-    //compartilhar imagem, deveria receber uma imagem, usuario dono, usuario recebedor
-    //essa classe instancia a permissao
-    public void compartilharImagem(Usuario usuario, Permissao permissao) throws Exception {
-        if (usuario.isAdmin()) {
+    public void compartilharImagem(Permissao permissao) throws Exception {
+        if (permissao.isCompartilhar()) {
             permissaoRepository.gerarCompartilhamento(permissao);
-        } else {
-            throw new Exception("O usuário não é administrador!");
         }
     }
     
