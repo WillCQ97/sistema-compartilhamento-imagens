@@ -1,6 +1,8 @@
 package br.ufes.sgi.presenter;
 
+import br.ufes.sgi.model.Imagem;
 import br.ufes.sgi.model.Usuario;
+import br.ufes.sgi.service.ImagemService;
 import br.ufes.sgi.service.UsuarioService;
 import br.ufes.sgi.view.ConfiguracaoInicialView;
 import java.awt.event.ActionEvent;
@@ -12,6 +14,8 @@ public class ConfiguracaoInicialPresenter {
 
     private ConfiguracaoInicialView view;
     private UsuarioService usuarioService;
+    private ImagemService imagemService;
+    private File diretorioImagens;
 
     public ConfiguracaoInicialPresenter() {
         StringBuilder sb = new StringBuilder();
@@ -29,6 +33,7 @@ public class ConfiguracaoInicialPresenter {
         
         try {
             this.usuarioService = new UsuarioService();
+            this.imagemService = new ImagemService();
             
             view.getBtnInformarCaminho().addActionListener((ActionEvent e) -> {
                 definirDiretorioImagens();
@@ -54,14 +59,13 @@ public class ConfiguracaoInicialPresenter {
 
         if (retorno == JFileChooser.APPROVE_OPTION) {
 
-            File arquivo = view.getJfcSeletorDiretorio().getSelectedFile();
-            String diretorio = arquivo.getPath();
+            diretorioImagens = view.getJfcSeletorDiretorio().getSelectedFile();
+            String diretorio = diretorioImagens.getPath();
 
             view.getTxtCaminho().setText(diretorio);
         }
     }
     
-    // FIX-ME: OBSERVAÇÕES ABAIXO
     private void efetuarCadastro() {
         String nome = view.getTxtNome().getText();
         String usuario = view.getTxtUsuario().getText();
@@ -89,8 +93,14 @@ public class ConfiguracaoInicialPresenter {
 
                 usuarioService.salvar(novoUsuario);
                 
-                // AINDA TEM QUE SALVAR OS CAMINHOS DAS IMAGENS COM PERMISSAO TOTAL PARA ESSE USUÁRIO
-                
+                for(File arquivo : diretorioImagens.listFiles()){
+                    
+                    String nomeArquivo = arquivo.getName();
+                    
+                    if (nomeArquivo.endsWith(".jpg") || nomeArquivo.endsWith(".png") || nomeArquivo.endsWith(".jpeg")) {
+                        imagemService.salvar(new Imagem(arquivo.getPath()));
+                    }
+                }
                 
                 view.setVisible(false);
                 view.dispose();

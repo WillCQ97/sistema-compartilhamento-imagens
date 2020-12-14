@@ -137,7 +137,7 @@ public class Main {
         System.out.println("Adicionar a " + pWillian.toString());        
         
         System.out.println("----------------------------------");
-        sUsuario.compartilharImagem(uGabriel, pWillian); //dono da imagem, permissao pro outro user
+        //sUsuario.compartilharImagem(uGabriel, pWillian); //dono da imagem, permissao pro outro user
         
         System.out.println("-------------------------------");
         System.out.println(sPermissao.getPermissaoByUsuario(uGabriel).toString());
