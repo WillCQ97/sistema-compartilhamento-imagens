@@ -151,9 +151,11 @@ public class ManterUsuariosView extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        /*
         int select = tblUsuarios.getSelectedRow();
         int id = (int) tblUsuarios.getModel().getValueAt(select, 0);
         Usuario user = new Usuario();
@@ -166,11 +168,11 @@ public class ManterUsuariosView extends javax.swing.JFrame {
                 Logger.getLogger(ManterUsuariosView.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
+*/
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        int select = tblUsuarios.getSelectedRow();
+  /*      int select = tblUsuarios.getSelectedRow();
         int id = (int) tblUsuarios.getModel().getValueAt(select, 0);
         Usuario user = new Usuario();
         user.setId(id);
@@ -179,7 +181,7 @@ public class ManterUsuariosView extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(ManterUsuariosView.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+*/
     }//GEN-LAST:event_btnEditarActionPerformed
     
     public JButton getBtnBuscar(){

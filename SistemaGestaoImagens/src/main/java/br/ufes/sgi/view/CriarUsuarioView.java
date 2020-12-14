@@ -152,7 +152,7 @@ public class CriarUsuarioView extends javax.swing.JFrame {
                 usuario.setAdmin(jRadioButton1.isSelected());
                 usuario.setNome(jTextFieldNome.getText());
                 usuario.setSenha(jPasswordFieldSenha.getText());
-                usuario.setUsuario(jTextFieldUsuario.getText());
+                usuario.setApelido(jTextFieldUsuario.getText());
                 serviceUsuario.salvar(usuario);
             } catch (Exception ex) {
                 Logger.getLogger(CriarUsuarioView.class.getName()).log(Level.SEVERE, null, ex);
