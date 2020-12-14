@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class UsuarioRepository {
 
     private final UsuarioDAO dao;
-
+    
     public UsuarioRepository() throws Exception {
         this.dao = new UsuarioDAO();
     }
@@ -20,7 +20,7 @@ public class UsuarioRepository {
         if (usuario == null) {
             throw new Exception("Usuário fornecido é inválido");
         } else {
-            if (usuario.getUsuario() == null || usuario.getUsuario().isBlank()) {
+            if (usuario.getApelido() == null || usuario.getApelido().isBlank()) {
                 throw new Exception("Login fornecido é inválido");
             }
             if (usuario.getSenha() == null || usuario.getSenha().isBlank()) {
@@ -48,10 +48,18 @@ public class UsuarioRepository {
     public Usuario getById(int idUsuario) throws Exception {
         return dao.getById(idUsuario);
     }
-    public Usuario getByName(String nome) throws Exception{
-        if(nome == null){
-         throw new Exception("nome fornecido é nulo");   
+
+    public Usuario getByApelido(String apelido) throws Exception {
+        if (apelido == null) {
+            throw new Exception("nome fornecido é nulo");
         }
-        return dao.getByName(nome);
+        
+        for(Usuario usuario : this.getAll()){
+            if(apelido.equals(usuario.getApelido())){
+                return usuario;
+            }
+        }
+        throw new Exception("Usuário com o apelido informado não encontrado!");
     }
+    
 }

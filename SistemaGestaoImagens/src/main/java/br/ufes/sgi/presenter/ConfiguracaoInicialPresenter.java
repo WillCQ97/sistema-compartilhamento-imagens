@@ -72,12 +72,12 @@ public class ConfiguracaoInicialPresenter {
 
     private void efetuarCadastro() {
         String nome = view.getTxtNome().getText();
-        String usuario = view.getTxtUsuario().getText();
+        String apelido = view.getTxtApelido().getText();
         String senha = view.getPswSenha().getText();
         String confirmacao = view.getPswConfirmarSenha().getText();
         String caminho = view.getTxtCaminho().getText();
 
-        if (nome.isBlank() || usuario.isBlank() || senha.isBlank() || confirmacao.isBlank() || caminho.isBlank()) {
+        if (nome.isBlank() || apelido.isBlank() || senha.isBlank() || confirmacao.isBlank() || caminho.isBlank()) {
 
             JOptionPane.showMessageDialog(view, "Os campos são de preenchimento obrigatório!");
 
@@ -89,12 +89,7 @@ public class ConfiguracaoInicialPresenter {
 
         } else {
             try {
-                var novoUsuario = new Usuario();
-                novoUsuario.setNome(nome);
-                novoUsuario.setUsuario(usuario);
-                novoUsuario.setSenha(senha);
-                novoUsuario.setAdmin(true);
-
+                var novoUsuario = new Usuario(apelido, senha, nome, true);
                 usuarioService.salvar(novoUsuario);
 
                 for (File arquivo : diretorioImagens.listFiles()) {

@@ -201,9 +201,9 @@ public class ListarUsuariosView extends javax.swing.JInternalFrame {
 
             for (Usuario users : usuarios) {
                 if (users.isAdmin() && jRadioButtonAdministrador.isSelected()) {
-                    modelo.addRow(new Object[]{users.getId(), users.getUsuario(), users.getNome(), admin});
+                    modelo.addRow(new Object[]{users.getId(), users.getApelido(), users.getNome(), admin});
                 } else if (!users.isAdmin() && !jRadioButtonAdministrador.isSelected()) {
-                    modelo.addRow(new Object[]{users.getId(), users.getUsuario(), users.getNome(), comum});
+                    modelo.addRow(new Object[]{users.getId(), users.getApelido(), users.getNome(), comum});
                 }
 
             }

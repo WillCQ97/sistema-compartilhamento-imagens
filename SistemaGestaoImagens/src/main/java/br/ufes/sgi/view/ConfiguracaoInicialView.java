@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufes.sgi.view;
 
 import javax.swing.JButton;
@@ -10,15 +5,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-/**
- *
- * @author willcq
- */
 public class ConfiguracaoInicialView extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ConfiguracaoInicialView
-     */
     public ConfiguracaoInicialView() {
         initComponents();
     }
@@ -39,7 +27,7 @@ public class ConfiguracaoInicialView extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
-        txtUsuario = new javax.swing.JTextField();
+        txtApelido = new javax.swing.JTextField();
         pswSenha = new javax.swing.JPasswordField();
         txtCaminhoImagens = new javax.swing.JTextField();
         btnInformarCaminho = new javax.swing.JButton();
@@ -58,13 +46,20 @@ public class ConfiguracaoInicialView extends javax.swing.JFrame {
 
         jLabel5.setText("Nome:");
 
-        jLabel6.setText("Usuário:");
+        jLabel6.setText("Apelido:");
 
         jLabel7.setText("Senha:");
 
         jLabel8.setText("Localização das imagens:");
 
+        txtNome.setText("seu nome");
+
+        txtApelido.setText("apelido único para login");
+
+        pswSenha.setText("senha");
+
         txtCaminhoImagens.setEditable(false);
+        txtCaminhoImagens.setText("/caminho/pasta-de-imagens");
         txtCaminhoImagens.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtCaminhoImagens.setDisabledTextColor(new java.awt.Color(0, 0, 0));
 
@@ -76,6 +71,8 @@ public class ConfiguracaoInicialView extends javax.swing.JFrame {
 
         jLabel9.setText("Confirmar senha:");
 
+        pswConfirmarSenha.setText("senha");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -83,43 +80,37 @@ public class ConfiguracaoInicialView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(112, 112, 112)
-                        .addComponent(jLabel1))
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCaminhoImagens, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnInformarCaminho))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel8)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtCaminhoImagens, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(btnConfirmar)
-                                        .addGap(48, 48, 48)
-                                        .addComponent(btnSair)
-                                        .addGap(77, 77, 77)))
-                                .addGap(18, 18, 18)
-                                .addComponent(btnInformarCaminho))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(128, 128, 128)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel6)
-                                            .addComponent(jLabel5)
-                                            .addComponent(jLabel7)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel9)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtUsuario)
-                                    .addComponent(txtNome)
-                                    .addComponent(pswSenha)
-                                    .addComponent(pswConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(32, Short.MAX_VALUE))
+                                .addGap(139, 139, 139)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel7)))
+                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtApelido)
+                            .addComponent(txtNome)
+                            .addComponent(pswSenha)
+                            .addComponent(pswConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addComponent(jLabel1)))
+                .addContainerGap(28, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnConfirmar)
+                .addGap(48, 48, 48)
+                .addComponent(btnSair)
+                .addGap(210, 210, 210))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,7 +124,7 @@ public class ConfiguracaoInicialView extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtApelido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
@@ -144,8 +135,8 @@ public class ConfiguracaoInicialView extends javax.swing.JFrame {
                     .addComponent(pswConfirmarSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
                     .addComponent(txtCaminhoImagens, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
                     .addComponent(btnInformarCaminho))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -217,8 +208,8 @@ public class ConfiguracaoInicialView extends javax.swing.JFrame {
         return txtNome;
     }
     
-    public JTextField getTxtUsuario(){
-        return txtUsuario;
+    public JTextField getTxtApelido(){
+        return txtApelido;
     }
     
     public JPasswordField getPswConfirmarSenha(){
@@ -242,8 +233,8 @@ public class ConfiguracaoInicialView extends javax.swing.JFrame {
     private javax.swing.JFileChooser jfcSelecaoDiretorio;
     private javax.swing.JPasswordField pswConfirmarSenha;
     private javax.swing.JPasswordField pswSenha;
+    private javax.swing.JTextField txtApelido;
     private javax.swing.JTextField txtCaminhoImagens;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

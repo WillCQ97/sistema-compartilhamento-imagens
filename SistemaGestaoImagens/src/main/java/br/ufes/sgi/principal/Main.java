@@ -52,7 +52,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        inicializarBancoDados("configuracao-banco.sql");
+        //inicializarBancoDados("configuracao-banco.sql");
         LoginPresenter pLogin = new LoginPresenter();
         
         /*

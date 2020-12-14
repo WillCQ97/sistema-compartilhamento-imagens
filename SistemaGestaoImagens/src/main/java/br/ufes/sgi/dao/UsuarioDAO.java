@@ -24,12 +24,12 @@ public class UsuarioDAO {
 
             while (rs.next()) {
                 int idUsuario = rs.getInt(1);
-                String usuario = rs.getString(2);
+                String apelido = rs.getString(2);
                 String senha = rs.getString(3);
                 String nome = rs.getString(4);
                 boolean admin = rs.getBoolean(5);
 
-                list.add(new Usuario(idUsuario, usuario, senha, nome, admin));
+                list.add(new Usuario(idUsuario, apelido, senha, nome, admin));
             }
             return list;
         } catch (SQLException sqle) {
@@ -48,12 +48,12 @@ public class UsuarioDAO {
         }
 
         try {
-            String SQL = "INSERT INTO usuario (usuario, senha, nome, admin)"
+            String SQL = "INSERT INTO usuario (apelido, senha, nome, admin)"
                     + " values (?, ?, ?,?);";
 
             ps = conn.prepareStatement(SQL);
 
-            ps.setString(1, usuario.getUsuario());
+            ps.setString(1, usuario.getApelido());
             ps.setString(2, usuario.getSenha());
             ps.setString(3, usuario.getNome());
             ps.setBoolean(4, usuario.isAdmin());
@@ -75,11 +75,11 @@ public class UsuarioDAO {
         }
 
         try {
-            String SQL = "UPDATE usuario SET usuario=?, senha=?, nome = ?, admin=?"
+            String SQL = "UPDATE usuario SET apelido=?, senha=?, nome = ?, admin=?"
                     + "where idUsuario = ?;";
 
             ps = conn.prepareStatement(SQL);
-            ps.setString(1, usuario.getUsuario());
+            ps.setString(1, usuario.getApelido());
             ps.setString(2, usuario.getSenha());
             ps.setString(3, usuario.getNome());
             ps.setBoolean(4, usuario.isAdmin());
@@ -124,12 +124,12 @@ public class UsuarioDAO {
             ps.setInt(1, idUsuario);
             rs = ps.executeQuery();
 
-            String usuario = rs.getString(2);
+            String apelido = rs.getString(2);
             String senha = rs.getString(3);
             String nome = rs.getString(4);
             boolean admin = rs.getBoolean(5);
 
-            return new Usuario(idUsuario, usuario, senha, nome, admin);
+            return new Usuario(idUsuario, apelido, senha, nome, admin);
 
         } catch (SQLException sqle) {
             throw new Exception(sqle);
@@ -137,34 +137,6 @@ public class UsuarioDAO {
         } finally {
             ConnectionFactory.closeConnection(conn, ps, rs);
         }
-    }
-
-    public Usuario getByName(String nome) throws Exception {
-        Connection conn = ConnectionFactory.getConnection();
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-
-            ps = conn.prepareStatement("select * from usuario where nome = ?");
-            ps.setString(1, nome);
-            rs = ps.executeQuery();
-
-            int idUsuario = rs.getInt(1);
-            String usuario = rs.getString(2);
-            String senha = rs.getString(3);
-            String nome1 = rs.getString(4);
-            boolean admin = rs.getBoolean(5);
-
-            Usuario user = new Usuario(idUsuario, usuario, senha, nome1, admin);
-
-            return user;
-        } catch (SQLException sqle) {
-            throw new Exception(sqle);
-        } finally {
-            ConnectionFactory.closeConnection(conn, ps, rs);
-        }
-
     }
 
 }

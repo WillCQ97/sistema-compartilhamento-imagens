@@ -1,11 +1,9 @@
 package br.ufes.sgi.presenter;
 
+import br.ufes.sgi.model.Usuario;
 import br.ufes.sgi.service.UsuarioService;
-import br.ufes.sgi.view.ConfiguracaoInicialView;
 import br.ufes.sgi.view.LoginView;
 import java.awt.event.ActionEvent;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class LoginPresenter {
@@ -48,25 +46,32 @@ public class LoginPresenter {
     }
 
     private void efetuarLogin() {
-        String usuario = loginView.getTxtUsuario().getText();
+        String apelido = loginView.getTxtApelido().getText();
         String senha = loginView.getPswSenha().getText();
 
-        if (usuario.isBlank() || senha.isEmpty()) {
-            JOptionPane.showMessageDialog(loginView, "Por favor, informe usuário e senha!");
+        try {
+            if (apelido.isBlank() || senha.isEmpty()) {
+                throw new Exception("Por favor, informe usuário e senha!");
 
-        } else {
-            try {
-                //em seguida validar no banco de dados o usuário informado
+            } else {
 
-                //caso esteja, ele entra na tela inicial do sistema
-                //se não, ele permanece na tela de login
-                //TelaPrincipalPresenter pTelaPrincipal = new TelaPrincipalPresenter(usuario, "tst");
-            } catch (Exception ex) {
-                Logger.getLogger(LoginPresenter.class.getName()).log(Level.SEVERE, null, ex);
+                Usuario usuario = usuarioService.getByApelido(apelido);
+
+                if (!senha.equals(usuario.getSenha())) {
+                    loginView.getPswSenha().setText("");
+                    throw new Exception("A senha está incorreta!");
+
+                } else {
+
+                    loginView.setVisible(false);
+                    loginView.dispose();
+                    new TelaPrincipalPresenter(usuario);
+
+                }
+
             }
-
-            loginView.setVisible(false);
-            loginView.dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(loginView, "Erro ao efetuar login: \n" + ex.getMessage());
         }
     }
 }
