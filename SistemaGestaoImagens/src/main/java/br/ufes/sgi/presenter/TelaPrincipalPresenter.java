@@ -7,6 +7,7 @@ import br.ufes.sgi.service.ImagemService;
 import br.ufes.sgi.service.PermissaoService;
 import br.ufes.sgi.service.UsuarioService;
 import br.ufes.sgi.view.AcessoNegadoView;
+import br.ufes.sgi.view.ListarUsuariosView;
 import br.ufes.sgi.view.TelaPrincipalView;
 import br.ufes.sgi.view.imagem.ManipuladorImagem;
 import java.awt.event.ActionEvent;
@@ -53,6 +54,15 @@ public class TelaPrincipalPresenter {
                 //implementação da exclusão
             });
 
+            view.getMenuItemManterUsuarios().addActionListener((ActionEvent e) -> {
+                manterUsuarios();
+            });
+
+            view.getMenuItemSair().addActionListener((ActionEvent e) -> {
+                view.setVisible(false);
+                view.dispose();
+            });
+
             view.setVisible(true);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(view, ex.getMessage(), "Ocorreu um erro!", JOptionPane.ERROR_MESSAGE);
@@ -61,14 +71,23 @@ public class TelaPrincipalPresenter {
     }
 
     private void configurarOpcoesPorTipoUsuario() {
-
         if (usuario.isAdmin()) {
             view.getTxtTipoUsuario().setText("Administrador");
         } else {
-            //desabilitar todas as funcionalidades, quando clicar na imagem, atualiza
+            view.getTxtTipoUsuario().setText("Usuário");
+            view.getMenuItemManterUsuarios().setEnabled(false);
             view.getBtnCompartilhar().setEnabled(false);
             view.getBtnExcluir().setEnabled(false);
         }
+    }
+
+    // será necessário haver um listener na tabela, quando for identificado o clic
+    //pega a posição, instancia a imagem, perquisa pelo permissao e atualiza os botoes
+    private void atualizarPermissaoPorImagem(Imagem imagem) {
+
+        //realizar um get por imagem no banco
+        //view.getBtnCompartilhar().setEnabled(false);
+        //view.getBtnExcluir().setEnabled(false);
     }
 
     private void carregarListaImagens() {
@@ -94,16 +113,26 @@ public class TelaPrincipalPresenter {
         }
     }
 
-    private void manterUsuario() {
-        /*
-        ListarUsuariosView l;
+    private void manterUsuarios() {
+
+        ListarUsuariosView lusuariosView;
         try {
-            l = new ListarUsuariosView();
-            l.setVisible(true);
+            
+            lusuariosView = new ListarUsuariosView();
+            lusuariosView.setVisible(true);
+            
         } catch (Exception ex) {
-            Logger.getLogger(TelaPrincipalView.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(view, ex.getMessage(), "Não foi possível iniciar tela de Manter Usuários.",
+                    JOptionPane.ERROR_MESSAGE);
         }
-         */
+    }
+
+    private void renderizarImagem(Imagem imagem) {
+        BufferedImage buffImage;
+        buffImage = ManipuladorImagem.setImagemDimensao(imagem.getCaminho(), 450, 450);
+
+        ImageIcon imageIcon = new ImageIcon(buffImage);
+        view.getLblMostrarImagem().setIcon(imageIcon);
     }
 
     private void visualizarImagem() {
@@ -112,29 +141,23 @@ public class TelaPrincipalPresenter {
 
             int posicaoImagem = lstImagens.getSelectedIndex();
             Imagem imagem = imagemService.getAll().get(posicaoImagem);
-            
-            if(usuario.isAdmin()){
-                //efetua a operação selecionada
-            }else{
+
+            if (usuario.isAdmin()) {
+                this.renderizarImagem(imagem);
+            } else {
                 //verifica a permissao para esse user e imagem no banco se houver
                 //                permissaoService.ver
                 System.out.println(permissaoService.verificarPermissao(usuario, imagem));
             }
             /*
-            Permissao p = new Permissao(usuario, imagem, true, true, true);
-
-            if (permissaoService.verificarPermissao(p)) {
+            if (permissaoService.verificarPermissao(usuario, imagem)) {
                 if (p.isVisualizar()) {
-                    BufferedImage buffImage;
-                    buffImage = ManipuladorImagem.setImagemDimensao(imagem.getCaminho(), 200, 200);
-                    
-                    ImageIcon ii = new ImageIcon(buffImage);
-                    view.getLblMostrarImagem().setIcon(ii);
+                   
                 }
             } else {
                 new AcessoNegadoView(usuario, imagem).setVisible(true);
-            }*/
-
+            }
+             */
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(view, ex);
         }

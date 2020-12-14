@@ -3,7 +3,6 @@ package br.ufes.sgi.view;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JTextField;
 
@@ -39,10 +38,8 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         btnNotificacao = new javax.swing.JButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
         jMenuBar1 = new javax.swing.JMenuBar();
-        menuAdministrador = new javax.swing.JMenu();
         menuOpcoes = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItemManterUsuario = new javax.swing.JMenuItem();
+        mnitManterUsuarios = new javax.swing.JMenuItem();
         menuItemSair = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -83,8 +80,8 @@ public class TelaPrincipalView extends javax.swing.JFrame {
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(14, 14, 14)
-                        .addComponent(lblMostrarImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(30, Short.MAX_VALUE))))
+                        .addComponent(lblMostrarImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(32, Short.MAX_VALUE))))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,17 +132,10 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         tbRodape.add(btnNotificacao);
         tbRodape.add(jSeparator4);
 
-        menuAdministrador.setText("Administrador");
-        jMenuBar1.add(menuAdministrador);
-
         menuOpcoes.setText("Opções");
 
-        jMenu2.setText("Usuário");
-
-        jMenuItemManterUsuario.setText("Manter Usuário");
-        jMenu2.add(jMenuItemManterUsuario);
-
-        menuOpcoes.add(jMenu2);
+        mnitManterUsuarios.setText("Manter Usuário");
+        menuOpcoes.add(mnitManterUsuarios);
 
         menuItemSair.setText("Sair");
         menuOpcoes.add(menuItemSair);
@@ -241,8 +231,8 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         return this.lstImagens;
     }
 
-    public JMenu getMenuAdministrador() {
-        return this.menuAdministrador;
+    public JMenuItem getMenuItemManterUsuarios(){
+        return this.mnitManterUsuarios;
     }
 
     public JMenuItem getMenuItemSair() {
@@ -266,9 +256,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItemManterUsuario;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
@@ -279,9 +267,9 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator7;
     private javax.swing.JLabel lblMostrarImagem;
     private javax.swing.JList<String> lstImagens;
-    private javax.swing.JMenu menuAdministrador;
     private javax.swing.JMenuItem menuItemSair;
     private javax.swing.JMenu menuOpcoes;
+    private javax.swing.JMenuItem mnitManterUsuarios;
     private javax.swing.JToolBar tbRodape;
     private javax.swing.JTextField txtNomeUsuario;
     private javax.swing.JTextField txtTipoUsuario;
