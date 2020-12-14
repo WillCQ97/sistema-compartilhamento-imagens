@@ -1,18 +1,5 @@
 package br.ufes.sgi.view;
 
-import br.ufes.sgi.view.imagem.ManipuladorImagem;
-import br.ufes.sgi.model.Imagem;
-import br.ufes.sgi.model.Permissao;
-import br.ufes.sgi.model.Usuario;
-import br.ufes.sgi.service.ImagemService;
-import br.ufes.sgi.service.PermissaoService;
-import br.ufes.sgi.service.UsuarioService;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JMenu;
@@ -21,47 +8,8 @@ import javax.swing.JTextField;
 
 public class TelaPrincipalView extends javax.swing.JFrame {
 
-    private DefaultListModel listModel;
-    private ImagemService serviceImagem;
-    private Usuario usuario;//preciso receber um usuario por parametro
-    private File[] listOfFiles;
-    private PermissaoService servicePermissao;
-    private UsuarioService serviceUsuario;
-
-    public TelaPrincipalView() throws Exception {
+    public TelaPrincipalView() {
         initComponents();
-        this.listModel = new DefaultListModel();
-        serviceImagem = new ImagemService();
-        jList1 = new JList(modeloJlist(""));
-    }
-
-    private DefaultListModel modeloJlist(String path) throws Exception {
-        File folder = new File(path);
-        listOfFiles = folder.listFiles();
-
-        int count = 0;
-        for (int i = 0; i < listOfFiles.length; i++) {
-
-            String name = listOfFiles[i].toString();
-            preencherBanco(name);
-            System.out.println(name);
-
-            if (name.endsWith("jpg") || name.endsWith("png") || name.endsWith("jpeg")) {
-                BufferedImage imagem;
-                imagem = ManipuladorImagem.setImagemDimensao(listOfFiles[i].getAbsolutePath(), 60, 60);
-
-                ImageIcon ii = new ImageIcon(imagem);
-                listModel.add(count++, ii);
-            }
-        }
-        return listModel;
-    }
-    
-    // FIX-ME: ANALISAR ESTE CÓDIGO E REMOVELO DEPOIS
-    public void preencherBanco(String path) throws Exception {
-        if (serviceImagem.isNull()) {
-            serviceImagem.salvar(new Imagem(path));
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -70,11 +18,11 @@ public class TelaPrincipalView extends javax.swing.JFrame {
 
         jDesktopPane1 = new javax.swing.JDesktopPane();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jLabelMostrarImagem = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        lstImagens = new javax.swing.JList<>();
+        lblMostrarImagem = new javax.swing.JLabel();
+        btnCompartilhar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+        btnVisualizar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         tbRodape = new javax.swing.JToolBar();
         jLabel1 = new javax.swing.JLabel();
@@ -99,34 +47,27 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Compartilhamento de Imagens");
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(lstImagens);
 
-        jLabelMostrarImagem.setText("jLabel4");
+        btnCompartilhar.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        btnCompartilhar.setText("Compartilhar");
 
-        jButton1.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        jButton1.setText("Compartilhar");
+        btnExcluir.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        btnExcluir.setText("Excluir");
 
-        jButton2.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        jButton2.setText("Excluir");
-
-        jButton3.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        jButton3.setText("Visualizar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnVisualizar.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        btnVisualizar.setText("Visualizar");
+        btnVisualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnVisualizarActionPerformed(evt);
             }
         });
 
         jDesktopPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jLabelMostrarImagem, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(lblMostrarImagem, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnCompartilhar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnExcluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(btnVisualizar, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -135,18 +76,18 @@ public class TelaPrincipalView extends javax.swing.JFrame {
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addComponent(jButton3)
+                        .addComponent(btnVisualizar)
                         .addGap(118, 118, 118)
-                        .addComponent(jButton1))
+                        .addComponent(btnCompartilhar))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelMostrarImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblMostrarImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(19, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(btnExcluir)
                         .addGap(71, 71, 71))))
         );
         jDesktopPane1Layout.setVerticalGroup(
@@ -154,13 +95,13 @@ public class TelaPrincipalView extends javax.swing.JFrame {
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabelMostrarImagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblMostrarImagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnVisualizar)
+                    .addComponent(btnCompartilhar)
+                    .addComponent(btnExcluir))
                 .addGap(0, 17, Short.MAX_VALUE))
         );
 
@@ -216,11 +157,6 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         menuOpcoes.add(jMenu2);
 
         menuItemSair.setText("Sair");
-        menuItemSair.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemSairActionPerformed(evt);
-            }
-        });
         menuOpcoes.add(menuItemSair);
 
         jMenuBar1.add(menuOpcoes);
@@ -249,11 +185,8 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void menuItemSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSairActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menuItemSairActionPerformed
-
     private void jMenuItemManterUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemManterUsuarioActionPerformed
+        /*
         ListarUsuariosView l;
         try {
             l = new ListarUsuariosView();
@@ -261,13 +194,13 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(TelaPrincipalView.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+         */
     }//GEN-LAST:event_jMenuItemManterUsuarioActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        try {
+    private void btnVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarActionPerformed
+        /*        try {
 
-            int k = jList1.getSelectedIndex();
+            int k = lstImagens.getSelectedIndex();
             String path = listOfFiles[k].toString();
 
             Imagem im = new Imagem();
@@ -285,7 +218,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
                     BufferedImage imagem;
                     imagem = ManipuladorImagem.setImagemDimensao(listOfFiles[k].getAbsolutePath(), 200, 200);
                     ImageIcon ii = new ImageIcon(imagem);
-                    jLabelMostrarImagem.setIcon(ii);//mostra a imagem no label
+                    lblMostrarImagem.setIcon(ii);//mostra a imagem no label
                 }
 
             }
@@ -297,12 +230,12 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         } catch (Exception ex) {
             Logger.getLogger(TelaPrincipalView.class.getName()).log(Level.SEVERE, null, ex);
 
-        }
-    }//GEN-LAST:event_jButton3ActionPerformed
+        }*/
+    }//GEN-LAST:event_btnVisualizarActionPerformed
 
     /**
-         * @param args the command line arguments
-         */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -336,19 +269,29 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try {
-                    new TelaPrincipalView().setVisible(true);
-
-                } catch (Exception ex) {
-                    Logger.getLogger(TelaPrincipalView.class
-                            .getName()).log(Level.SEVERE, null, ex);
-                }
+                new TelaPrincipalView().setVisible(true);
             }
         });
     }
 
+    public JButton getBtnCompartilhar() {
+        return this.btnCompartilhar;
+    }
+
+    public JButton getBtnExcluir() {
+        return this.btnExcluir;
+    }
+
+    public JButton getBtnVisualizar() {
+        return this.btnVisualizar;
+    }
+
     public JButton getBtnNotificacoes() {
         return this.btnNotificacao;
+    }
+
+    public JList getLstImagens() {
+        return this.lstImagens;
     }
 
     public JMenu getMenuAdministrador() {
@@ -368,16 +311,14 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCompartilhar;
+    private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNotificacao;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnVisualizar;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabelMostrarImagem;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItemManterUsuario;
@@ -389,6 +330,8 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JToolBar.Separator jSeparator6;
     private javax.swing.JToolBar.Separator jSeparator7;
+    private javax.swing.JLabel lblMostrarImagem;
+    private javax.swing.JList<String> lstImagens;
     private javax.swing.JMenu menuAdministrador;
     private javax.swing.JMenuItem menuItemSair;
     private javax.swing.JMenu menuOpcoes;

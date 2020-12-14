@@ -61,7 +61,7 @@ public class LoginPresenter {
 
                 //caso esteja, ele entra na tela inicial do sistema
                 //se não, ele permanece na tela de login
-                TelaPrincipalPresenter pTelaPrincipal = new TelaPrincipalPresenter(usuario, "tst");
+                //TelaPrincipalPresenter pTelaPrincipal = new TelaPrincipalPresenter(usuario, "tst");
             } catch (Exception ex) {
                 Logger.getLogger(LoginPresenter.class.getName()).log(Level.SEVERE, null, ex);
             }

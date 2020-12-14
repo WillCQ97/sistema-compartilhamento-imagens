@@ -26,15 +26,15 @@ public class ConfiguracaoInicialPresenter {
         sb.append("Você também será o responsável por cadastrar os demais usuários\n");
         sb.append("no sistema.\n");
         sb.append("BOA SORTE!");
-        
+
         this.view = new ConfiguracaoInicialView();
         view.getTxtCaminho().setEnabled(false);
         JOptionPane.showMessageDialog(view, sb.toString(), "Primeira Execução", JOptionPane.INFORMATION_MESSAGE);
-        
+
         try {
             this.usuarioService = new UsuarioService();
             this.imagemService = new ImagemService();
-            
+
             view.getBtnInformarCaminho().addActionListener((ActionEvent e) -> {
                 definirDiretorioImagens();
             });
@@ -54,6 +54,10 @@ public class ConfiguracaoInicialPresenter {
         }
     }
 
+    private boolean verificarArquivoImagem(String nomeArquivo) {
+        return (nomeArquivo.endsWith(".jpg") || nomeArquivo.endsWith(".png") || nomeArquivo.endsWith(".jpeg"));
+    }
+
     private void definirDiretorioImagens() {
         int retorno = view.getJfcSeletorDiretorio().showOpenDialog(view);
 
@@ -65,7 +69,7 @@ public class ConfiguracaoInicialPresenter {
             view.getTxtCaminho().setText(diretorio);
         }
     }
-    
+
     private void efetuarCadastro() {
         String nome = view.getTxtNome().getText();
         String usuario = view.getTxtUsuario().getText();
@@ -79,10 +83,10 @@ public class ConfiguracaoInicialPresenter {
 
         } else if (!senha.equals(confirmacao)) {
             JOptionPane.showMessageDialog(view, "As senhas informadas não correspondem!");
-            
+
             view.getPswSenha().setText("");
             view.getPswConfirmarSenha().setText("");
-            
+
         } else {
             try {
                 var novoUsuario = new Usuario();
@@ -92,25 +96,30 @@ public class ConfiguracaoInicialPresenter {
                 novoUsuario.setAdmin(true);
 
                 usuarioService.salvar(novoUsuario);
-                
-                for(File arquivo : diretorioImagens.listFiles()){
-                    
+
+                for (File arquivo : diretorioImagens.listFiles()) {
+
                     String nomeArquivo = arquivo.getName();
-                    
-                    if (nomeArquivo.endsWith(".jpg") || nomeArquivo.endsWith(".png") || nomeArquivo.endsWith(".jpeg")) {
+
+                    if (verificarArquivoImagem(nomeArquivo)) {
                         imagemService.salvar(new Imagem(arquivo.getPath()));
                     }
                 }
-                
+
                 view.setVisible(false);
                 view.dispose();
                 
-                //Problemas nessa instanciação
-                //var pTelaPrincipal = new TelaPrincipalPresenter(usuario, "Administrador");
-                
+                try {
+                    var pTelaPrincipal = new TelaPrincipalPresenter(novoUsuario);
+                    
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(view, ex.getMessage(), 
+                            "Erro na tela principal", JOptionPane.ERROR_MESSAGE);
+                }
+
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(view, "Não foi possível criar novo usuário: \n"
-                        + ex.getMessage(), "Erro", + JOptionPane.ERROR_MESSAGE);
+                        + ex.getMessage(), "Erro", +JOptionPane.ERROR_MESSAGE);
             }
         }
     }
