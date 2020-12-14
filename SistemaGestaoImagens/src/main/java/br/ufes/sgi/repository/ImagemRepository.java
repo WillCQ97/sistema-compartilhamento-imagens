@@ -39,4 +39,8 @@ public class ImagemRepository {
     public Imagem getImagemById(int id) throws Exception {
         return dao.getImagemById(id);
     }
+
+    public boolean isNull() throws Exception {
+        return (dao.getAll() == null);
+    }
 }

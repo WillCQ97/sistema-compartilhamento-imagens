@@ -20,17 +20,19 @@ import java.util.logging.Logger;
  */
 public class CompartilharImagemView extends javax.swing.JInternalFrame {
 
-    public Imagem imagem;
-    public PermissaoService servicePermissao;
-    public NotificacaoService serviceNotificacao;
+    private Imagem imagem;
+    private Usuario user;
+    private PermissaoService servicePermissao;
+    private NotificacaoService serviceNotificacao;
 
     /**
      * Creates new form CompartilharImagem
      */
-    public CompartilharImagemView(Imagem imagem) throws Exception {
+    public CompartilharImagemView(Imagem imagem, Usuario user) throws Exception {
         initComponents();
         this.imagem = imagem;
         this.servicePermissao = new PermissaoService();
+        this.user = user;
     }
 
     /**
@@ -44,9 +46,9 @@ public class CompartilharImagemView extends javax.swing.JInternalFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        jButtonCompartilhar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButtonPedirPermissao = new javax.swing.JButton();
 
         setTitle("Compartilhar/Gerar Permissao");
 
@@ -82,11 +84,11 @@ public class CompartilharImagemView extends javax.swing.JInternalFrame {
             jTable1.getColumnModel().getColumn(1).setResizable(false);
         }
 
-        jButton1.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        jButton1.setText("Compartilhar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonCompartilhar.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        jButtonCompartilhar.setText("Compartilhar");
+        jButtonCompartilhar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonCompartilharActionPerformed(evt);
             }
         });
 
@@ -98,11 +100,11 @@ public class CompartilharImagemView extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton3.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        jButton3.setText("Pedir Permissão");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButtonPedirPermissao.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        jButtonPedirPermissao.setText("Pedir Permissão");
+        jButtonPedirPermissao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButtonPedirPermissaoActionPerformed(evt);
             }
         });
 
@@ -111,68 +113,72 @@ public class CompartilharImagemView extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 7, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
-                .addGap(30, 30, 30)
-                .addComponent(jButton1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonPedirPermissao)
+                        .addGap(40, 40, 40)
+                        .addComponent(jButtonCompartilhar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonPedirPermissao)
+                    .addComponent(jButtonCompartilhar)
+                    .addComponent(jButton2))
+                .addGap(15, 15, 15))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int[] selecao = jTable1.getSelectedRows();
+    private void jButtonCompartilharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCompartilharActionPerformed
+        int[] selecao = jTable1.getSelectedRows(); 
         for (int i = 0; i < selecao.length; i++) {
             try {
                 servicePermissao.gerarCompartilhamento(new Permissao(new Usuario((int) jTable1.getModel().getValueAt(selecao[i], 0)),
                         imagem, true, false, false));
                 serviceNotificacao.salvarById(new Notificacao(new Usuario((int) jTable1.getModel().getValueAt(selecao[i], 0)),
-                        "Imagem: " + imagem.getCaminho() + " compartilhada com você."));
+                        "Imagem: " + imagem.getCaminho() + " compartilhada com voce."));
             } catch (Exception ex) {
                 Logger.getLogger(CompartilharImagemView.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonCompartilharActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButtonPedirPermissaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPedirPermissaoActionPerformed
         int selecao = jTable1.getSelectedRow();
         try {
-            servicePermissao.gerarPedidoPermissao(new Permissao(new Usuario((int) jTable1.getModel().getValueAt(selecao, 0)),
+            servicePermissao.gerarPedidoPermissao(new Permissao(user,//o user simula uma permissao a ser aprovada
                     imagem, false, false, false));
             serviceNotificacao.salvarById(new Notificacao(new Usuario((int) jTable1.getModel().getValueAt(selecao, 0)),
-                    "Imagem: " + imagem.getCaminho() + " gerou um pedido der permissão."));
+                    "Imagem: " + imagem.getCaminho() + " gerou um pedido der permissão pra ser visualizada"));
         } catch (Exception ex) {
             Logger.getLogger(CompartilharImagemView.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButtonPedirPermissaoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonCompartilhar;
+    private javax.swing.JButton jButtonPedirPermissao;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables

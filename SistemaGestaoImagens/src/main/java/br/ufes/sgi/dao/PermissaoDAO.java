@@ -66,8 +66,9 @@ public class PermissaoDAO {
         try {
             String SQL = "UPDATE permissao SET compartilhar=?,"
                     + " visualizar=?, excluir = ?"
-                    + "where idUsuario = ?;"; //essa query não vai atualizar todas as imagens desse user???
-
+                    + "where (idImagem= ? and idUsuario = ?);"; //essa query não vai atualizar todas as imagens desse user???
+            ps.setInt(1, permissao.getImagem().getId());
+            ps.setInt(2, permissao.getUsuario().getId());
             ps = conn.prepareStatement(SQL);
             ps.setBoolean(1, permissao.isCompartilhar());
             ps.setBoolean(2, permissao.isVisualizar());
@@ -92,7 +93,8 @@ public class PermissaoDAO {
             ps = conn.prepareStatement("select idPermissao"
                     + "from permissao where permissao.idUsuario = ? "
                     + "and permissao.idImagem = ?;");
-            ps.setInt(1, permissao.getId());
+            ps.setInt(1, permissao.getUsuario().getId());
+            ps.setInt(2, permissao.getImagem().getId());
             rs = ps.executeQuery();
             int idPermissao = rs.getInt(1);
             Long idPermissaoFormatado = (long) idPermissao;
@@ -164,5 +166,10 @@ public class PermissaoDAO {
             ConnectionFactory.closeConnection(conn, ps);
         }
     }
+    
+    
+    
+    
+    
 
 }
