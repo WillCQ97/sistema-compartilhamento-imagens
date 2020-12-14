@@ -18,6 +18,7 @@ public class PermissaoDAO {
         if (permissao == null) {
             throw new Exception("Permissao não pode ser nulo!");
         }
+        
         try {
             String SQL = "INSERT INTO permissao (idUsuario, idImagem, compartilhar,"
                     + " excluir, visualizar)"
@@ -115,10 +116,16 @@ public class PermissaoDAO {
         try {
             ps = conn.prepareStatement("select idPermissao, idUsuario, idImagem, compartilhar, "
                     + "excluir, visualizar "
+<<<<<<< HEAD
                     + "from permissao where permissao.idUsuario = ? and permissao.idImagem = ?;");
 
             ps.setInt(1, permissao.getUsuario().getId());
             ps.setInt(2,permissao.getImagem().getId());
+=======
+                    + "from permissao where idUsuario = ? ;");
+            
+            ps.setInt(1, usuario.getId());
+>>>>>>> 96be0cd2fa5446b521aea2b1e09d03ee3e0527b5
             rs = ps.executeQuery();
 
             int idPermissao = rs.getInt(1);
@@ -129,12 +136,20 @@ public class PermissaoDAO {
             boolean visualizar = rs.getBoolean(6);
 
             UsuarioDAO usuarioDAO = new UsuarioDAO();
+<<<<<<< HEAD
             Usuario user = usuarioDAO.getByID(idUsuario); 
+=======
+            usuario = usuarioDAO.getById(idUsuario);
+>>>>>>> 96be0cd2fa5446b521aea2b1e09d03ee3e0527b5
 
             ImagemDAO imagemDAO = new ImagemDAO();
             Imagem img = imagemDAO.getImagemById(idImagem);
 
+<<<<<<< HEAD
             Permissao p = new Permissao(idPermissao, user, img, visualizar, excluir, compartilhar);
+=======
+            Permissao permissao = new Permissao(idPermissao, usuario, img, visualizar, excluir, compartilhar);
+>>>>>>> 96be0cd2fa5446b521aea2b1e09d03ee3e0527b5
 
             return permissao;
         } catch (SQLException sqle) {

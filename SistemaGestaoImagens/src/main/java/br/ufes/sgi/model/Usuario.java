@@ -9,7 +9,6 @@ public class Usuario {
     private boolean admin;
 
     public Usuario() {
-
     }
 
     public Usuario(int id) {

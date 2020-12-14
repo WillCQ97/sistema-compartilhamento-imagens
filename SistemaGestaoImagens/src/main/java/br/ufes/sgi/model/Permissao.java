@@ -2,45 +2,46 @@ package br.ufes.sgi.model;
 
 public class Permissao {
 
-    public int id;
-    public Usuario Usuario;
-    public Imagem Imagem;
-    public boolean visualizar;
-    public boolean excluir;
-    public boolean compartilhar;
+    private int id;
+    private Usuario usuario;
+    private Imagem imagem;
+    private boolean visualizar;
+    private boolean excluir;
+    private boolean compartilhar;
 
-    public Permissao(int id, Usuario Usuario, Imagem Imagem, boolean visualizar, 
+    public Permissao(Usuario usuario, Imagem imagem, boolean visualizar,
             boolean excluir, boolean compartilhar) {
-        this.id = id;
-        this.Usuario = Usuario;
-        this.Imagem = Imagem;
+        this.usuario = usuario;
+        this.imagem = imagem;
         this.visualizar = visualizar;
         this.excluir = excluir;
         this.compartilhar = compartilhar;
     }
-    public Permissao(Usuario Usuario, Imagem Imagem, boolean visualizar, 
+
+    public Permissao(int id, Usuario usuario, Imagem imagem, boolean visualizar,
             boolean excluir, boolean compartilhar) {
-        this.Usuario = Usuario;
-        this.Imagem = Imagem;
+        this.id = id;
+        this.usuario = usuario;
+        this.imagem = imagem;
         this.visualizar = visualizar;
         this.excluir = excluir;
         this.compartilhar = compartilhar;
     }
 
     public Usuario getUsuario() {
-        return Usuario;
+        return usuario;
     }
 
     public void setUsuario(Usuario idUsuario) {
-        this.Usuario = idUsuario;
+        this.usuario = idUsuario;
     }
 
     public Imagem getImagem() {
-        return Imagem;
+        return imagem;
     }
 
     public void setIdImagem(Imagem idImagem) {
-        this.Imagem = idImagem;
+        this.imagem = idImagem;
     }
 
     public int getId() {
@@ -77,8 +78,8 @@ public class Permissao {
 
     @Override
     public String toString() {
-        return "Permissao{" + "id=" + id + ", Usuario=" + Usuario + ", Imagem=" + Imagem +
-                ", visualizar=" + visualizar + ", excluir=" + excluir + ", compartilhar=" + compartilhar + '}';
+        return "Permissao{" + "id=" + id + ", Usuario=" + usuario + ", Imagem=" + imagem
+                + ", visualizar=" + visualizar + ", excluir=" + excluir + ", compartilhar=" + compartilhar + '}';
     }
 
 }

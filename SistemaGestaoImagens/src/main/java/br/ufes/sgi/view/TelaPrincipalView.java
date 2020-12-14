@@ -1,6 +1,6 @@
 package br.ufes.sgi.view;
 
-import br.ufes.sgi.exemplos.ManipularImagem;
+import br.ufes.sgi.view.imagem.ManipuladorImagem;
 import br.ufes.sgi.model.Imagem;
 import br.ufes.sgi.model.Permissao;
 import br.ufes.sgi.model.Usuario;
@@ -48,7 +48,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
 
             if (name.endsWith("jpg") || name.endsWith("png") || name.endsWith("jpeg")) {
                 BufferedImage imagem;
-                imagem = ManipularImagem.setImagemDimensao(listOfFiles[i].getAbsolutePath(), 60, 60);
+                imagem = ManipuladorImagem.setImagemDimensao(listOfFiles[i].getAbsolutePath(), 60, 60);
 
                 ImageIcon ii = new ImageIcon(imagem);
                 listModel.add(count++, ii);
@@ -56,7 +56,8 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         }
         return listModel;
     }
-
+    
+    // FIX-ME: ANALISAR ESTE CÓDIGO E REMOVELO DEPOIS
     public void preencherBanco(String path) throws Exception {
         if (serviceImagem.isNull()) {
             serviceImagem.salvar(new Imagem(path));
@@ -292,7 +293,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
 
                 if (p.isVisualizar()) {//verifica se ele pode visualizar
                     BufferedImage imagem;
-                    imagem = ManipularImagem.setImagemDimensao(listOfFiles[k].getAbsolutePath(), 200, 200);
+                    imagem = ManipuladorImagem.setImagemDimensao(listOfFiles[k].getAbsolutePath(), 200, 200);
                     ImageIcon ii = new ImageIcon(imagem);
                     jLabelMostrarImagem.setIcon(ii);//mostra a imagem no label
                 } else {//caso ela não possa visualizar

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufes.sgi.dao;
 
 import br.ufes.sgi.connection.ConnectionFactory;
@@ -14,27 +9,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-/**
- *
- * @author 55289
- */
 public class NotificacaoDAO {
 
-    private Connection conn;
-
-    public NotificacaoDAO() throws Exception {
-        try {
-            this.conn = ConnectionFactory.getConnection();
-        } catch (Exception e) {
-            throw new Exception("Erro: \n" + e.getMessage());
-        }
-    }
-
-    public NotificacaoDAO(Connection conn) {
-        this.conn = conn;
-    }
-
     public void salvarById(Notificacao notificacao) throws Exception {
+        Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
 
         if (notificacao == null) {
@@ -59,6 +37,7 @@ public class NotificacaoDAO {
     }
 
     public ArrayList<Notificacao> getNotificacaoById(int id) throws Exception {
+        Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
 
         ResultSet rs = null;
@@ -75,10 +54,9 @@ public class NotificacaoDAO {
                 int idNotificacao = rs.getInt(1);
                 int idUsuario = rs.getInt(2);
                 String descricao = rs.getString(3);
-                
+
                 UsuarioDAO usuarioDAO = new UsuarioDAO();
-                Usuario usuario = usuarioDAO.getByID(idUsuario);
-                
+                Usuario usuario = usuarioDAO.getById(idUsuario);
 
                 list.add(new Notificacao(idNotificacao, usuario, descricao));
             }
@@ -88,10 +66,10 @@ public class NotificacaoDAO {
         } finally {
             ConnectionFactory.closeConnection(conn, ps, rs);
         }
-        
-         }
-    
+    }
+
     public void excluir(Notificacao notificacao) throws Exception {
+        Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
 
         if (notificacao == null) {
@@ -106,11 +84,5 @@ public class NotificacaoDAO {
         } finally {
             ConnectionFactory.closeConnection(conn, ps);
         }
-        
     }
 }
-    
-    
-    
-    
-

@@ -22,6 +22,7 @@ public class PermissaoRepository {
         if (permissao.getImagem().getCaminho() == null) {
             throw new Exception("Imagem não pode estar com o caminho nulo!");
         }
+        
         dao.gerarCompartilhamento(permissao);
     }
 

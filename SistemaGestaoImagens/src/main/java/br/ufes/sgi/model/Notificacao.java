@@ -1,28 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufes.sgi.model;
 
-/**
- *
- * @author 55289
- */
 public class Notificacao {
 
-    public int id;
-    public Usuario usuario;
-    public String descricao;
+    private int id;
+    private Usuario usuario;
+    private String descricao;
 
-    public Notificacao(int id, Usuario Usuario, String descricao) {
+    public Notificacao(int id, Usuario usuario, String descricao) {
         this.id = id;
-        this.usuario = Usuario;
+        this.usuario = usuario;
         this.descricao = descricao;
     }
 
-    public Notificacao(Usuario Usuario, String descricao) {
-        this.usuario = Usuario;
+    public Notificacao(Usuario usuario, String descricao) {
+        this.usuario = usuario;
         this.descricao = descricao;
     }
 
