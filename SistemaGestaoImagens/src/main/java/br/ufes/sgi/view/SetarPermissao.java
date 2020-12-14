@@ -5,8 +5,14 @@
  */
 package br.ufes.sgi.view;
 
+import br.ufes.sgi.model.Notificacao;
 import br.ufes.sgi.model.Permissao;
+import br.ufes.sgi.model.Solicitacao;
+import br.ufes.sgi.service.ImagemService;
+import br.ufes.sgi.service.NotificacaoService;
 import br.ufes.sgi.service.PermissaoService;
+import br.ufes.sgi.service.SolicitacaoService;
+import br.ufes.sgi.service.UsuarioService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,16 +22,22 @@ import java.util.logging.Logger;
  */
 public class SetarPermissao extends javax.swing.JFrame {
 
-    private PermissaoService servicePermissao;
-    private Permissao permissao;
+    private SolicitacaoService solicitacaoService;
+    private PermissaoService permissaoService;
+    private Solicitacao solicitacao;
+    private NotificacaoService serviceNotificacao;
+    private UsuarioService serviceUsuario;
+    private ImagemService imagemService;
 
     /**
      * Creates new form SetarPermissao
      */
-    public SetarPermissao(Permissao permissao) throws Exception {
+    public SetarPermissao(Solicitacao solicitacao) throws Exception {
         initComponents();
-        servicePermissao = new PermissaoService();
-        permissao = permissao;
+        this.solicitacaoService = new SolicitacaoService();
+        this.solicitacao = solicitacao;
+        jLabelNome.setText(serviceUsuario.getById(solicitacao.getUsuarioSolicitante().getId()).getNome());
+        jLabelImagem.setText(imagemService.getImagemById(solicitacao.getImagem().getId()).getCaminho());
     }
 
     /**
@@ -151,11 +163,35 @@ public class SetarPermissao extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButtonCompartilharActionPerformed
 
     private void jButtonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmarActionPerformed
+
         try {
-            permissao.setCompartilhar(jRadioButtonCompartilhar.isSelected());
-            permissao.setExcluir(jRadioButtonExcluir.isSelected());
-            permissao.setVisualizar(jRadioButtonVisualizar.isSelected());
-            servicePermissao.atualizar(permissao);
+            //pegando a permissao conforme a imagem e usuario solicitante
+            Permissao permissao = permissaoService.getPermissao(solicitacao.getImagem().getId(), solicitacao.getUsuarioSolicitante().getId());
+            //caso essa permissao já exista, iremos somente edita-la
+            if (permissao != null) {
+                //setando os dados permissao
+                permissao.setCompartilhar(jRadioButtonCompartilhar.isSelected());
+                permissao.setExcluir(jRadioButtonExcluir.isSelected());
+                permissao.setVisualizar(jRadioButtonVisualizar.isSelected());
+                //criando o compartilhamento, ja que foi autorizado
+                permissaoService.gerarCompartilhamento(permissao);
+            } else {//caso ele não tenha uma permissao no banco
+
+                //ja que o usuario não tem uma permissao, então uma nova permissao é criada
+                Permissao newPermissao = new Permissao();
+                //setando os dados da permissao
+                newPermissao.setUsuario(solicitacao.getUsuarioSolicitante());
+                newPermissao.setImagem(solicitacao.getImagem());
+                permissao.setCompartilhar(jRadioButtonCompartilhar.isSelected());
+                permissao.setExcluir(jRadioButtonExcluir.isSelected());
+                permissao.setVisualizar(jRadioButtonVisualizar.isSelected());
+                //criando o compartilhamento, ja que foi autorizado
+                permissaoService.gerarCompartilhamento(permissao);
+            }
+
+            //notificando o usuário que pediu a solicitacao, que ela foi aceita
+            serviceNotificacao.salvar(new Notificacao(solicitacao.getUsuarioSolicitante(), "Solicitação:\n" + solicitacao.getDescricao() + "foi recebida e confirmada!"));
+            solicitacaoService.excluir(solicitacao.getId());
         } catch (Exception ex) {
             Logger.getLogger(SetarPermissao.class.getName()).log(Level.SEVERE, null, ex);
         }

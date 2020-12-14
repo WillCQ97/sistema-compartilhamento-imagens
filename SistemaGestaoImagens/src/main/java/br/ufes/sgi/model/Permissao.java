@@ -17,6 +17,9 @@ public class Permissao {
         this.excluir = excluir;
         this.compartilhar = compartilhar;
     }
+    public Permissao (){
+        
+    }
 
     public Permissao(int id, Usuario usuario, Imagem imagem, boolean visualizar,
             boolean excluir, boolean compartilhar) {
@@ -40,7 +43,7 @@ public class Permissao {
         return imagem;
     }
 
-    public void setIdImagem(Imagem idImagem) {
+    public void setImagem(Imagem idImagem) {
         this.imagem = idImagem;
     }
 

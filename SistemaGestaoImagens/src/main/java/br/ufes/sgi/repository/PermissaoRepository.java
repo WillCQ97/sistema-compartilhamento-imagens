@@ -49,11 +49,8 @@ public class PermissaoRepository {
         return dao.verificaPermissao(permissao);
     }
 
-    public Permissao getPermissao(Permissao permissao) throws Exception {
-        if (permissao == null) {
-            throw new Exception("Usuario não pode ser nulo!");
-        }
-        return dao.getPermissao(permissao);
+    public Permissao getPermissao(int idImagem,int idUsuario) throws Exception {
+        return dao.getPermissao(idImagem, idUsuario);
     }
 
     public void gerarPedidoPermissao(Permissao permissao) throws Exception{

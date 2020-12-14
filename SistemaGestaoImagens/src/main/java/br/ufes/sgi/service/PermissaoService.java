@@ -34,15 +34,11 @@ public class PermissaoService {
         return repository.verificaPermissao(permissao) == null;
     }
 
-    public Permissao getPermissao(Permissao permissao) throws Exception {
-        return repository.getPermissao(permissao);
+    public Permissao getPermissao(int idImagem, int idUsuario) throws Exception {
+        return repository.getPermissao(idImagem, idUsuario);
     }
 
-    // entretanto um usuário pode ter mais de uma permissão... aliás terá
-    public Permissao getPermissaoByUsuario(Permissao permissao) throws Exception {
-        return repository.getPermissao(permissao);
-
-    }
+   
 
     public void gerarPedidoPermissao(Permissao permissao) throws Exception {
         repository.gerarPedidoPermissao(permissao);

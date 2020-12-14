@@ -197,7 +197,7 @@ public class CompartilharImagemView extends javax.swing.JFrame {
             try {
                 servicePermissao.gerarCompartilhamento(new Permissao(new Usuario((int) jTable1.getModel().getValueAt(selecao[i], 0)),
                         img, true, false, false));
-                serviceNotificacao.salvarById(new Notificacao(new Usuario((int) jTable1.getModel().getValueAt(selecao[i], 0)),
+                serviceNotificacao.salvar(new Notificacao(new Usuario((int) jTable1.getModel().getValueAt(selecao[i], 0)),
                         "Imagem: " + img.getCaminho() + " compartilhada com voce."));
             } catch (Exception ex) {
                 Logger.getLogger(CompartilharImagemView.class.getName()).log(Level.SEVERE, null, ex);

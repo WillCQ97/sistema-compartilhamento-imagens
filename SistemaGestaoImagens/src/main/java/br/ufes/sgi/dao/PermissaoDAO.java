@@ -108,7 +108,7 @@ public class PermissaoDAO {
         }
     }
 
-    public Permissao getPermissao(Permissao permissao) throws Exception {
+    public Permissao getPermissao(int IdImagem,int idUsuario) throws Exception {
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -118,13 +118,13 @@ public class PermissaoDAO {
                     + "excluir, visualizar "
                     + "from permissao where permissao.idUsuario = ? and permissao.idImagem = ?;");
 
-            ps.setInt(1, permissao.getUsuario().getId());
-            ps.setInt(2, permissao.getImagem().getId());
+            ps.setInt(1, idUsuario);
+            ps.setInt(2, IdImagem);
 
             rs = ps.executeQuery();
 
             int idPermissao = rs.getInt(1);
-            int idUsuario = rs.getInt(2);
+            int idUser = rs.getInt(2);
             int idImagem = rs.getInt(3);
             boolean compartilhar = rs.getBoolean(4);
             boolean excluir = rs.getBoolean(5);
@@ -134,7 +134,7 @@ public class PermissaoDAO {
 
             Usuario usuario;
 
-            usuario = usuarioDAO.getById(idUsuario);
+            usuario = usuarioDAO.getById(idUser);
 
             ImagemDAO imagemDAO = new ImagemDAO();
             Imagem img = imagemDAO.getImagemById(idImagem);

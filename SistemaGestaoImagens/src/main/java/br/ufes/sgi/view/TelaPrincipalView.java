@@ -6,6 +6,7 @@ import br.ufes.sgi.model.Permissao;
 import br.ufes.sgi.model.Usuario;
 import br.ufes.sgi.service.ImagemService;
 import br.ufes.sgi.service.PermissaoService;
+import br.ufes.sgi.service.SolicitacaoService;
 import br.ufes.sgi.service.UsuarioService;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -27,10 +28,14 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     private File[] listOfFiles;
     private PermissaoService servicePermissao;
     private UsuarioService serviceUsuario;
+    private SolicitacaoService serviceSolicitacao;
 
     public TelaPrincipalView() throws Exception {
         initComponents();
-        this.listModel = new DefaultListModel();
+        serviceUsuario = new UsuarioService();
+        serviceSolicitacao = new SolicitacaoService();
+        servicePermissao = new PermissaoService();
+        listModel = new DefaultListModel();
         serviceImagem = new ImagemService();
         jList1 = new JList(modeloJlist(""));
     }
@@ -56,7 +61,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         }
         return listModel;
     }
-    
+
     // FIX-ME: ANALISAR ESTE CÓDIGO E REMOVELO DEPOIS
     public void preencherBanco(String path) throws Exception {
         if (serviceImagem.isNull()) {
@@ -276,7 +281,6 @@ public class TelaPrincipalView extends javax.swing.JFrame {
 
     private void jButtonVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisualizarActionPerformed
         try {
-            String solicitacao = "v";
             int k = jList1.getSelectedIndex();
             String path = listOfFiles[k].toString();
 
@@ -286,8 +290,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
                     im = imagem;
                 }
             }
-            Permissao p = new Permissao(usuario, im, true, true, true);
-            servicePermissao.getPermissao(p);
+            Permissao p = servicePermissao.getPermissao(im.getId(), usuario.getId());
 
             if (p != null) {//verifica se existe permissao
 
@@ -302,10 +305,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
                 }
 
             } else {//caso ele não tenha permissao no banco
-                Permissao novaPermissao = new Permissao(usuario, im, true, false, false);//cria a permissao deixando o cara visualizar
-                servicePermissao.gerarCompartilhamento(novaPermissao);//adiciono no banco
-                Permissao novaPermissaoBanco = servicePermissao.getPermissao(novaPermissao);//pego a permissao do banco, pra ter o id da permissao
-                new AcessoNegadoView(novaPermissaoBanco).setVisible(true);
+                
             }
 
         } catch (Exception ex) {
@@ -326,8 +326,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
                 }
             }
 
-            Permissao p = new Permissao(usuario, im, true, true, true);
-            servicePermissao.getPermissao(p);
+            Permissao p = servicePermissao.getPermissao(im.getId(), usuario.getId());
 
             if (p != null) {//verifica se existe permissao
 
@@ -339,10 +338,6 @@ public class TelaPrincipalView extends javax.swing.JFrame {
                 }
 
             }
-            Permissao novaPermissao = new Permissao(usuario, im, true, true, false);//cria a permissao deixando o cara visualizar
-            servicePermissao.gerarCompartilhamento(novaPermissao);//adiciono no banco
-            Permissao novaPermissaoBanco = servicePermissao.getPermissao(novaPermissao);//pego a permissao do banco, pra ter o id da permissao
-            new AcessoNegadoView(novaPermissaoBanco).setVisible(true);
 
         } catch (Exception ex) {
             Logger.getLogger(TelaPrincipalView.class.getName()).log(Level.SEVERE, null, ex);
@@ -360,8 +355,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
                     im = imagem;
                 }
             }
-            Permissao p = new Permissao(usuario, im, true, true, true);
-            servicePermissao.getPermissao(p);
+            Permissao p = servicePermissao.getPermissao(im.getId(), usuario.getId());
 
             if (p != null) {//verifica se existe permissao
 
@@ -372,10 +366,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
                 }
 
             } else {
-                Permissao novaPermissao = new Permissao(usuario, im, true, false, true);//cria a permissao deixando o cara visualizar
-                servicePermissao.gerarCompartilhamento(novaPermissao);//adiciono no banco
-                Permissao novaPermissaoBanco = servicePermissao.getPermissao(novaPermissao);//pego a permissao do banco, pra ter o id da permissao
-                new AcessoNegadoView(novaPermissaoBanco).setVisible(true);
+
             }
 
         } catch (Exception ex) {

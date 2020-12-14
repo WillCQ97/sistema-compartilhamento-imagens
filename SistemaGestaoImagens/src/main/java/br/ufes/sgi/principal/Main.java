@@ -124,6 +124,7 @@ public class Main {
         var uGabriel = sUsuario.getById(1);
         System.out.println(uGabriel.toString());
 
+        /*
         Permissao permissao = sPermissao.getPermissaoByUsuario(uGabriel);
         System.out.println(permissao.toString());
         
@@ -143,7 +144,7 @@ public class Main {
         System.out.println(sPermissao.getPermissaoByUsuario(uGabriel).toString());
         System.out.println(sPermissao.getPermissaoByUsuario(uWillian).toString());
         System.out.println("-------------------------------");
-        
+        */
 
     }
 
