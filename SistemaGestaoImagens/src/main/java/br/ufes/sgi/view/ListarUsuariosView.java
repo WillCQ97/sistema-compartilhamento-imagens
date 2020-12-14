@@ -256,7 +256,7 @@ public class ListarUsuariosView extends javax.swing.JFrame {
         Usuario user = new Usuario();
         user.setId(id);
         try {
-            new EditarUsuarioView(serviceUsuario.getByID(id));
+            new EditarUsuarioView(serviceUsuario.getById(id));
         } catch (Exception ex) {
             Logger.getLogger(ListarUsuariosView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -267,7 +267,7 @@ public class ListarUsuariosView extends javax.swing.JFrame {
         try {
             int select = jTable1.getSelectedRow();//pega a linha selecionada
             int id = (int) jTable1.getModel().getValueAt(select, 0);//pega o id
-            Usuario user = serviceUsuario.getByID(id);//pega o usuario com aquele id
+            Usuario user = serviceUsuario.getById(id);//pega o usuario com aquele id
             new EditarUsuarioView(user);//inicia a view de editar usuario
         } catch (Exception ex) {
             Logger.getLogger(ListarUsuariosView.class.getName()).log(Level.SEVERE, null, ex);

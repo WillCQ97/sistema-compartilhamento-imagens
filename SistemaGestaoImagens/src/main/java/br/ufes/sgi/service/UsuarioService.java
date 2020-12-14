@@ -41,16 +41,17 @@ public class UsuarioService {
             permissaoRepository.gerarCompartilhamento(permissao);
         }
     }
-    
-    public Usuario getByName(String nome) throws Exception{
+
+    public Usuario getByName(String nome) throws Exception {
         return usuarioRepository.getByName(nome);
     }
-    
-    public ArrayList<Usuario> getAllUser() throws Exception{
-        return repository.getAllUser();
+
+    public ArrayList<Usuario> getAllUser() throws Exception {
+        return usuarioRepository.getAllUser();
     }
-    public ArrayList<Usuario> getAllAdm() throws Exception{
-        return repository.getAllAdm();
+
+    public ArrayList<Usuario> getAllAdm() throws Exception {
+        return usuarioRepository.getAllAdm();
     }
 
 }

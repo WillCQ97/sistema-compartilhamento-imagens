@@ -26,28 +26,16 @@ public class ImagemService {
     }
 
     public void excluir(Permissao permissao) throws Exception {
-<<<<<<< HEAD
-        repository.excluir(permissao.getImagem());
-=======
+        imagemRepository.excluir(permissao.getImagem());
         if (!permissao.isExcluir()) {
             throw new Exception("Não tem permissão para excluir");
         }
-
         imagemRepository.excluir(permissao.getImagem());
->>>>>>> 96be0cd2fa5446b521aea2b1e09d03ee3e0527b5
         permissaoRepository.excluir(permissao);
     }
 
     public ArrayList<Imagem> getImagensByIdUsuario(Usuario usuario) throws Exception {
-<<<<<<< HEAD
-        return repository.getImagensByIdUsuario(usuario.getId());
-=======
-        if (permissaoRepository.getPermissaoByUsuario(usuario).isVisualizar()) {
-            return imagemRepository.getImagensByIdUsuario(usuario.getId());
-        }
-
-        throw new Exception("Não tem permissão para visualizar");
->>>>>>> 96be0cd2fa5446b521aea2b1e09d03ee3e0527b5
+        return imagemRepository.getImagensByIdUsuario(usuario.getId());
     }
 
     public Imagem getImagemById(int id) throws Exception {

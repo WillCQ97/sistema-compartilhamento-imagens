@@ -2,7 +2,6 @@ package br.ufes.sgi.service;
 
 import br.ufes.sgi.repository.PermissaoRepository;
 import br.ufes.sgi.model.Permissao;
-import br.ufes.sgi.model.Usuario;
 
 public class PermissaoService {
 
@@ -13,10 +12,10 @@ public class PermissaoService {
     }
 
     public void gerarCompartilhamento(Permissao permissao) throws Exception {
-        if(permissao.isCompartilhar()){
-          repository.gerarCompartilhamento(permissao);  
+        if (permissao.isCompartilhar()) {
+            repository.gerarCompartilhamento(permissao);
         }
-        
+
     }
 
     public void excluir(Permissao permissao) throws Exception {
@@ -34,16 +33,15 @@ public class PermissaoService {
     public boolean verificaPermissao(Permissao permissao) throws Exception {
         return repository.verificaPermissao(permissao) == null;
     }
-<<<<<<< HEAD
 
     public Permissao getPermissao(Permissao permissao) throws Exception {
         return repository.getPermissao(permissao);
-=======
-    
+    }
+
     // entretanto um usuário pode ter mais de uma permissão... aliás terá
-    public Permissao getPermissaoByUsuario(Usuario usuario) throws Exception {
-        return repository.getPermissaoByUsuario(usuario);
->>>>>>> 96be0cd2fa5446b521aea2b1e09d03ee3e0527b5
+    public Permissao getPermissaoByUsuario(Permissao permissao) throws Exception {
+        return repository.getPermissao(permissao);
+
     }
 
     public void gerarPedidoPermissao(Permissao permissao) throws Exception {

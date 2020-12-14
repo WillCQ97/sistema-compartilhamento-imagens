@@ -80,9 +80,6 @@ public class CompartilharImagemView extends javax.swing.JFrame {
         jButtonCompartilhar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButtonPedirPermissao = new javax.swing.JButton();
-        jRadioButtonVisualizar = new javax.swing.JRadioButton();
-        jRadioButtonCompartilhar = new javax.swing.JRadioButton();
-        jRadioButtonExcluir = new javax.swing.JRadioButton();
 
         setTitle("Compartilhar/Gerar Permissao");
 
@@ -142,15 +139,6 @@ public class CompartilharImagemView extends javax.swing.JFrame {
             }
         });
 
-        jRadioButtonVisualizar.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        jRadioButtonVisualizar.setText("Visualizar");
-
-        jRadioButtonCompartilhar.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        jRadioButtonCompartilhar.setText("Compartilhar");
-
-        jRadioButtonExcluir.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        jRadioButtonExcluir.setText("Excluir");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -166,14 +154,7 @@ public class CompartilharImagemView extends javax.swing.JFrame {
                         .addComponent(jButtonCompartilhar))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jRadioButtonVisualizar)
-                        .addGap(67, 67, 67)
-                        .addComponent(jRadioButtonCompartilhar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jRadioButtonExcluir)
-                        .addGap(9, 9, 9)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -181,12 +162,7 @@ public class CompartilharImagemView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButtonVisualizar)
-                    .addComponent(jRadioButtonCompartilhar)
-                    .addComponent(jRadioButtonExcluir))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonPedirPermissao)
                     .addComponent(jButtonCompartilhar)
@@ -253,9 +229,6 @@ public class CompartilharImagemView extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonCompartilhar;
     private javax.swing.JButton jButtonPedirPermissao;
-    private javax.swing.JRadioButton jRadioButtonCompartilhar;
-    private javax.swing.JRadioButton jRadioButtonExcluir;
-    private javax.swing.JRadioButton jRadioButtonVisualizar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
