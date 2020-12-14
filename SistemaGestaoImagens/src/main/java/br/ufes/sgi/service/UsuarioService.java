@@ -44,5 +44,12 @@ public class UsuarioService {
     public Usuario getByName(String nome) throws Exception{
         return repository.getByName(nome);
     }
+    
+    public ArrayList<Usuario> getAllUser() throws Exception{
+        return repository.getAllUser();
+    }
+    public ArrayList<Usuario> getAllAdm() throws Exception{
+        return repository.getAllAdm();
+    }
 
 }

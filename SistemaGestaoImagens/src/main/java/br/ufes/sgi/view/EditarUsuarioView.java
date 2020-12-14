@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  *
  * @author 55289
  */
-public class EditarUsuarioView extends javax.swing.JInternalFrame {
+public class EditarUsuarioView extends javax.swing.JFrame {
     
     public UsuarioService serviceUsuario;
     public Usuario user;

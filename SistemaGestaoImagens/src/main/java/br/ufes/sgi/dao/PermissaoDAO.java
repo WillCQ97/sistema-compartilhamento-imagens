@@ -59,7 +59,7 @@ public class PermissaoDAO {
 
     }
 
-    public void atualizarById(Permissao permissao) throws Exception {
+    public void atualizar(Permissao permissao) throws Exception {
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
 
@@ -107,7 +107,7 @@ public class PermissaoDAO {
         }
     }
 
-    public Permissao getPermissaoByUsuario(Usuario usuario) throws Exception {
+    public Permissao getPermissao(Permissao permissao) throws Exception {
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -115,9 +115,10 @@ public class PermissaoDAO {
         try {
             ps = conn.prepareStatement("select idPermissao, idUsuario, idImagem, compartilhar, "
                     + "excluir, visualizar "
-                    + "from permissao where permissao.idUsuario = ? ;");
+                    + "from permissao where permissao.idUsuario = ? and permissao.idImagem = ?;");
 
-            ps.setInt(1, usuario.getId());
+            ps.setInt(1, permissao.getUsuario().getId());
+            ps.setInt(2,permissao.getImagem().getId());
             rs = ps.executeQuery();
 
             int idPermissao = rs.getInt(1);
@@ -128,12 +129,12 @@ public class PermissaoDAO {
             boolean visualizar = rs.getBoolean(6);
 
             UsuarioDAO usuarioDAO = new UsuarioDAO();
-            Usuario user = usuarioDAO.getByID(idUsuario); //não compreendi isto, o método recebe um user
+            Usuario user = usuarioDAO.getByID(idUsuario); 
 
             ImagemDAO imagemDAO = new ImagemDAO();
             Imagem img = imagemDAO.getImagemById(idImagem);
 
-            Permissao permissao = new Permissao(idPermissao, user, img, visualizar, excluir, compartilhar);
+            Permissao p = new Permissao(idPermissao, user, img, visualizar, excluir, compartilhar);
 
             return permissao;
         } catch (SQLException sqle) {

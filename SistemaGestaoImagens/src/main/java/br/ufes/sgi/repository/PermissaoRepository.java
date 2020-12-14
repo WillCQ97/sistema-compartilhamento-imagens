@@ -30,9 +30,9 @@ public class PermissaoRepository {
         dao.excluir(permissao);
     }
 
-    public void atualizarById(Permissao permissao) throws Exception {
+    public void atualizar(Permissao permissao) throws Exception {
 
-        dao.atualizarById(permissao);
+        dao.atualizar(permissao);
     }
 
     public Long verificaPermissao(Permissao permissao) throws Exception {
@@ -48,11 +48,11 @@ public class PermissaoRepository {
         return dao.verificaPermissao(permissao);
     }
 
-    public Permissao getPermissaoByUsuario(Usuario usuario) throws Exception {
-        if (usuario == null) {
+    public Permissao getPermissao(Permissao permissao) throws Exception {
+        if (permissao == null) {
             throw new Exception("Usuario não pode ser nulo!");
         }
-        return dao.getPermissaoByUsuario(usuario);
+        return dao.getPermissao(permissao);
     }
 
     public void gerarPedidoPermissao(Permissao permissao) throws Exception{

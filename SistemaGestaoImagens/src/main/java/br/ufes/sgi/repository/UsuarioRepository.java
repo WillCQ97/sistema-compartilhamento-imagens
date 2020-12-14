@@ -54,4 +54,11 @@ public class UsuarioRepository {
         }
         return dao.getByName(nome);
     }
+    
+    public ArrayList<Usuario> getAllUser() throws Exception{
+        return dao.getAllUser();
+    }
+    public ArrayList<Usuario> getAllAdm() throws Exception{
+        return dao.getAllAdm();
+    }
 }

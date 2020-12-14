@@ -6,6 +6,7 @@
 package br.ufes.sgi.view;
 
 import br.ufes.sgi.model.Imagem;
+import br.ufes.sgi.model.Permissao;
 import br.ufes.sgi.model.Usuario;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,17 +15,18 @@ import java.util.logging.Logger;
  *
  * @author 55289
  */
-public class AcessoNegadoView extends javax.swing.JInternalFrame {
-    private Usuario user;
+public class AcessoNegadoView extends javax.swing.JFrame {
+
+    private Permissao permissao;
     private Imagem img;
     /**
      * Creates new form AcessoNegadoView
      */
-    public AcessoNegadoView(Usuario user, Imagem img) {
+    public AcessoNegadoView(Permissao permissao) {
         initComponents();
-        this.user = user;
-        this.img = img;
+        this.permissao = permissao;
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -85,7 +87,8 @@ public class AcessoNegadoView extends javax.swing.JInternalFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
-            new CompartilharImagemView(img,user).setVisible(true);
+
+            new CompartilharImagemView(permissao,false).setVisible(true);
         } catch (Exception ex) {
             Logger.getLogger(AcessoNegadoView.class.getName()).log(Level.SEVERE, null, ex);
         }

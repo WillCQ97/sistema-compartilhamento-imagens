@@ -71,9 +71,9 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
         jLabelMostrarImagem = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButtonCompartilhar = new javax.swing.JButton();
+        jButtonExcluir = new javax.swing.JButton();
+        jButtonVisualizar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         tbRodape = new javax.swing.JToolBar();
         jLabel1 = new javax.swing.JLabel();
@@ -107,25 +107,35 @@ public class TelaPrincipalView extends javax.swing.JFrame {
 
         jLabelMostrarImagem.setText("jLabel4");
 
-        jButton1.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        jButton1.setText("Compartilhar");
-
-        jButton2.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        jButton2.setText("Excluir");
-
-        jButton3.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
-        jButton3.setText("Visualizar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButtonCompartilhar.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        jButtonCompartilhar.setText("Compartilhar");
+        jButtonCompartilhar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButtonCompartilharActionPerformed(evt);
+            }
+        });
+
+        jButtonExcluir.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        jButtonExcluir.setText("Excluir");
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExcluirActionPerformed(evt);
+            }
+        });
+
+        jButtonVisualizar.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        jButtonVisualizar.setText("Visualizar");
+        jButtonVisualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVisualizarActionPerformed(evt);
             }
         });
 
         jDesktopPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabelMostrarImagem, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jDesktopPane1.setLayer(jButton3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jButtonCompartilhar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jButtonExcluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jButtonVisualizar, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
@@ -134,9 +144,9 @@ public class TelaPrincipalView extends javax.swing.JFrame {
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addComponent(jButton3)
+                        .addComponent(jButtonVisualizar)
                         .addGap(118, 118, 118)
-                        .addComponent(jButton1))
+                        .addComponent(jButtonCompartilhar))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
@@ -145,7 +155,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
                         .addContainerGap(19, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
+                        .addComponent(jButtonExcluir)
                         .addGap(71, 71, 71))))
         );
         jDesktopPane1Layout.setVerticalGroup(
@@ -157,9 +167,9 @@ public class TelaPrincipalView extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButtonVisualizar)
+                    .addComponent(jButtonCompartilhar)
+                    .addComponent(jButtonExcluir))
                 .addGap(0, 17, Short.MAX_VALUE))
         );
 
@@ -263,9 +273,48 @@ public class TelaPrincipalView extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItemManterUsuarioActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButtonVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVisualizarActionPerformed
         try {
+            String solicitacao = "v";
+            int k = jList1.getSelectedIndex();
+            String path = listOfFiles[k].toString();
 
+            Imagem im = new Imagem();
+            for (Imagem imagem : serviceImagem.getImagensByIdUsuario(usuario)) {
+                if (imagem.getCaminho().equals(path)) {//procura a imagem pelo path
+                    im = imagem;
+                }
+            }
+            Permissao p = new Permissao(usuario, im, true, true, true);
+            servicePermissao.getPermissao(p);
+
+            if (p != null) {//verifica se existe permissao
+
+                if (p.isVisualizar()) {//verifica se ele pode visualizar
+                    BufferedImage imagem;
+                    imagem = ManipularImagem.setImagemDimensao(listOfFiles[k].getAbsolutePath(), 200, 200);
+                    ImageIcon ii = new ImageIcon(imagem);
+                    jLabelMostrarImagem.setIcon(ii);//mostra a imagem no label
+                } else {//caso ela não possa visualizar
+                    p.setVisualizar(true);//mudo o visualizar e passo para o pedido de permissao para ser aprovado
+                    new AcessoNegadoView(p).setVisible(true);
+                }
+
+            } else {//caso ele não tenha permissao no banco
+                Permissao novaPermissao = new Permissao(usuario, im, true, false, false);//cria a permissao deixando o cara visualizar
+                servicePermissao.gerarCompartilhamento(novaPermissao);//adiciono no banco
+                Permissao novaPermissaoBanco = servicePermissao.getPermissao(novaPermissao);//pego a permissao do banco, pra ter o id da permissao
+                new AcessoNegadoView(novaPermissaoBanco).setVisible(true);
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(TelaPrincipalView.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+    }//GEN-LAST:event_jButtonVisualizarActionPerformed
+
+    private void jButtonCompartilharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCompartilharActionPerformed
+        try {
             int k = jList1.getSelectedIndex();
             String path = listOfFiles[k].toString();
 
@@ -277,31 +326,65 @@ public class TelaPrincipalView extends javax.swing.JFrame {
             }
 
             Permissao p = new Permissao(usuario, im, true, true, true);
+            servicePermissao.getPermissao(p);
 
-            if (servicePermissao.verificaPermissao(p)) {//verifica se existe permissao
+            if (p != null) {//verifica se existe permissao
 
-                if (p.isVisualizar()) {//verifica se ele pode visualizar
-                    BufferedImage imagem;
-                    imagem = ManipularImagem.setImagemDimensao(listOfFiles[k].getAbsolutePath(), 200, 200);
-                    ImageIcon ii = new ImageIcon(imagem);
-                    jLabelMostrarImagem.setIcon(ii);//mostra a imagem no label
+                if (p.isCompartilhar()) {//verifica se ele pode compartilhar
+                    new CompartilharImagemView(im, true);
+                } else {
+                    p.setCompartilhar(true);
+                    new AcessoNegadoView(p).setVisible(true);
                 }
 
             }
-            //caso ele não tenho permissao
-            else{
-                new AcessoNegadoView(usuario,im).setVisible(true);
+            Permissao novaPermissao = new Permissao(usuario, im, true, true, false);//cria a permissao deixando o cara visualizar
+            servicePermissao.gerarCompartilhamento(novaPermissao);//adiciono no banco
+            Permissao novaPermissaoBanco = servicePermissao.getPermissao(novaPermissao);//pego a permissao do banco, pra ter o id da permissao
+            new AcessoNegadoView(novaPermissaoBanco).setVisible(true);
+
+        } catch (Exception ex) {
+            Logger.getLogger(TelaPrincipalView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonCompartilharActionPerformed
+
+    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
+        try {
+            int k = jList1.getSelectedIndex();
+            String path = listOfFiles[k].toString();
+
+            Imagem im = new Imagem();
+            for (Imagem imagem : serviceImagem.getImagensByIdUsuario(usuario)) {
+                if (imagem.getCaminho().equals(path)) {//procura a imagem pelo path
+                    im = imagem;
+                }
+            }
+            Permissao p = new Permissao(usuario, im, true, true, true);
+            servicePermissao.getPermissao(p);
+
+            if (p != null) {//verifica se existe permissao
+
+                if (p.isExcluir()) {//verifica se ele pode compartilhar
+                    serviceImagem.excluir(p);
+                } else {
+                    new AcessoNegadoView(p).setVisible(true);
+                }
+
+            } else {
+                Permissao novaPermissao = new Permissao(usuario, im, true, false, true);//cria a permissao deixando o cara visualizar
+                servicePermissao.gerarCompartilhamento(novaPermissao);//adiciono no banco
+                Permissao novaPermissaoBanco = servicePermissao.getPermissao(novaPermissao);//pego a permissao do banco, pra ter o id da permissao
+                new AcessoNegadoView(novaPermissaoBanco).setVisible(true);
             }
 
         } catch (Exception ex) {
             Logger.getLogger(TelaPrincipalView.class.getName()).log(Level.SEVERE, null, ex);
-
         }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     /**
-         * @param args the command line arguments
-         */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -368,9 +451,9 @@ public class TelaPrincipalView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNotificacao;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonCompartilhar;
+    private javax.swing.JButton jButtonExcluir;
+    private javax.swing.JButton jButtonVisualizar;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

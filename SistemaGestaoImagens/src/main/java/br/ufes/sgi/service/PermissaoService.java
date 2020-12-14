@@ -27,16 +27,16 @@ public class PermissaoService {
         }
     }
 
-    public void atualizarById(Permissao permissao) throws Exception {
-        repository.atualizarById(permissao);
+    public void atualizar(Permissao permissao) throws Exception {
+        repository.atualizar(permissao);
     }
 
     public boolean verificaPermissao(Permissao permissao) throws Exception {
         return repository.verificaPermissao(permissao) == null;
     }
 
-    public Permissao getPermissaoByUsuario(Usuario usuario) throws Exception {
-        return repository.getPermissaoByUsuario(usuario);
+    public Permissao getPermissao(Permissao permissao) throws Exception {
+        return repository.getPermissao(permissao);
     }
 
     public void gerarPedidoPermissao(Permissao permissao) throws Exception {

@@ -166,5 +166,64 @@ public class UsuarioDAO {
         }
 
     }
+    
+    public ArrayList<Usuario> getAllAdm() throws Exception {
+        Connection conn = ConnectionFactory.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            ps = conn.prepareStatement("select * from usuario where usuario.admin = ?");
+            ps.setBoolean(1, true);//é 1 mesmo ou 0? surgiu essa duvida
+            rs = ps.executeQuery();
+
+            ArrayList<Usuario> list = new ArrayList<>();
+
+            while (rs.next()) {
+                int idUsuario = rs.getInt(1);
+                String usuario = rs.getString(2);
+                String senha = rs.getString(3);
+                String nome = rs.getString(4);
+                boolean admin = rs.getBoolean(5);
+
+                list.add(new Usuario(idUsuario, usuario, senha, nome, admin));
+            }
+            return list;
+        } catch (SQLException sqle) {
+            throw new Exception(sqle);
+        } finally {
+            ConnectionFactory.closeConnection(conn, ps, rs);
+        }
+    }
+    public ArrayList<Usuario> getAllUser() throws Exception {
+        Connection conn = ConnectionFactory.getConnection();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            ps = conn.prepareStatement("select * from usuario where usuario.admin = ?");
+            ps.setBoolean(1, false);//é 1 mesmo ou 0? surgiu essa duvida
+            rs = ps.executeQuery();
+
+            ArrayList<Usuario> list = new ArrayList<>();
+
+            while (rs.next()) {
+                int idUsuario = rs.getInt(1);
+                String usuario = rs.getString(2);
+                String senha = rs.getString(3);
+                String nome = rs.getString(4);
+                boolean admin = rs.getBoolean(5);
+
+                list.add(new Usuario(idUsuario, usuario, senha, nome, admin));
+            }
+            return list;
+        } catch (SQLException sqle) {
+            throw new Exception(sqle);
+        } finally {
+            ConnectionFactory.closeConnection(conn, ps, rs);
+        }
+    }
 
 }
