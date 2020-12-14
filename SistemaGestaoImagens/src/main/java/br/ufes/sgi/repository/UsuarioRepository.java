@@ -62,4 +62,16 @@ public class UsuarioRepository {
         throw new Exception("Usuário com o apelido informado não encontrado!");
     }
     
+    public ArrayList<Usuario> getAllAdministradores() throws Exception{
+        ArrayList<Usuario> administradores = new ArrayList<>();
+        
+        for (Usuario usuario: this.getAll()){
+            if(usuario.isAdmin()){
+                administradores.add(usuario);
+            }
+        }
+        
+        return administradores;
+    }
+    
 }

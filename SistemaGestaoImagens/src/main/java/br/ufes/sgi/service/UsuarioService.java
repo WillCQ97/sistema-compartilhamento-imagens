@@ -45,5 +45,9 @@ public class UsuarioService {
     public Usuario getByApelido(String apelido) throws Exception{
         return usuarioRepository.getByApelido(apelido);
     }
+    
+    public ArrayList<Usuario> getAdministradores() throws Exception{
+        return usuarioRepository.getAllAdministradores();
+    }
 
 }

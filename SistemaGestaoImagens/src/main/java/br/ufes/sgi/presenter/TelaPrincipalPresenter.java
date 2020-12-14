@@ -1,13 +1,10 @@
 package br.ufes.sgi.presenter;
 
 import br.ufes.sgi.model.Imagem;
-import br.ufes.sgi.model.Permissao;
 import br.ufes.sgi.model.Usuario;
 import br.ufes.sgi.service.ImagemService;
 import br.ufes.sgi.service.PermissaoService;
 import br.ufes.sgi.service.UsuarioService;
-import br.ufes.sgi.view.AcessoNegadoView;
-import br.ufes.sgi.view.ListarUsuariosView;
 import br.ufes.sgi.view.TelaPrincipalView;
 import br.ufes.sgi.view.imagem.ManipuladorImagem;
 import java.awt.event.ActionEvent;
@@ -114,17 +111,10 @@ public class TelaPrincipalPresenter {
     }
 
     private void manterUsuarios() {
+        new ManterUsuariosPresenter(this.usuario);
 
-        ListarUsuariosView lusuariosView;
-        try {
-            
-            lusuariosView = new ListarUsuariosView();
-            lusuariosView.setVisible(true);
-            
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(view, ex.getMessage(), "Não foi possível iniciar tela de Manter Usuários.",
-                    JOptionPane.ERROR_MESSAGE);
-        }
+        view.setVisible(false);
+        view.dispose();
     }
 
     private void renderizarImagem(Imagem imagem) {
