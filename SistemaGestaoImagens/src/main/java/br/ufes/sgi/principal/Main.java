@@ -4,6 +4,7 @@ import br.ufes.sgi.connection.ConnectionFactory;
 import br.ufes.sgi.model.Imagem;
 import br.ufes.sgi.model.Permissao;
 import br.ufes.sgi.model.Usuario;
+import br.ufes.sgi.presenter.LoginPresenter;
 import br.ufes.sgi.service.ImagemService;
 import br.ufes.sgi.service.PermissaoService;
 import br.ufes.sgi.service.UsuarioService;
@@ -52,8 +53,9 @@ public class Main {
 
     public static void main(String[] args) {
         inicializarBancoDados("configuracao-banco.sql");
-        //LoginPresenter pLogin = new LoginPresenter();
-
+        LoginPresenter pLogin = new LoginPresenter();
+        
+        /*
         try {
 
             testarDAO();
@@ -61,6 +63,7 @@ public class Main {
         } catch (Exception ex) {
             System.out.println("ERRO: " + ex.getMessage());
         }
+        */
     }
 
     private static void testarDAO() throws Exception {

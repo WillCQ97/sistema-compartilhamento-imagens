@@ -1,44 +1,73 @@
 package br.ufes.sgi.presenter;
 
+import br.ufes.sgi.service.UsuarioService;
+import br.ufes.sgi.view.ConfiguracaoInicialView;
 import br.ufes.sgi.view.LoginView;
 import java.awt.event.ActionEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class LoginPresenter {
 
-    private LoginView view;
+    private ConfiguracaoInicialView configView;
+    private LoginView loginView;
+    private UsuarioService usuarioService;
 
     public LoginPresenter() {
-        this.view = new LoginView();
 
-        view.setVisible(true);
+        try {
+            this.usuarioService = new UsuarioService();
 
-        view.getBtnEntrar().addActionListener((ActionEvent e) -> {
-            efetuarLogin();
-        });
+            if (verificarPrimeiraExecucao()) {
+                var pConfiguracaoInicial = new ConfiguracaoInicialPresenter();
 
-        view.getBtnSair().addActionListener((ActionEvent e) -> {
-            view.setVisible(false);
-            view.dispose();
-        });
+            } else {
+
+                this.loginView = new LoginView();
+                loginView.setVisible(true);
+
+                loginView.getBtnEntrar().addActionListener((ActionEvent e) -> {
+                    efetuarLogin();
+                });
+
+                loginView.getBtnSair().addActionListener((ActionEvent e) -> {
+                    loginView.setVisible(false);
+                    loginView.dispose();
+                });
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(loginView, ex.getMessage(), "Erro ao inicializar!", JOptionPane.ERROR_MESSAGE);
+        }
+
     }
 
-    public void efetuarLogin() {
-        String usuario = view.getTxtUsuario().getText();
-        String senha = view.getPswSenha().getText();
+    private boolean verificarPrimeiraExecucao() throws Exception {
+        int quantidadeUsuarios = usuarioService.getAll().size();
+
+        return quantidadeUsuarios == 0;
+    }
+
+    private void efetuarLogin() {
+        String usuario = loginView.getTxtUsuario().getText();
+        String senha = loginView.getPswSenha().getText();
 
         if (usuario.isBlank() || senha.isEmpty()) {
-            JOptionPane.showMessageDialog(view, "Por favor, informe usuário e senha!");
-            
+            JOptionPane.showMessageDialog(loginView, "Por favor, informe usuário e senha!");
+
         } else {
-            //em seguida validar no banco de dados o usuário informado
+            try {
+                //em seguida validar no banco de dados o usuário informado
 
-            //caso esteja, ele entra na tela inicial do sistema
-            //se não, ele permanece na tela de login
-            TelaPrincipalPresenter pTelaPrincipal = new TelaPrincipalPresenter(usuario, "tst");
+                //caso esteja, ele entra na tela inicial do sistema
+                //se não, ele permanece na tela de login
+                TelaPrincipalPresenter pTelaPrincipal = new TelaPrincipalPresenter(usuario, "tst");
+            } catch (Exception ex) {
+                Logger.getLogger(LoginPresenter.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-            view.setVisible(false);
-            view.dispose();
+            loginView.setVisible(false);
+            loginView.dispose();
         }
     }
 
