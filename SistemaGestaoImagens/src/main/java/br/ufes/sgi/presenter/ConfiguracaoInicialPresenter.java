@@ -14,8 +14,18 @@ public class ConfiguracaoInicialPresenter {
     private UsuarioService usuarioService;
 
     public ConfiguracaoInicialPresenter() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Detectamos que essa é a primeira execução do programa!\n");
+        sb.append("É necessário que você crie um usuário que será o administrador\n");
+        sb.append("e defina a pasta (diretório) do sistema onde estão os arquivos\n");
+        sb.append("das imagens.\n");
+        sb.append("Você também será o responsável por cadastrar os demais usuários\n");
+        sb.append("no sistema.\n");
+        sb.append("BOA SORTE!");
+        
         this.view = new ConfiguracaoInicialView();
         view.getTxtCaminho().setEnabled(false);
+        JOptionPane.showMessageDialog(view, sb.toString());
         
         try {
             this.usuarioService = new UsuarioService();
@@ -50,7 +60,8 @@ public class ConfiguracaoInicialPresenter {
             view.getTxtCaminho().setText(diretorio);
         }
     }
-
+    
+    // FIX-ME: OBSERVAÇÕES ABAIXO
     private void efetuarCadastro() {
         String nome = view.getTxtNome().getText();
         String usuario = view.getTxtUsuario().getText();
@@ -78,10 +89,12 @@ public class ConfiguracaoInicialPresenter {
 
                 usuarioService.salvar(novoUsuario);
                 
+                // AINDA TEM QUE SALVAR OS CAMINHOS DAS IMAGENS COM PERMISSAO TOTAL PARA ESSE USUÁRIO
+                
                 view.setVisible(false);
                 view.dispose();
                 
-                //instanciar a tela principal a partir daqui
+                var pTelaPrincipal = new TelaPrincipalPresenter(usuario, "Administrador");
                 
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(view, "Não foi possível criar novo usuário: \n"
