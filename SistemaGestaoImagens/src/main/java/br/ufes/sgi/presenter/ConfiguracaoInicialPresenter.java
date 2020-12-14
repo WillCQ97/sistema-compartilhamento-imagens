@@ -25,7 +25,7 @@ public class ConfiguracaoInicialPresenter {
         
         this.view = new ConfiguracaoInicialView();
         view.getTxtCaminho().setEnabled(false);
-        JOptionPane.showMessageDialog(view, sb.toString());
+        JOptionPane.showMessageDialog(view, sb.toString(), "Primeira Execução", JOptionPane.INFORMATION_MESSAGE);
         
         try {
             this.usuarioService = new UsuarioService();
@@ -45,7 +45,7 @@ public class ConfiguracaoInicialPresenter {
 
             view.setVisible(true);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(view, ex.getMessage());
+            JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -94,11 +94,12 @@ public class ConfiguracaoInicialPresenter {
                 view.setVisible(false);
                 view.dispose();
                 
-                var pTelaPrincipal = new TelaPrincipalPresenter(usuario, "Administrador");
+                //Problemas nessa instanciação
+                //var pTelaPrincipal = new TelaPrincipalPresenter(usuario, "Administrador");
                 
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(view, "Não foi possível criar novo usuário: \n"
-                        + ex.getMessage());
+                        + ex.getMessage(), "Erro", + JOptionPane.ERROR_MESSAGE);
             }
         }
     }
