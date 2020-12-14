@@ -110,11 +110,11 @@ public class ConfiguracaoInicialPresenter {
                 view.dispose();
                 
                 try {
-                    var pTelaPrincipal = new TelaPrincipalPresenter(novoUsuario);
+                    new TelaPrincipalPresenter(novoUsuario);
                     
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(view, ex.getMessage(), 
-                            "Erro na tela principal", JOptionPane.ERROR_MESSAGE);
+                            "Erro ao iniciar o programa!", JOptionPane.ERROR_MESSAGE);
                 }
 
             } catch (Exception ex) {

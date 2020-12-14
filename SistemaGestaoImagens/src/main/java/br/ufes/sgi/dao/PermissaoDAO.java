@@ -84,23 +84,22 @@ public class PermissaoDAO {
         }
     }
 
-    public long verificaPermissao(Permissao permissao) throws Exception {
+    public boolean verificarPermissao(Usuario usuario, Imagem imagem) throws Exception {
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
-
         ResultSet rs = null;
-        try {
 
+        try {
             ps = conn.prepareStatement("select idPermissao"
                     + "from permissao where permissao.idUsuario = ? "
                     + "and permissao.idImagem = ?;");
-            ps.setInt(1, permissao.getUsuario().getId());
-            ps.setInt(2, permissao.getImagem().getId());
+            ps.setInt(1, usuario.getId());
+            ps.setInt(2, imagem.getId());
             rs = ps.executeQuery();
+            
             int idPermissao = rs.getInt(1);
-            Long idPermissaoFormatado = (long) idPermissao;
-
-            return idPermissaoFormatado;
+            
+            return idPermissao == 0;
         } catch (SQLException sqle) {
             throw new Exception(sqle);
         } finally {

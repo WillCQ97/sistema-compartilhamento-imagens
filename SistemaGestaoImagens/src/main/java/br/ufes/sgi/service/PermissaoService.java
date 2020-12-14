@@ -1,5 +1,6 @@
 package br.ufes.sgi.service;
 
+import br.ufes.sgi.model.Imagem;
 import br.ufes.sgi.repository.PermissaoRepository;
 import br.ufes.sgi.model.Permissao;
 import br.ufes.sgi.model.Usuario;
@@ -31,8 +32,8 @@ public class PermissaoService {
         repository.atualizarById(permissao);
     }
 
-    public boolean verificaPermissao(Permissao permissao) throws Exception {
-        return repository.verificaPermissao(permissao) == null;
+    public boolean verificarPermissao(Usuario usuario, Imagem imagem) throws Exception {
+        return repository.verificarPermissao(usuario, imagem);
     }
     
     // entretanto um usuário pode ter mais de uma permissão... aliás terá

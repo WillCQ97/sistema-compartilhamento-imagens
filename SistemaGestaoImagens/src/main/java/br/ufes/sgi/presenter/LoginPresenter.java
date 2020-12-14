@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 
 public class LoginPresenter {
 
-    private ConfiguracaoInicialView configView;
     private LoginView loginView;
     private UsuarioService usuarioService;
 
@@ -20,7 +19,7 @@ public class LoginPresenter {
             this.usuarioService = new UsuarioService();
 
             if (verificarPrimeiraExecucao()) {
-                var pConfiguracaoInicial = new ConfiguracaoInicialPresenter();
+                new ConfiguracaoInicialPresenter();
 
             } else {
 
@@ -70,5 +69,4 @@ public class LoginPresenter {
             loginView.dispose();
         }
     }
-
 }

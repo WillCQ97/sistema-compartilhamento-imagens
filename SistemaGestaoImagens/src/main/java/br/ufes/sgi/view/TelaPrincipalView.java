@@ -1,6 +1,7 @@
 package br.ufes.sgi.view;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -57,11 +58,6 @@ public class TelaPrincipalView extends javax.swing.JFrame {
 
         btnVisualizar.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         btnVisualizar.setText("Visualizar");
-        btnVisualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVisualizarActionPerformed(evt);
-            }
-        });
 
         jDesktopPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(lblMostrarImagem, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -74,21 +70,21 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addComponent(btnVisualizar)
-                        .addGap(118, 118, 118)
-                        .addComponent(btnCompartilhar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblMostrarImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(19, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(btnVisualizar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCompartilhar)
+                        .addGap(101, 101, 101)
                         .addComponent(btnExcluir)
-                        .addGap(71, 71, 71))))
+                        .addGap(105, 105, 105))
+                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14)
+                        .addComponent(lblMostrarImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(30, Short.MAX_VALUE))))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -96,7 +92,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblMostrarImagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVisualizar)
@@ -147,11 +143,6 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jMenu2.setText("Usuário");
 
         jMenuItemManterUsuario.setText("Manter Usuário");
-        jMenuItemManterUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemManterUsuarioActionPerformed(evt);
-            }
-        });
         jMenu2.add(jMenuItemManterUsuario);
 
         menuOpcoes.add(jMenu2);
@@ -184,54 +175,6 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenuItemManterUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemManterUsuarioActionPerformed
-        /*
-        ListarUsuariosView l;
-        try {
-            l = new ListarUsuariosView();
-            l.setVisible(true);
-        } catch (Exception ex) {
-            Logger.getLogger(TelaPrincipalView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-         */
-    }//GEN-LAST:event_jMenuItemManterUsuarioActionPerformed
-
-    private void btnVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarActionPerformed
-        /*        try {
-
-            int k = lstImagens.getSelectedIndex();
-            String path = listOfFiles[k].toString();
-
-            Imagem im = new Imagem();
-            for (Imagem imagem : serviceImagem.getImagensByIdUsuario(usuario)) {
-                if (imagem.getCaminho().equals(path)) {//procura a imagem pelo path
-                    im = imagem;
-                }
-            }
-
-            Permissao p = new Permissao(usuario, im, true, true, true);
-
-            if (servicePermissao.verificaPermissao(p)) {//verifica se existe permissao
-
-                if (p.isVisualizar()) {//verifica se ele pode visualizar
-                    BufferedImage imagem;
-                    imagem = ManipuladorImagem.setImagemDimensao(listOfFiles[k].getAbsolutePath(), 200, 200);
-                    ImageIcon ii = new ImageIcon(imagem);
-                    lblMostrarImagem.setIcon(ii);//mostra a imagem no label
-                }
-
-            }
-            //caso ele não tenho permissao
-            else{
-                new AcessoNegadoView(usuario,im).setVisible(true);
-            }
-
-        } catch (Exception ex) {
-            Logger.getLogger(TelaPrincipalView.class.getName()).log(Level.SEVERE, null, ex);
-
-        }*/
-    }//GEN-LAST:event_btnVisualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -288,6 +231,10 @@ public class TelaPrincipalView extends javax.swing.JFrame {
 
     public JButton getBtnNotificacoes() {
         return this.btnNotificacao;
+    }
+    
+    public JLabel getLblMostrarImagem(){
+        return this.lblMostrarImagem;
     }
 
     public JList getLstImagens() {
