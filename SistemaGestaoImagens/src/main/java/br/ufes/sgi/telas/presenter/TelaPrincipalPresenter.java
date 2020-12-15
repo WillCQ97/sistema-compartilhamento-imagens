@@ -1,11 +1,11 @@
-package br.ufes.sgi.presenter;
+package br.ufes.sgi.telas.presenter;
 
 import br.ufes.sgi.model.Imagem;
 import br.ufes.sgi.model.Usuario;
 import br.ufes.sgi.service.ImagemService;
 import br.ufes.sgi.service.PermissaoService;
 import br.ufes.sgi.service.UsuarioService;
-import br.ufes.sgi.view.TelaPrincipalView;
+import br.ufes.sgi.telas.view.TelaPrincipalView;
 import br.ufes.sgi.view.imagem.ManipuladorImagem;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;

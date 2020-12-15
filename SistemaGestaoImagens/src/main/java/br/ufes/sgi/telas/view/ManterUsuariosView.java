@@ -1,14 +1,8 @@
-package br.ufes.sgi.view;
+package br.ufes.sgi.telas.view;
 
-import br.ufes.sgi.model.Usuario;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 public class ManterUsuariosView extends javax.swing.JFrame {
 
@@ -73,19 +67,9 @@ public class ManterUsuariosView extends javax.swing.JFrame {
 
         btnExcluir.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         btnExcluir.setText("Excluir");
-        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExcluirActionPerformed(evt);
-            }
-        });
 
         btnEditar.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         btnEditar.setText("Editar");
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
-            }
-        });
 
         btnCriar.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         btnCriar.setText("Criar");
@@ -154,64 +138,34 @@ public class ManterUsuariosView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        /*
-        int select = tblUsuarios.getSelectedRow();
-        int id = (int) tblUsuarios.getModel().getValueAt(select, 0);
-        Usuario user = new Usuario();
-        int resposta = JOptionPane.showConfirmDialog(null, "Confirma a exclusão", "Exclusão", JOptionPane.YES_NO_OPTION);
-        if (resposta > 0) {
-            user.setId(id);
-            try {
-                serviceUsuario.excluir(user);
-            } catch (Exception ex) {
-                Logger.getLogger(ManterUsuariosView.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-*/
-    }//GEN-LAST:event_btnExcluirActionPerformed
-
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-  /*      int select = tblUsuarios.getSelectedRow();
-        int id = (int) tblUsuarios.getModel().getValueAt(select, 0);
-        Usuario user = new Usuario();
-        user.setId(id);
-        try {
-            new EditarUsuarioView(serviceUsuario.getById(id));
-        } catch (Exception ex) {
-            Logger.getLogger(ManterUsuariosView.class.getName()).log(Level.SEVERE, null, ex);
-        }
-*/
-    }//GEN-LAST:event_btnEditarActionPerformed
-    
-    public JButton getBtnBuscar(){
+    public JButton getBtnBuscar() {
         return this.btnBuscar;
     }
-    
-    public JButton getBtnCriar(){
+
+    public JButton getBtnCriar() {
         return this.btnCriar;
     }
-    
-    public JButton getBtnEditar(){
+
+    public JButton getBtnEditar() {
         return this.btnEditar;
     }
-    
-    public JButton getBtnExcluir(){
+
+    public JButton getBtnExcluir() {
         return this.btnExcluir;
     }
-    
-    public JButton getBtnVoltar(){
+
+    public JButton getBtnVoltar() {
         return this.btnVoltar;
     }
-    
-    public JRadioButton getBtnAdministrador(){
+
+    public JRadioButton getBtnAdministrador() {
         return this.rbtnAdministrador;
     }
-    
-    public JTable getTblUsuarios(){
+
+    public JTable getTblUsuarios() {
         return this.tblUsuarios;
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCriar;
