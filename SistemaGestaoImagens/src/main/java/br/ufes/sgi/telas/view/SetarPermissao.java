@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufes.sgi.view;
+package br.ufes.sgi.telas.view;
 
 import br.ufes.sgi.model.Notificacao;
 import br.ufes.sgi.model.Permissao;

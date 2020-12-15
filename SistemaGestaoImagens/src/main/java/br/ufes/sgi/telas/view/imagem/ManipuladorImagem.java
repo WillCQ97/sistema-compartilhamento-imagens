@@ -1,4 +1,4 @@
-package br.ufes.sgi.view.imagem;
+package br.ufes.sgi.telas.view.imagem;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;

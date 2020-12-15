@@ -1,7 +1,9 @@
 package br.ufes.sgi.service;
 
+import br.ufes.sgi.model.Imagem;
 import br.ufes.sgi.repository.PermissaoRepository;
 import br.ufes.sgi.model.Permissao;
+import br.ufes.sgi.model.Usuario;
 
 public class PermissaoService {
 
@@ -15,7 +17,6 @@ public class PermissaoService {
         if (permissao.isCompartilhar()) {
             repository.gerarCompartilhamento(permissao);
         }
-
     }
 
     public void excluir(Permissao permissao) throws Exception {
@@ -30,15 +31,13 @@ public class PermissaoService {
         repository.atualizar(permissao);
     }
 
-    public boolean verificaPermissao(Permissao permissao) throws Exception {
-        return repository.verificaPermissao(permissao) == null;
+    public boolean verificarPermissao(Usuario usuario, Imagem imagem) throws Exception {
+        return repository.verificarPermissao(usuario, imagem);
     }
 
     public Permissao getPermissao(int idImagem, int idUsuario) throws Exception {
         return repository.getPermissao(idImagem, idUsuario);
     }
-
-   
 
     public void gerarPedidoPermissao(Permissao permissao) throws Exception {
         repository.gerarPedidoPermissao(permissao);

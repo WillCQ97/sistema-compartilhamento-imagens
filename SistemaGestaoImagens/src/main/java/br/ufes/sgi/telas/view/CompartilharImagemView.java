@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.ufes.sgi.view;
+package br.ufes.sgi.telas.view;
 
 import br.ufes.sgi.model.Imagem;
 import br.ufes.sgi.model.Notificacao;
@@ -177,13 +177,13 @@ public class CompartilharImagemView extends javax.swing.JFrame {
         DefaultTableModel modelo = (DefaultTableModel) this.jTable1.getModel();
         ArrayList<Usuario> usuarios = null;
         if (tipo) {//se for compartilhar, irá listar os usuarios comuns
-            usuarios = serviceUsuario.getAllUser();
+            //usuarios = serviceUsuario.getAllUser();
             for (Usuario users : usuarios) {
                 modelo.addRow(new Object[]{users.getId(), users.getNome()});
             }
 
         } else {// se for pedir permissao, irá listar os adm para o usuario pedir permissao
-            usuarios = serviceUsuario.getAllAdm();
+            //usuarios = serviceUsuario.getAllAdm();
             for (Usuario users : usuarios) {
                 modelo.addRow(new Object[]{users.getId(), users.getNome()});
             }

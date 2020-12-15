@@ -65,9 +65,12 @@ public class PermissaoDAO {
         PreparedStatement ps = null;
 
         try {
+            //FIX-ME: essa query não vai atualizar todas as imagens desse user???
             String SQL = "UPDATE permissao SET compartilhar=?,"
                     + " visualizar=?, excluir = ?"
-                    + "where (idImagem= ? and idUsuario = ?);"; //essa query não vai atualizar todas as imagens desse user???
+                    + "where (idImagem= ? and idUsuario = ?);";
+
+            ps = conn.prepareStatement(SQL);
             ps.setInt(1, permissao.getImagem().getId());
             ps.setInt(2, permissao.getUsuario().getId());
             ps = conn.prepareStatement(SQL);
@@ -84,23 +87,22 @@ public class PermissaoDAO {
         }
     }
 
-    public long verificaPermissao(Permissao permissao) throws Exception {
+    public boolean verificarPermissao(Usuario usuario, Imagem imagem) throws Exception {
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
-
         ResultSet rs = null;
-        try {
 
+        try {
             ps = conn.prepareStatement("select idPermissao"
                     + "from permissao where permissao.idUsuario = ? "
                     + "and permissao.idImagem = ?;");
-            ps.setInt(1, permissao.getUsuario().getId());
-            ps.setInt(2, permissao.getImagem().getId());
+            ps.setInt(1, usuario.getId());
+            ps.setInt(2, imagem.getId());
             rs = ps.executeQuery();
-            int idPermissao = rs.getInt(1);
-            Long idPermissaoFormatado = (long) idPermissao;
 
-            return idPermissaoFormatado;
+            int idPermissao = rs.getInt(1);
+
+            return idPermissao == 0;
         } catch (SQLException sqle) {
             throw new Exception(sqle);
         } finally {
@@ -108,7 +110,7 @@ public class PermissaoDAO {
         }
     }
 
-    public Permissao getPermissao(int IdImagem,int idUsuario) throws Exception {
+    public Permissao getPermissao(int IdImagem, int idUsuario) throws Exception {
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;

@@ -9,6 +9,9 @@ public class Permissao {
     private boolean excluir;
     private boolean compartilhar;
 
+    public Permissao() {
+    }
+
     public Permissao(Usuario usuario, Imagem imagem, boolean visualizar,
             boolean excluir, boolean compartilhar) {
         this.usuario = usuario;
@@ -16,9 +19,6 @@ public class Permissao {
         this.visualizar = visualizar;
         this.excluir = excluir;
         this.compartilhar = compartilhar;
-    }
-    public Permissao (){
-        
     }
 
     public Permissao(int id, Usuario usuario, Imagem imagem, boolean visualizar,

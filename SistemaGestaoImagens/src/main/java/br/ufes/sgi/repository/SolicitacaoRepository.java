@@ -1,18 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.ufes.sgi.repository;
 
 import br.ufes.sgi.dao.SolicitacaoDAO;
 import br.ufes.sgi.model.Solicitacao;
 import java.util.ArrayList;
 
-/**
- *
- * @author 55289
- */
 public class SolicitacaoRepository {
 
     private SolicitacaoDAO dao;

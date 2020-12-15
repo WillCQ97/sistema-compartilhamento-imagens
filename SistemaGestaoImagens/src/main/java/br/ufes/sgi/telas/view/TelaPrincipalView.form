@@ -4,38 +4,20 @@
   <NonVisualComponents>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="menuAdministrador">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Administrador"/>
-          </Properties>
-        </Menu>
         <Menu class="javax.swing.JMenu" name="menuOpcoes">
           <Properties>
             <Property name="text" type="java.lang.String" value="Op&#xe7;&#xf5;es"/>
           </Properties>
           <SubComponents>
-            <Menu class="javax.swing.JMenu" name="jMenu2">
+            <MenuItem class="javax.swing.JMenuItem" name="mnitManterUsuarios">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Usu&#xe1;rio"/>
+                <Property name="text" type="java.lang.String" value="Manter Usu&#xe1;rio"/>
               </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItemManterUsuario">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Manter Usu&#xe1;rio"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemManterUsuarioActionPerformed"/>
-                  </Events>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuItemSair">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Sair"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemSairActionPerformed"/>
-              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -90,25 +72,24 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jScrollPane1" min="-2" pref="329" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                          <Component id="jButtonVisualizar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
-                          <Component id="jButtonCompartilhar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                          <Component id="btnVisualizar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btnCompartilhar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
+                          <Component id="btnExcluir" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jScrollPane1" min="-2" pref="150" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                          <Component id="lblMostrarImagem" min="-2" pref="450" max="-2" attributes="0"/>
+                          <EmptySpace pref="32" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="10" max="32767" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jLabelMostrarImagem" min="-2" pref="281" max="-2" attributes="0"/>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="jButtonExcluir" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="73" max="-2" attributes="0"/>
-                          <Component id="jButtonRestaurar" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <EmptySpace pref="15" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -117,15 +98,14 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jLabelMostrarImagem" max="32767" attributes="0"/>
-                      <Component id="jScrollPane1" pref="271" max="32767" attributes="0"/>
+                      <Component id="lblMostrarImagem" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="300" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jButtonVisualizar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButtonCompartilhar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButtonExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButtonRestaurar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnVisualizar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnCompartilhar" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="17" max="32767" attributes="0"/>
               </Group>
@@ -140,72 +120,38 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JList" name="jList1">
-              <Properties>
-                <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-                  <StringArray count="5">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
-                    <StringItem index="4" value="Item 5"/>
-                  </StringArray>
-                </Property>
-              </Properties>
+            <Component class="javax.swing.JList" name="lstImagens">
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JLabel" name="jLabelMostrarImagem">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel4"/>
-          </Properties>
+        <Component class="javax.swing.JLabel" name="lblMostrarImagem">
         </Component>
-        <Component class="javax.swing.JButton" name="jButtonCompartilhar">
+        <Component class="javax.swing.JButton" name="btnCompartilhar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="sansserif" size="12" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Compartilhar"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonCompartilharActionPerformed"/>
-          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButtonExcluir">
+        <Component class="javax.swing.JButton" name="btnExcluir">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="sansserif" size="12" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Excluir"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonExcluirActionPerformed"/>
-          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButtonVisualizar">
+        <Component class="javax.swing.JButton" name="btnVisualizar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="sansserif" size="12" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Visualizar"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonVisualizarActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButtonRestaurar">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="sansserif" size="12" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Restaurar"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonRestaurarActionPerformed"/>
-          </Events>
         </Component>
       </SubComponents>
     </Container>

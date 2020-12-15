@@ -3,7 +3,7 @@ package br.ufes.sgi.model;
 public class Usuario {
 
     private int id;
-    private String usuario;
+    private String apelido;
     private String senha;
     private String nome;
     private boolean admin;
@@ -15,9 +15,16 @@ public class Usuario {
         this.id = id;
     }
 
-    public Usuario(int id, String usuario, String senha, String nome, boolean admin) {
+    public Usuario(String apelido, String senha, String nome, boolean admin) {
+        this.apelido = apelido;
+        this.senha = senha;
+        this.nome = nome;
+        this.admin = admin;
+    }
+
+    public Usuario(int id, String apelido, String senha, String nome, boolean admin) {
         this.id = id;
-        this.usuario = usuario;
+        this.apelido = apelido;
         this.senha = senha;
         this.nome = nome;
         this.admin = admin;
@@ -31,12 +38,12 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getApelido() {
+        return apelido;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setApelido(String apelido) {
+        this.apelido = apelido;
     }
 
     public String getSenha() {
@@ -65,6 +72,6 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nome=" + nome + ", usuario=" + usuario + ", senha=" + senha + ", admin=" + admin + '}';
+        return "Usuario{" + "id=" + id + ", nome=" + nome + ", usuario=" + apelido + ", senha=" + senha + ", admin=" + admin + '}';
     }
 }

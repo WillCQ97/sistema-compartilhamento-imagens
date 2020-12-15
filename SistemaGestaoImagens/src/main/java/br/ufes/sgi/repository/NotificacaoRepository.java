@@ -22,6 +22,7 @@ public class NotificacaoRepository {
     public ArrayList<Notificacao> getNotificacaoById(int id) throws Exception {
         return dao.getNotificacaoById(id);
     }
+
     public void excluir(Notificacao notificacao) throws Exception {
         dao.excluir(notificacao);
     }

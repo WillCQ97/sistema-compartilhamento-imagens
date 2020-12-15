@@ -6,7 +6,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -23,25 +23,34 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="jButtonExcluir" min="-2" pref="82" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                      <Component id="jButtonEditar" min="-2" pref="88" max="-2" attributes="0"/>
-                      <EmptySpace pref="78" max="32767" attributes="0"/>
-                      <Component id="jButtonAlterarCargo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
-                      <Component id="jButtonNovo" min="-2" pref="85" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jRadioButtonAdministrador" min="-2" max="-2" attributes="0"/>
+                      <Component id="rbtnAdministrador" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jButtonBuscar" min="-2" pref="91" max="-2" attributes="0"/>
+                      <Component id="btnBuscar" min="-2" pref="91" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
+                              <Component id="btnCriar" min="-2" pref="85" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                              <Component id="btnEditar" min="-2" pref="88" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                              <Component id="btnExcluir" min="-2" pref="82" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="btnVoltar" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jScrollPane1" min="-2" pref="567" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -54,19 +63,19 @@
               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jRadioButtonAdministrador" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButtonBuscar" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
+                  <Component id="rbtnAdministrador" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnBuscar" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="94" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jButtonEditar" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButtonExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButtonNovo" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButtonAlterarCargo" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnEditar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnExcluir" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnCriar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnVoltar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="10" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -79,14 +88,14 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="jTable1">
+        <Component class="javax.swing.JTable" name="tblUsuarios">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="4">
+              <Table columnCount="4" rowCount="0">
                 <Column editable="false" title="Id" type="java.lang.Integer"/>
-                <Column editable="false" title="Usuario" type="java.lang.String"/>
+                <Column editable="false" title="Apelido" type="java.lang.String"/>
                 <Column editable="false" title="Nome" type="java.lang.String"/>
-                <Column editable="false" title="Cargo" type="java.lang.String"/>
+                <Column editable="false" title="Tipo de Usu&#xe1;rio" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -120,49 +129,37 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="jButtonExcluir">
+    <Component class="javax.swing.JButton" name="btnExcluir">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="sansserif" size="12" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Excluir"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonExcluirActionPerformed"/>
-      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButtonEditar">
+    <Component class="javax.swing.JButton" name="btnEditar">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="sansserif" size="12" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Editar"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonEditarActionPerformed"/>
-      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButtonNovo">
+    <Component class="javax.swing.JButton" name="btnCriar">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="sansserif" size="12" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Novo"/>
+        <Property name="text" type="java.lang.String" value="Criar"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNovoActionPerformed"/>
-      </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="jRadioButtonAdministrador">
+    <Component class="javax.swing.JRadioButton" name="rbtnAdministrador">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="sansserif" size="12" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Administrador"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonAdministradorActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
@@ -172,27 +169,18 @@
         <Property name="text" type="java.lang.String" value="Buscar por:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButtonBuscar">
+    <Component class="javax.swing.JButton" name="btnBuscar">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="sansserif" size="12" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Buscar"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBuscarActionPerformed"/>
-      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButtonAlterarCargo">
+    <Component class="javax.swing.JButton" name="btnVoltar">
       <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="sansserif" size="12" style="1"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Alterar Cargo"/>
+        <Property name="text" type="java.lang.String" value="Voltar"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAlterarCargoActionPerformed"/>
-      </Events>
     </Component>
   </SubComponents>
 </Form>

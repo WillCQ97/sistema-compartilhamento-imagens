@@ -1,19 +1,23 @@
-package br.ufes.sgi.presenter;
+package br.ufes.sgi.telas.presenter;
 
+import br.ufes.sgi.model.Imagem;
 import br.ufes.sgi.model.Usuario;
+import br.ufes.sgi.service.ImagemService;
 import br.ufes.sgi.service.UsuarioService;
-import br.ufes.sgi.view.ConfiguracaoInicialView;
+import br.ufes.sgi.telas.view.EfetuarConfiguracaoView;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-public class ConfiguracaoInicialPresenter {
+public class EfetuarConfiguracaoPresenter {
 
-    private ConfiguracaoInicialView view;
+    private EfetuarConfiguracaoView view;
     private UsuarioService usuarioService;
+    private ImagemService imagemService;
+    private File diretorioImagens;
 
-    public ConfiguracaoInicialPresenter() {
+    public EfetuarConfiguracaoPresenter() {
         StringBuilder sb = new StringBuilder();
         sb.append("Detectamos que essa é a primeira execução do programa!\n");
         sb.append("É necessário que você crie um usuário que será o administrador\n");
@@ -22,14 +26,15 @@ public class ConfiguracaoInicialPresenter {
         sb.append("Você também será o responsável por cadastrar os demais usuários\n");
         sb.append("no sistema.\n");
         sb.append("BOA SORTE!");
-        
-        this.view = new ConfiguracaoInicialView();
+
+        this.view = new EfetuarConfiguracaoView();
         view.getTxtCaminho().setEnabled(false);
         JOptionPane.showMessageDialog(view, sb.toString(), "Primeira Execução", JOptionPane.INFORMATION_MESSAGE);
-        
+
         try {
             this.usuarioService = new UsuarioService();
-            
+            this.imagemService = new ImagemService();
+
             view.getBtnInformarCaminho().addActionListener((ActionEvent e) -> {
                 definirDiretorioImagens();
             });
@@ -49,58 +54,67 @@ public class ConfiguracaoInicialPresenter {
         }
     }
 
+    private boolean verificarArquivoImagem(String nomeArquivo) {
+        return (nomeArquivo.endsWith(".jpg") || nomeArquivo.endsWith(".png") || nomeArquivo.endsWith(".jpeg"));
+    }
+
     private void definirDiretorioImagens() {
         int retorno = view.getJfcSeletorDiretorio().showOpenDialog(view);
 
         if (retorno == JFileChooser.APPROVE_OPTION) {
 
-            File arquivo = view.getJfcSeletorDiretorio().getSelectedFile();
-            String diretorio = arquivo.getPath();
+            diretorioImagens = view.getJfcSeletorDiretorio().getSelectedFile();
+            String diretorio = diretorioImagens.getPath();
 
             view.getTxtCaminho().setText(diretorio);
         }
     }
-    
-    // FIX-ME: OBSERVAÇÕES ABAIXO
+
     private void efetuarCadastro() {
         String nome = view.getTxtNome().getText();
-        String usuario = view.getTxtUsuario().getText();
+        String apelido = view.getTxtApelido().getText();
         String senha = view.getPswSenha().getText();
         String confirmacao = view.getPswConfirmarSenha().getText();
         String caminho = view.getTxtCaminho().getText();
 
-        if (nome.isBlank() || usuario.isBlank() || senha.isBlank() || confirmacao.isBlank() || caminho.isBlank()) {
+        if (nome.isBlank() || apelido.isBlank() || senha.isBlank() || confirmacao.isBlank() || caminho.isBlank()) {
 
             JOptionPane.showMessageDialog(view, "Os campos são de preenchimento obrigatório!");
 
         } else if (!senha.equals(confirmacao)) {
             JOptionPane.showMessageDialog(view, "As senhas informadas não correspondem!");
-            
+
             view.getPswSenha().setText("");
             view.getPswConfirmarSenha().setText("");
-            
+
         } else {
             try {
-                var novoUsuario = new Usuario();
-                novoUsuario.setNome(nome);
-                novoUsuario.setUsuario(usuario);
-                novoUsuario.setSenha(senha);
-                novoUsuario.setAdmin(true);
-
+                var novoUsuario = new Usuario(apelido, senha, nome, true);
                 usuarioService.salvar(novoUsuario);
-                
-                // AINDA TEM QUE SALVAR OS CAMINHOS DAS IMAGENS COM PERMISSAO TOTAL PARA ESSE USUÁRIO
-                
-                
+
+                for (File arquivo : diretorioImagens.listFiles()) {
+
+                    String nomeArquivo = arquivo.getName();
+
+                    if (verificarArquivoImagem(nomeArquivo)) {
+                        imagemService.salvar(new Imagem(arquivo.getPath()));
+                    }
+                }
+
                 view.setVisible(false);
                 view.dispose();
                 
-                //Problemas nessa instanciação
-                //var pTelaPrincipal = new TelaPrincipalPresenter(usuario, "Administrador");
-                
+                try {
+                    new TelaPrincipalPresenter(novoUsuario);
+                    
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(view, ex.getMessage(), 
+                            "Erro ao iniciar o programa!", JOptionPane.ERROR_MESSAGE);
+                }
+
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(view, "Não foi possível criar novo usuário: \n"
-                        + ex.getMessage(), "Erro", + JOptionPane.ERROR_MESSAGE);
+                        + ex.getMessage(), "Erro", +JOptionPane.ERROR_MESSAGE);
             }
         }
     }

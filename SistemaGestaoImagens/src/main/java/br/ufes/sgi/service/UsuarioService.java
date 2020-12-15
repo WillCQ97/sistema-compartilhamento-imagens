@@ -42,16 +42,12 @@ public class UsuarioService {
         }
     }
 
-    public Usuario getByName(String nome) throws Exception {
-        return usuarioRepository.getByName(nome);
+    public Usuario getByApelido(String apelido) throws Exception {
+        return usuarioRepository.getByApelido(apelido);
     }
 
-    public ArrayList<Usuario> getAllUser() throws Exception {
-        return usuarioRepository.getAllUser();
+    public ArrayList<Usuario> getAdministradores() throws Exception {
+        return usuarioRepository.getAllAdministradores();
     }
-
-    public ArrayList<Usuario> getAllAdm() throws Exception {
-        return usuarioRepository.getAllAdm();
-    }
-
+    
 }
