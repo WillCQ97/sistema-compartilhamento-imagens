@@ -34,11 +34,15 @@ public class ManterUsuariosPresenter {
             });
 
             view.getBtnCriar().addActionListener((ActionEvent e) -> {
-                //new CriarEditarUsuarioPresenter();
+                criarUsuario();
             });
 
             view.getBtnBuscar().addActionListener((ActionEvent e) -> {
                 preencherTabela();
+            });
+
+            view.getBtnEditar().addActionListener((ActionEvent e) -> {
+                editarUsuario();
             });
 
             view.getBtnExcluir().addActionListener((ActionEvent e) -> {
@@ -96,6 +100,42 @@ public class ManterUsuariosPresenter {
         return usuarioService.getAdministradores().size() > 1;
     }
 
+    private void criarUsuario() {
+        new CriarEditarUsuarioPresenter(this.usuarioAtual, null);
+        view.setVisible(false);
+        view.dispose();
+    }
+
+    private void editarUsuario() {
+        try {
+            JTable tblUsuarios = view.getTblUsuarios();
+
+            int select = tblUsuarios.getSelectedRow();
+            int id = (int) tblUsuarios.getModel().getValueAt(select, 0);
+
+            Usuario usuario = usuarioService.getById(id);
+
+            StringBuilder sb = new StringBuilder();
+            sb.append(usuario.getId()).append(',')
+                    .append(usuario.getNome()).append(',')
+                    .append(usuario.getApelido()).append(',')
+                    .append(usuario.getSenha()).append(',')
+                    .append(usuario.isAdmin());
+
+            new CriarEditarUsuarioPresenter(usuarioAtual, sb.toString());
+
+            view.setVisible(false);
+            view.dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(view, ex.getMessage(),
+                    "Erro ao carregar edição do usuário!", JOptionPane.ERROR_MESSAGE);
+        }
+
+        view.setVisible(false);
+        view.dispose();
+
+    }
+
     private void excluirUsuario() {
         try {
             JTable tblUsuarios = view.getTblUsuarios();
@@ -106,15 +146,13 @@ public class ManterUsuariosPresenter {
             int resposta = JOptionPane.showConfirmDialog(null, "Confirma a exclusão",
                     "Exclusão", JOptionPane.YES_NO_OPTION);
 
-            if (resposta > 0) {
+            if (resposta == JOptionPane.YES_OPTION) {
                 Usuario usuario = usuarioService.getById(id);
-                
+
                 if (!usuario.isAdmin() || usuario.isAdmin() && verificarQuantidadeAdministradores()) {
-                    //permite a exclusao se for usuário comum, ou se for admim caso haja mais de um
-                    //deve haver no mínimo um admin cadastrado
                     usuarioService.excluir(usuario);
                 } else {
-                    throw new Exception("Deve haver mais de um usuário administrador!");
+                    throw new Exception("Deve haver no mínimo um usuário administrador cadastrado!");
                 }
             }
 
