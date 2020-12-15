@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 public class PermissaoDAO {
 
-    public void gerarCompartilhamento(Permissao permissao) throws Exception {
+    public void salvarPermissao(Permissao permissao) throws Exception {
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
 
@@ -101,8 +101,11 @@ public class PermissaoDAO {
             ps.setInt(2, imagem.getId());
 
             rs = ps.executeQuery();
-
-            return rs.getRow() != 0;
+            int cont = 0;
+            while (rs.next()) {
+                cont++;
+            }
+            return cont != 0;
 
         } catch (SQLException sqle) {
             throw new Exception(sqle);
@@ -111,7 +114,7 @@ public class PermissaoDAO {
         }
     }
 
-    public Permissao getPermissao(int IdImagem, int idUsuario) throws Exception {
+    public Permissao getPermissao(int idUsuario, int IdImagem) throws Exception {
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;

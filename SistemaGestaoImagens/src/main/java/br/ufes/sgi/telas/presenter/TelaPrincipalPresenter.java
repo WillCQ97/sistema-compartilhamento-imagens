@@ -2,6 +2,7 @@ package br.ufes.sgi.telas.presenter;
 
 import br.ufes.sgi.model.Imagem;
 import br.ufes.sgi.model.Permissao;
+import br.ufes.sgi.model.Solicitacao;
 import br.ufes.sgi.model.Usuario;
 import br.ufes.sgi.service.ImagemService;
 import br.ufes.sgi.service.PermissaoService;
@@ -19,19 +20,19 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 
 public class TelaPrincipalPresenter {
-    
+
     private TelaPrincipalView view;
-    
+
     private Usuario usuarioAtual;
     private ImagemService imagemService;
     private PermissaoService permissaoService;
     private SolicitacaoService solicitacaoService;
     private UsuarioService usuarioService;
-    
+
     public TelaPrincipalPresenter(Usuario usuarioAtual) {
         this.usuarioAtual = usuarioAtual;
         this.view = new TelaPrincipalView();
-        
+
         try {
             this.imagemService = new ImagemService();
             this.usuarioService = new UsuarioService();
@@ -39,48 +40,50 @@ public class TelaPrincipalPresenter {
             this.solicitacaoService = new SolicitacaoService();
             
             view.getTxtNomeUsuario().setText(usuarioAtual.getNome());
-            
+
             this.configurarOpcoesPorTipoUsuario();
 
             //adicionar um método de espera aqui ou não kk
             this.carregarListaImagens();
-            
+
             view.getBtnVisualizar().addActionListener((ActionEvent e) -> {
                 visualizarImagem();
             });
-            
+
             view.getBtnCompartilhar().addActionListener((ActionEvent e) -> {
                 compartilharImagem();
             });
-            
+
             view.getBtnExcluir().addActionListener((ActionEvent e) -> {
                 excluirImagem();
             });
-            
+
             view.getLstImagens().addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mouseClicked(java.awt.event.MouseEvent evt) {
-                    atualizaBotoesPorImagem();
+                    if (!usuarioAtual.isAdmin()) {
+                        atualizaBotoesPorPermissaoPorImagem();
+                    }
                 }
             });
-            
+
             view.getMenuItemManterUsuarios().addActionListener((ActionEvent e) -> {
                 manterUsuarios();
             });
-            
+
             view.getMenuItemSair().addActionListener((ActionEvent e) -> {
                 view.setVisible(false);
                 view.dispose();
             });
-            
+
             view.setVisible(true);
-            
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(view, ex.getMessage(), "Ocorreu um erro!", JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }
-    
+
     private void configurarOpcoesPorTipoUsuario() {
         if (usuarioAtual.isAdmin()) {
             view.getTxtTipoUsuario().setText("Administrador");
@@ -93,115 +96,113 @@ public class TelaPrincipalPresenter {
         }
     }
 
-    private void atualizaBotoesPorImagem() {
+    private Imagem obterImagemSelecionada() throws Exception {
+        JList lstImagens = view.getLstImagens();
+
+        int posicaoImagem = lstImagens.getSelectedIndex();
+        return imagemService.getImagemByIndex(posicaoImagem);
+    }
+
+    private void atualizaBotoesPorPermissaoPorImagem() {
         try {
-            JList lstImagens = view.getLstImagens();
-            
-            int posicaoImagem = lstImagens.getSelectedIndex();
-            Imagem imagem = imagemService.getImagemByIndex(posicaoImagem);
-            
+            Imagem imagem = obterImagemSelecionada();
+            view.getLblMostrarImagem().setIcon(null);
+
             if (permissaoService.verificarPermissao(usuarioAtual, imagem)) {
                 Permissao p = permissaoService.getPermissao(usuarioAtual.getId(), imagem.getId());
                 view.getBtnVisualizar().setEnabled(p.isVisualizar());
                 view.getBtnCompartilhar().setEnabled(p.isCompartilhar());
                 view.getBtnExcluir().setEnabled(p.isExcluir());
-                
+
             } else {
-                throw new Exception("Você não possui permissão para a imagem!\n Favor solicitar à algum Administrador!");
+
+                view.setEnabled(false);
+                String mensagem = "Você não possui permissões para esta imagem!\n"
+                        + "Você deseja solicitar permissao?\n";
+
+                int resposta = JOptionPane.showConfirmDialog(view, mensagem,
+                        "Acesso Negado", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+                if (resposta == JOptionPane.YES_OPTION) {
+                    solicitarAcesso();
+                }
+
+                view.setEnabled(true);
+
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(view, ex.getMessage(), "Erro ao verificar permissões para imagem selecionada!",
                     JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void carregarListaImagens() {
         DefaultListModel listModel = new DefaultListModel();
         JList listaImagens = view.getLstImagens();
-        
+
         try {
-            
+
             int count = 0;
             for (Imagem imagem : imagemService.getAll()) {
                 BufferedImage buffImage;
                 buffImage = ManipuladorImagem.setImagemDimensao(imagem.getCaminho(), 100, 100);
-                
+
                 ImageIcon icon = new ImageIcon(buffImage);
                 listModel.add(count++, icon);
             }
-            
+
             listaImagens.setModel(listModel);
-            
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(view, ex.getMessage(), "Não foi possível obter a lista de imagens.",
                     JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     private void manterUsuarios() {
         new ManterUsuariosPresenter(this.usuarioAtual);
-        
+
         view.setVisible(false);
         view.dispose();
     }
-    
+
     private void renderizarImagem(Imagem imagem) {
         BufferedImage buffImage;
         buffImage = ManipuladorImagem.setImagemDimensao(imagem.getCaminho(), 450, 450);
-        
+
         ImageIcon imageIcon = new ImageIcon(buffImage);
         view.getLblMostrarImagem().setIcon(imageIcon);
     }
-    
+
     private void visualizarImagem() {
         try {
-            JList lstImagens = view.getLstImagens();
-            
-            int posicaoImagem = lstImagens.getSelectedIndex();
-            if (posicaoImagem == -1) {
-                throw new Exception("Selecione uma imagem e tente novamente!");
-            }
-            
-            Imagem imagem = imagemService.getImagemByIndex(posicaoImagem);
-            
-            if (usuarioAtual.isAdmin()) {
-                this.renderizarImagem(imagem);
-            } else {
-                if (permissaoService.verificarPermissao(usuarioAtual, imagem)) {
-                    Permissao p = permissaoService.getPermissao(usuarioAtual.getId(), imagem.getId());
-                    if (p.isVisualizar()) {
-                        this.renderizarImagem(imagem);
-                    }
-                } else {
-                    
-                    view.setEnabled(false);
-                    String mensagem = "Você não tem permissão para visualizar esta imagem!\n"
-                            + "Você deseja solicitar permissao?\n";
-                    
-                    int resposta = JOptionPane.showConfirmDialog(view, mensagem,
-                            "Acesso Negado", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                    
-                    if (resposta == JOptionPane.YES_OPTION) {
-                        solicitarAcesso();
-                    }
-                    
-                    view.setEnabled(true);
-                }
-            }
+            Imagem imagem = obterImagemSelecionada();
+            this.renderizarImagem(imagem);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(view, ex);
+            JOptionPane.showMessageDialog(view, "Erro ao renderizar imagem:\n" + ex.getMessage());
         }
     }
-    
+
     private void solicitarAcesso() {
-        //processa a solicitação
+        try {
+            //iniciar a presenter com os administradores
+
+        } catch (Exception e) {
+
+        }
     }
-    
+
     private void compartilharImagem() {
-        
+        try {
+            new ListarUsuariosPresenter(usuarioAtual, ListarUsuariosEnum.COMPARTILHAR, obterImagemSelecionada());
+            view.setVisible(false);
+            view.dispose();
+        } catch (Exception ex) {
+            Logger.getLogger(TelaPrincipalPresenter.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+
     private void excluirImagem() {
-        
+
     }
 }

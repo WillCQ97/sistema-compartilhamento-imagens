@@ -13,7 +13,7 @@ public class PermissaoRepository {
         this.dao = new PermissaoDAO();
     }
 
-    public void gerarCompartilhamento(Permissao permissao) throws Exception {
+    public void salvarPermissao(Permissao permissao) throws Exception {
         if (permissao.getUsuario() == null) {
             throw new Exception("Usuario não pode estar nulo!");
         }
@@ -24,7 +24,7 @@ public class PermissaoRepository {
             throw new Exception("Imagem não pode estar com o caminho nulo!");
         }
 
-        dao.gerarCompartilhamento(permissao);
+        dao.salvarPermissao(permissao);
     }
 
     public void excluir(Permissao permissao) throws Exception {
@@ -47,8 +47,8 @@ public class PermissaoRepository {
         return dao.verificarPermissao(usuario, imagem);
     }
 
-    public Permissao getPermissao(int idImagem, int idUsuario) throws Exception {
-        return dao.getPermissao(idImagem, idUsuario);
+    public Permissao getPermissao(int idUsuario, int idImagem) throws Exception {
+        return dao.getPermissao(idUsuario, idImagem);
     }
 
     public void gerarPedidoPermissao(Permissao permissao) throws Exception {

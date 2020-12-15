@@ -191,7 +191,7 @@ public class SetarPermissao extends javax.swing.JFrame {
                 permissao.setExcluir(jRadioButtonExcluir.isSelected());
                 permissao.setVisualizar(jRadioButtonVisualizar.isSelected());
                 //criando o compartilhamento, ja que foi autorizado
-                permissaoService.gerarCompartilhamento(permissao);
+                permissaoService.salvarPermissao(permissao);
             } else {//caso ele não tenha uma permissao no banco
 
                 //ja que o usuario não tem uma permissao, então uma nova permissao é criada
@@ -203,7 +203,7 @@ public class SetarPermissao extends javax.swing.JFrame {
                 permissao.setExcluir(jRadioButtonExcluir.isSelected());
                 permissao.setVisualizar(jRadioButtonVisualizar.isSelected());
                 //criando o compartilhamento, ja que foi autorizado
-                permissaoService.gerarCompartilhamento(permissao);
+                permissaoService.salvarPermissao(permissao);
             }
 
             //notificando o usuário que pediu a solicitacao, que ela foi aceita

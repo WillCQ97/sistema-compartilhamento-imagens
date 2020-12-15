@@ -47,4 +47,9 @@ public class Imagem implements ImagemCommandMemento {
         this.caminho = caminho;
     }
 
+    @Override
+    public String toString() {
+        return "Imagem{" + "id=" + id + ", caminho=" + caminho + '}';
+    }
+
 }

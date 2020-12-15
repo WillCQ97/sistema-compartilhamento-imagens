@@ -13,10 +13,8 @@ public class PermissaoService {
         this.repository = new PermissaoRepository();
     }
 
-    public void gerarCompartilhamento(Permissao permissao) throws Exception {
-        if (permissao.isCompartilhar()) {
-            repository.gerarCompartilhamento(permissao);
-        }
+    public void salvarPermissao(Permissao permissao) throws Exception {
+        repository.salvarPermissao(permissao);
     }
 
     public void excluir(Permissao permissao) throws Exception {
@@ -35,8 +33,8 @@ public class PermissaoService {
         return repository.verificarPermissao(usuario, imagem);
     }
 
-    public Permissao getPermissao(int idImagem, int idUsuario) throws Exception {
-        return repository.getPermissao(idImagem, idUsuario);
+    public Permissao getPermissao(int idUsuario, int idImagem) throws Exception {
+        return repository.getPermissao(idUsuario, idImagem);
     }
 
     public void gerarPedidoPermissao(Permissao permissao) throws Exception {

@@ -38,7 +38,7 @@ public class UsuarioService {
 
     public void compartilharImagem(Permissao permissao) throws Exception {
         if (permissao.isCompartilhar()) {
-            permissaoRepository.gerarCompartilhamento(permissao);
+            permissaoRepository.salvarPermissao(permissao);
         }
     }
 
@@ -49,5 +49,8 @@ public class UsuarioService {
     public ArrayList<Usuario> getAdministradores() throws Exception {
         return usuarioRepository.getAllAdministradores();
     }
-    
+
+    public ArrayList<Usuario> getUsuariosComuns() throws Exception {
+        return usuarioRepository.getUsuariosComuns();
+    }
 }

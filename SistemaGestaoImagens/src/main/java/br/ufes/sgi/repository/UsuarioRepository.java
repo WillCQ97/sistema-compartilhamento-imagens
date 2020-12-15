@@ -74,4 +74,16 @@ public class UsuarioRepository {
         return administradores;
     }
 
+    public ArrayList<Usuario> getUsuariosComuns() throws Exception {
+        ArrayList<Usuario> usuarios = new ArrayList<>();
+
+        for (Usuario usuario : this.getAll()) {
+            if (!usuario.isAdmin()) {
+                usuarios.add(usuario);
+            }
+        }
+
+        return usuarios;
+    }
+
 }
