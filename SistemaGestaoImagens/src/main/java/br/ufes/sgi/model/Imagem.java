@@ -1,6 +1,8 @@
 package br.ufes.sgi.model;
 
-public class Imagem {
+import br.ufes.sgi.command.ImagemCommandMemento;
+
+public class Imagem implements ImagemCommandMemento {
 
     private int id;
     private String caminho;
@@ -9,8 +11,20 @@ public class Imagem {
         this.id = id;
         this.caminho = caminho;
     }
-    public Imagem(){
-        
+
+    @Override
+    public void restaurar(ImagemMemento memento) {
+        this.id = memento.getId();
+        this.caminho = memento.getCaminho();
+    }
+
+    @Override
+    public ImagemMemento criar() {
+        return new ImagemMemento(this.id, this.caminho);
+    }
+
+    public Imagem() {
+
     }
 
     public Imagem(String caminho) {
@@ -31,11 +45,6 @@ public class Imagem {
 
     public void setCaminho(String caminho) {
         this.caminho = caminho;
-    }
-
-    @Override
-    public String toString() {
-        return "Imagem{" + "id=" + id + ", caminho=" + caminho + '}';
     }
 
 }

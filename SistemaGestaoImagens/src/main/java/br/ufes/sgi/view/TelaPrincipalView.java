@@ -1,5 +1,6 @@
 package br.ufes.sgi.view;
 
+import br.ufes.sgi.memento.ZeladorImagem;
 import br.ufes.sgi.view.imagem.ManipuladorImagem;
 import br.ufes.sgi.model.Imagem;
 import br.ufes.sgi.model.Permissao;
@@ -18,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class TelaPrincipalView extends javax.swing.JFrame {
@@ -29,6 +31,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     private PermissaoService servicePermissao;
     private UsuarioService serviceUsuario;
     private SolicitacaoService serviceSolicitacao;
+    private ZeladorImagem mementoZelador;
 
     public TelaPrincipalView() throws Exception {
         initComponents();
@@ -38,6 +41,8 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         listModel = new DefaultListModel();
         serviceImagem = new ImagemService();
         jList1 = new JList(modeloJlist(""));
+        mementoZelador = ZeladorImagem.getInstancia();
+        jButtonRestaurar.setVisible(false);
     }
 
     private DefaultListModel modeloJlist(String path) throws Exception {
@@ -80,6 +85,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
         jButtonCompartilhar = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
         jButtonVisualizar = new javax.swing.JButton();
+        jButtonRestaurar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         tbRodape = new javax.swing.JToolBar();
         jLabel1 = new javax.swing.JLabel();
@@ -137,32 +143,41 @@ public class TelaPrincipalView extends javax.swing.JFrame {
             }
         });
 
+        jButtonRestaurar.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        jButtonRestaurar.setText("Restaurar");
+        jButtonRestaurar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRestaurarActionPerformed(evt);
+            }
+        });
+
         jDesktopPane1.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jLabelMostrarImagem, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jButtonCompartilhar, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jButtonExcluir, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane1.setLayer(jButtonVisualizar, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane1.setLayer(jButtonRestaurar, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
         jDesktopPane1.setLayout(jDesktopPane1Layout);
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addComponent(jButtonVisualizar)
-                        .addGap(118, 118, 118)
-                        .addComponent(jButtonCompartilhar))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jDesktopPane1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelMostrarImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(19, Short.MAX_VALUE))
+                        .addGap(36, 36, 36)
+                        .addComponent(jButtonVisualizar)
+                        .addGap(78, 78, 78)
+                        .addComponent(jButtonCompartilhar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabelMostrarImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonExcluir)
-                        .addGap(71, 71, 71))))
+                        .addGap(73, 73, 73)
+                        .addComponent(jButtonRestaurar)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
         jDesktopPane1Layout.setVerticalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,7 +190,8 @@ public class TelaPrincipalView extends javax.swing.JFrame {
                 .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonVisualizar)
                     .addComponent(jButtonCompartilhar)
-                    .addComponent(jButtonExcluir))
+                    .addComponent(jButtonExcluir)
+                    .addComponent(jButtonRestaurar))
                 .addGap(0, 17, Short.MAX_VALUE))
         );
 
@@ -305,7 +321,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
                 }
 
             } else {//caso ele não tenha permissao no banco
-                
+
             }
 
         } catch (Exception ex) {
@@ -360,7 +376,9 @@ public class TelaPrincipalView extends javax.swing.JFrame {
             if (p != null) {//verifica se existe permissao
 
                 if (p.isExcluir()) {//verifica se ele pode compartilhar
+                    mementoZelador.add(p.getImagem());
                     serviceImagem.excluir(p);
+                    jButtonRestaurar.setVisible(true);
                 } else {
                     new AcessoNegadoView(p).setVisible(true);
                 }
@@ -373,6 +391,22 @@ public class TelaPrincipalView extends javax.swing.JFrame {
             Logger.getLogger(TelaPrincipalView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonExcluirActionPerformed
+
+    private void jButtonRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRestaurarActionPerformed
+        try {
+            String message = "Deseja recuperar a imagem "+mementoZelador.getUltimo().getCaminho() +"?";
+            String title = "Confirmação";
+            int reply = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
+            if (reply == JOptionPane.YES_OPTION) {
+                Imagem imagemRecuperada = mementoZelador.getUltimo();
+                serviceImagem.salvar(imagemRecuperada);
+                JOptionPane.showMessageDialog(null, "Imagem recuperada com sucesso");
+                jButtonRestaurar.setVisible(false);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(TelaPrincipalView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonRestaurarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -445,6 +479,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
     private javax.swing.JButton btnNotificacao;
     private javax.swing.JButton jButtonCompartilhar;
     private javax.swing.JButton jButtonExcluir;
+    private javax.swing.JButton jButtonRestaurar;
     private javax.swing.JButton jButtonVisualizar;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
