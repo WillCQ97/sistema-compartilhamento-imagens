@@ -2,59 +2,80 @@ package br.ufes.sgi.telas.presenter;
 
 import br.ufes.sgi.model.Usuario;
 import br.ufes.sgi.telas.view.CriarEditarUsuarioView;
+import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 public class CriarEditarUsuarioPresenter {
 
-    private CriarEditarUsuarioView dadosView;
+    private CriarEditarUsuarioView view;
+    private Usuario usuarioAtual;
 
-    public CriarEditarUsuarioPresenter() {
-        this.dadosView = new CriarEditarUsuarioView();
-        dadosView.setVisible(false);
+    public CriarEditarUsuarioPresenter(Usuario usuarioAtual, CriarEditarUsuarioEnum opcao) {
+        this.usuarioAtual = usuarioAtual;
+        this.view = new CriarEditarUsuarioView();
+        view.setVisible(true);
+
+        view.getBtnSalvar().addActionListener((ActionEvent e) -> {
+            executarOpcao(opcao);
+        });
+
+        view.getBtnCancelar().addActionListener((ActionEvent e) -> {
+            view.setVisible(false);
+            view.dispose();
+            new ManterUsuariosPresenter(usuarioAtual);
+        });
+    }
+
+    private void executarOpcao(CriarEditarUsuarioEnum opcao) {
+        if (opcao == CriarEditarUsuarioEnum.CRIAR) {
+            criarUsuario();
+        } else if (opcao == CriarEditarUsuarioEnum.EDITAR) {
+            editarUsuario();
+        }
     }
 
     private void criarUsuario() {
-        dadosView.setVisible(true);
-        dadosView.setTitle("Cadastro de Usuário");
-
-        //aqui, ele deve apenas instanciar a tela de inserção/edição
-        String nome = dadosView.getTxtNome().getText();
-        String apelido = dadosView.getTxtApelido().getText();
-        String senha = dadosView.getPswSenha().getText();
-        String confirmacao = dadosView.getPswConfirmarSenha().getText();
-        boolean admin = dadosView.getBtnAdministrador().isSelected();
+        view.setTitle("Cadastro de Usuário");
+        String nome = view.getTxtNome().getText();
+        String apelido = view.getTxtApelido().getText();
+        String senha = view.getPswSenha().getText();
+        String confirmacao = view.getPswConfirmarSenha().getText();
+        boolean admin = view.getBtnAdministrador().isSelected();
 
         if (nome.isBlank() || apelido.isBlank() || senha.isBlank() || confirmacao.isBlank()) {
 
-            JOptionPane.showMessageDialog(dadosView, "Os campos são de preenchimento obrigatório!");
+            JOptionPane.showMessageDialog(view, "Os campos são de preenchimento obrigatório!");
 
         } else if (!senha.equals(confirmacao)) {
 
-            JOptionPane.showMessageDialog(dadosView, "As senhas informadas não correspondem!");
-            dadosView.getPswSenha().setText("");
-            dadosView.getPswConfirmarSenha().setText("");
+            JOptionPane.showMessageDialog(view, "As senhas informadas não correspondem!");
+            view.getPswSenha().setText("");
+            view.getPswConfirmarSenha().setText("");
 
         } else {
             try {
                 var novoUsuario = new Usuario(apelido, senha, nome, admin);
                 //usuarioService.salvar(novoUsuario);
 
-                dadosView.setVisible(false);
-                dadosView.dispose();
+                view.setVisible(false);
+                view.dispose();
 
-                JOptionPane.showMessageDialog(dadosView, "Novo usuário cadastrado!: \n",
+                JOptionPane.showMessageDialog(view, "Novo usuário cadastrado!: \n",
                         "Sucesso", +JOptionPane.INFORMATION_MESSAGE);
 
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(dadosView, "Não foi possível criar novo usuário: \n"
+                JOptionPane.showMessageDialog(view, "Não foi possível criar novo usuário: \n"
                         + ex.getMessage(), "Erro", +JOptionPane.ERROR_MESSAGE);
             }
         }
     }
 
     private void editarUsuario() {
-        JTable tblUsuarios = manterView.getTblUsuarios();
+        view.setTitle("Edição de Usuário");
+        
+        
+        JTable tblUsuarios = view.getTblUsuarios();
 
         int select = tblUsuarios.getSelectedRow();
         int id = (int) tblUsuarios.getModel().getValueAt(select, 0);
@@ -91,4 +112,4 @@ public class CriarEditarUsuarioPresenter {
                     "Erro ao iniciar edição do usuário!", JOptionPane.ERROR_MESSAGE);
         }
     }
-                                   }
+                 }

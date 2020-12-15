@@ -31,7 +31,7 @@ public class UsuarioService {
     public void excluir(Usuario usuario) throws Exception {
         usuarioRepository.excluir(usuario);
     }
-
+    
     public Usuario getById(int idUsuario) throws Exception {
         return usuarioRepository.getById(idUsuario);
     }
