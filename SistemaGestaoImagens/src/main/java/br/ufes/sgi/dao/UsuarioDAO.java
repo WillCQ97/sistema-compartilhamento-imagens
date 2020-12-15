@@ -138,5 +138,4 @@ public class UsuarioDAO {
             ConnectionFactory.closeConnection(conn, ps, rs);
         }
     }
-
 }

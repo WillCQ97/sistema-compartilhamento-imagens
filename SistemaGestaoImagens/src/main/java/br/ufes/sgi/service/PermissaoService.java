@@ -14,10 +14,9 @@ public class PermissaoService {
     }
 
     public void gerarCompartilhamento(Permissao permissao) throws Exception {
-        if(permissao.isCompartilhar()){
-          repository.gerarCompartilhamento(permissao);  
+        if (permissao.isCompartilhar()) {
+            repository.gerarCompartilhamento(permissao);
         }
-        
     }
 
     public void excluir(Permissao permissao) throws Exception {
@@ -28,17 +27,16 @@ public class PermissaoService {
         }
     }
 
-    public void atualizarById(Permissao permissao) throws Exception {
-        repository.atualizarById(permissao);
+    public void atualizar(Permissao permissao) throws Exception {
+        repository.atualizar(permissao);
     }
 
     public boolean verificarPermissao(Usuario usuario, Imagem imagem) throws Exception {
         return repository.verificarPermissao(usuario, imagem);
     }
-    
-    // entretanto um usuário pode ter mais de uma permissão... aliás terá
-    public Permissao getPermissaoByUsuario(Usuario usuario) throws Exception {
-        return repository.getPermissaoByUsuario(usuario);
+
+    public Permissao getPermissao(int idImagem, int idUsuario) throws Exception {
+        return repository.getPermissao(idImagem, idUsuario);
     }
 
     public void gerarPedidoPermissao(Permissao permissao) throws Exception {

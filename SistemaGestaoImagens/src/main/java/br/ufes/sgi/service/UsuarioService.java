@@ -31,7 +31,7 @@ public class UsuarioService {
     public void excluir(Usuario usuario) throws Exception {
         usuarioRepository.excluir(usuario);
     }
-    
+
     public Usuario getById(int idUsuario) throws Exception {
         return usuarioRepository.getById(idUsuario);
     }
@@ -41,13 +41,13 @@ public class UsuarioService {
             permissaoRepository.gerarCompartilhamento(permissao);
         }
     }
-    
-    public Usuario getByApelido(String apelido) throws Exception{
+
+    public Usuario getByApelido(String apelido) throws Exception {
         return usuarioRepository.getByApelido(apelido);
     }
-    
-    public ArrayList<Usuario> getAdministradores() throws Exception{
+
+    public ArrayList<Usuario> getAdministradores() throws Exception {
         return usuarioRepository.getAllAdministradores();
     }
-
+    
 }

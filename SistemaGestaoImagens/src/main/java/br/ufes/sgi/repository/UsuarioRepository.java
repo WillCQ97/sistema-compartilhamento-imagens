@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class UsuarioRepository {
 
     private final UsuarioDAO dao;
-    
+
     public UsuarioRepository() throws Exception {
         this.dao = new UsuarioDAO();
     }
@@ -44,7 +44,7 @@ public class UsuarioRepository {
     public void excluir(Usuario usuario) throws Exception {
         dao.excluir(usuario);
     }
-    
+
     public Usuario getById(int idUsuario) throws Exception {
         return dao.getById(idUsuario);
     }
@@ -53,25 +53,25 @@ public class UsuarioRepository {
         if (apelido == null) {
             throw new Exception("nome fornecido é nulo");
         }
-        
-        for(Usuario usuario : this.getAll()){
-            if(apelido.equals(usuario.getApelido())){
+
+        for (Usuario usuario : this.getAll()) {
+            if (apelido.equals(usuario.getApelido())) {
                 return usuario;
             }
         }
         throw new Exception("Usuário com o apelido informado não encontrado!");
     }
-    
-    public ArrayList<Usuario> getAllAdministradores() throws Exception{
+
+    public ArrayList<Usuario> getAllAdministradores() throws Exception {
         ArrayList<Usuario> administradores = new ArrayList<>();
-        
-        for (Usuario usuario: this.getAll()){
-            if(usuario.isAdmin()){
+
+        for (Usuario usuario : this.getAll()) {
+            if (usuario.isAdmin()) {
                 administradores.add(usuario);
             }
         }
-        
+
         return administradores;
     }
-    
+
 }

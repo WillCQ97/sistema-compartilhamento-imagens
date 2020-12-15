@@ -11,28 +11,59 @@ import br.ufes.sgi.model.Permissao;
 import br.ufes.sgi.model.Usuario;
 import br.ufes.sgi.service.NotificacaoService;
 import br.ufes.sgi.service.PermissaoService;
+import br.ufes.sgi.service.UsuarioService;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author 55289
  */
-public class CompartilharImagemView extends javax.swing.JInternalFrame {
+public class CompartilharImagemView extends javax.swing.JFrame {
 
-    private Imagem imagem;
-    private Usuario user;
     private PermissaoService servicePermissao;
     private NotificacaoService serviceNotificacao;
+    private UsuarioService serviceUsuario;
+    private boolean tipo;
+    private Permissao permissao;
+    private Imagem img;
 
     /**
      * Creates new form CompartilharImagem
      */
-    public CompartilharImagemView(Imagem imagem, Usuario user) throws Exception {
+    public CompartilharImagemView(Permissao permissao, boolean tipo) throws Exception {//pedir permissao
         initComponents();
-        this.imagem = imagem;
         this.servicePermissao = new PermissaoService();
-        this.user = user;
+        this.tipo = tipo;
+        this.permissao = permissao;
+        this.serviceUsuario = new UsuarioService();
+
+        if (tipo) {
+            jButtonCompartilhar.setVisible(true);
+            jButtonPedirPermissao.setVisible(false);
+        } else {
+            jButtonCompartilhar.setVisible(false);
+            jButtonPedirPermissao.setVisible(true);
+        }
+        preencheTabela();
+    }
+
+    public CompartilharImagemView(Imagem im, boolean tipo) throws Exception {//compartilhar imagem
+        initComponents();
+        this.img = im;
+        this.tipo = tipo;
+        this.servicePermissao = new PermissaoService();
+        this.serviceUsuario = new UsuarioService();
+
+        if (tipo) {
+            jButtonCompartilhar.setVisible(true);
+            jButtonPedirPermissao.setVisible(false);
+        } else {
+            jButtonCompartilhar.setVisible(false);
+            jButtonPedirPermissao.setVisible(true);
+        }
     }
 
     /**
@@ -129,9 +160,9 @@ public class CompartilharImagemView extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
+                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonPedirPermissao)
                     .addComponent(jButtonCompartilhar)
@@ -142,14 +173,32 @@ public class CompartilharImagemView extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void preencheTabela() throws Exception {
+        DefaultTableModel modelo = (DefaultTableModel) this.jTable1.getModel();
+        ArrayList<Usuario> usuarios = null;
+        if (tipo) {//se for compartilhar, irá listar os usuarios comuns
+            //usuarios = serviceUsuario.getAllUser();
+            for (Usuario users : usuarios) {
+                modelo.addRow(new Object[]{users.getId(), users.getNome()});
+            }
+
+        } else {// se for pedir permissao, irá listar os adm para o usuario pedir permissao
+            //usuarios = serviceUsuario.getAllAdm();
+            for (Usuario users : usuarios) {
+                modelo.addRow(new Object[]{users.getId(), users.getNome()});
+            }
+        }
+    }
+
+
     private void jButtonCompartilharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCompartilharActionPerformed
-        int[] selecao = jTable1.getSelectedRows(); 
-        for (int i = 0; i < selecao.length; i++) {
+        int[] selecao = jTable1.getSelectedRows();
+        for (int i = 0; i < selecao.length; i++) {//pode compartilhar pra mais de um usuario
             try {
                 servicePermissao.gerarCompartilhamento(new Permissao(new Usuario((int) jTable1.getModel().getValueAt(selecao[i], 0)),
-                        imagem, true, false, false));
-                serviceNotificacao.salvarById(new Notificacao(new Usuario((int) jTable1.getModel().getValueAt(selecao[i], 0)),
-                        "Imagem: " + imagem.getCaminho() + " compartilhada com voce."));
+                        img, true, false, false));
+                serviceNotificacao.salvar(new Notificacao(new Usuario((int) jTable1.getModel().getValueAt(selecao[i], 0)),
+                        "Imagem: " + img.getCaminho() + " compartilhada com voce."));
             } catch (Exception ex) {
                 Logger.getLogger(CompartilharImagemView.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -164,14 +213,15 @@ public class CompartilharImagemView extends javax.swing.JInternalFrame {
     private void jButtonPedirPermissaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPedirPermissaoActionPerformed
         int selecao = jTable1.getSelectedRow();
         try {
-            servicePermissao.gerarPedidoPermissao(new Permissao(user,//o user simula uma permissao a ser aprovada
-                    imagem, false, false, false));
-            serviceNotificacao.salvarById(new Notificacao(new Usuario((int) jTable1.getModel().getValueAt(selecao, 0)),
-                    "Imagem: " + imagem.getCaminho() + " gerou um pedido der permissão pra ser visualizada"));
+            servicePermissao.gerarCompartilhamento(permissao);//gera o compartilhamento para aguardar a permissao
+            
+            //aqui em notificacao, a gente descreve qual foi o pedido, passando o id da permissao, ai quando o admin abrir o sistema ele vai receber o notificacao
+            
+            //serviceNotificacao.salvarById(new Notificacao(new Usuario((int) jTable1.getModel().getValueAt(selecao, 0)),
+            //       "Imagem: " + imagem.getCaminho() + " gerou um pedido de permissão pra ser visualizada"));
         } catch (Exception ex) {
             Logger.getLogger(CompartilharImagemView.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }//GEN-LAST:event_jButtonPedirPermissaoActionPerformed
 
 

@@ -18,7 +18,7 @@ public class PermissaoDAO {
         if (permissao == null) {
             throw new Exception("Permissao não pode ser nulo!");
         }
-        
+
         try {
             String SQL = "INSERT INTO permissao (idUsuario, idImagem, compartilhar,"
                     + " excluir, visualizar)"
@@ -60,14 +60,17 @@ public class PermissaoDAO {
 
     }
 
-    public void atualizarById(Permissao permissao) throws Exception {
+    public void atualizar(Permissao permissao) throws Exception {
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
 
         try {
+            //FIX-ME: essa query não vai atualizar todas as imagens desse user???
             String SQL = "UPDATE permissao SET compartilhar=?,"
                     + " visualizar=?, excluir = ?"
-                    + "where (idImagem= ? and idUsuario = ?);"; //essa query não vai atualizar todas as imagens desse user???
+                    + "where (idImagem= ? and idUsuario = ?);";
+
+            ps = conn.prepareStatement(SQL);
             ps.setInt(1, permissao.getImagem().getId());
             ps.setInt(2, permissao.getUsuario().getId());
             ps = conn.prepareStatement(SQL);
@@ -96,9 +99,9 @@ public class PermissaoDAO {
             ps.setInt(1, usuario.getId());
             ps.setInt(2, imagem.getId());
             rs = ps.executeQuery();
-            
+
             int idPermissao = rs.getInt(1);
-            
+
             return idPermissao == 0;
         } catch (SQLException sqle) {
             throw new Exception(sqle);
@@ -107,7 +110,7 @@ public class PermissaoDAO {
         }
     }
 
-    public Permissao getPermissaoByUsuario(Usuario usuario) throws Exception {
+    public Permissao getPermissao(int IdImagem, int idUsuario) throws Exception {
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -115,27 +118,31 @@ public class PermissaoDAO {
         try {
             ps = conn.prepareStatement("select idPermissao, idUsuario, idImagem, compartilhar, "
                     + "excluir, visualizar "
-                    + "from permissao where idUsuario = ? ;");
-            
-            ps.setInt(1, usuario.getId());
+                    + "from permissao where permissao.idUsuario = ? and permissao.idImagem = ?;");
+
+            ps.setInt(1, idUsuario);
+            ps.setInt(2, IdImagem);
+
             rs = ps.executeQuery();
 
             int idPermissao = rs.getInt(1);
-            int idUsuario = rs.getInt(2);
+            int idUser = rs.getInt(2);
             int idImagem = rs.getInt(3);
             boolean compartilhar = rs.getBoolean(4);
             boolean excluir = rs.getBoolean(5);
             boolean visualizar = rs.getBoolean(6);
 
             UsuarioDAO usuarioDAO = new UsuarioDAO();
-            usuario = usuarioDAO.getById(idUsuario);
+
+            Usuario usuario;
+
+            usuario = usuarioDAO.getById(idUser);
 
             ImagemDAO imagemDAO = new ImagemDAO();
             Imagem img = imagemDAO.getImagemById(idImagem);
 
-            Permissao permissao = new Permissao(idPermissao, usuario, img, visualizar, excluir, compartilhar);
-
-            return permissao;
+            Permissao p = new Permissao(idPermissao, usuario, img, visualizar, excluir, compartilhar);
+            return p;
         } catch (SQLException sqle) {
             throw new Exception(sqle);
         } finally {
@@ -166,10 +173,5 @@ public class PermissaoDAO {
             ConnectionFactory.closeConnection(conn, ps);
         }
     }
-    
-    
-    
-    
-    
 
 }

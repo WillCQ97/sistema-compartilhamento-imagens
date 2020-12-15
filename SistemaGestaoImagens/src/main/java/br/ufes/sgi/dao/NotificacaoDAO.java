@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class NotificacaoDAO {
 
-    public void salvarById(Notificacao notificacao) throws Exception {
+    public void salvar(Notificacao notificacao) throws Exception {
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
 
