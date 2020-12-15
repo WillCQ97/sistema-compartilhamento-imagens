@@ -376,7 +376,7 @@ public class TelaPrincipalView extends javax.swing.JFrame {
             if (p != null) {//verifica se existe permissao
 
                 if (p.isExcluir()) {//verifica se ele pode compartilhar
-                    mementoZelador.add(p.getImagem());
+                    mementoZelador.add(p.getImagem().criar());
                     serviceImagem.excluir(p);
                     jButtonRestaurar.setVisible(true);
                 } else {
@@ -394,11 +394,12 @@ public class TelaPrincipalView extends javax.swing.JFrame {
 
     private void jButtonRestaurarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRestaurarActionPerformed
         try {
-            String message = "Deseja recuperar a imagem "+mementoZelador.getUltimo().getCaminho() +"?";
+            String message = "Deseja recuperar a imagem " + mementoZelador.getUltimo().getCaminho() + "?";
             String title = "Confirmação";
             int reply = JOptionPane.showConfirmDialog(null, message, title, JOptionPane.YES_NO_OPTION);
             if (reply == JOptionPane.YES_OPTION) {
-                Imagem imagemRecuperada = mementoZelador.getUltimo();
+                Imagem imagemRecuperada = new Imagem();
+                imagemRecuperada.restaurar(mementoZelador.getUltimo());
                 serviceImagem.salvar(imagemRecuperada);
                 JOptionPane.showMessageDialog(null, "Imagem recuperada com sucesso");
                 jButtonRestaurar.setVisible(false);
