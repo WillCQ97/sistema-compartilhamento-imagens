@@ -45,5 +45,9 @@ public class ImagemService {
     public boolean isNull() throws Exception {
         return imagemRepository.isNull();
     }
+    
+    public Imagem getImagemByIndex(int indice) throws Exception{
+        return imagemRepository.getAll().get(indice);
+    }
 
 }

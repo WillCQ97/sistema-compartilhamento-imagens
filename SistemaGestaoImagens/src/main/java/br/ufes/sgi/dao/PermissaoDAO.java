@@ -93,16 +93,17 @@ public class PermissaoDAO {
         ResultSet rs = null;
 
         try {
-            ps = conn.prepareStatement("select idPermissao"
+            ps = conn.prepareStatement("select idPermissao "
                     + "from permissao where permissao.idUsuario = ? "
-                    + "and permissao.idImagem = ?;");
+                    + "and permissao.idImagem = ?; ");
+
             ps.setInt(1, usuario.getId());
             ps.setInt(2, imagem.getId());
+
             rs = ps.executeQuery();
 
-            int idPermissao = rs.getInt(1);
+            return rs.getRow() != 0;
 
-            return idPermissao == 0;
         } catch (SQLException sqle) {
             throw new Exception(sqle);
         } finally {
