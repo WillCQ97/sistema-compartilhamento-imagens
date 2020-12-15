@@ -15,13 +15,14 @@ import br.ufes.sgi.service.SolicitacaoService;
 import br.ufes.sgi.service.UsuarioService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author 55289
  */
-public class SetarPermissao extends javax.swing.JFrame {
-    
+public class SetarPermissaoView extends javax.swing.JFrame {
+
     private SolicitacaoService solicitacaoService;
     private PermissaoService permissaoService;
     private Solicitacao solicitacao;
@@ -32,10 +33,15 @@ public class SetarPermissao extends javax.swing.JFrame {
     /**
      * Creates new form SetarPermissao
      */
-    public SetarPermissao(Solicitacao solicitacao) throws Exception {
+    public SetarPermissaoView(Solicitacao solicitacao) throws Exception {
         initComponents();
-        this.solicitacaoService = new SolicitacaoService();
         this.solicitacao = solicitacao;
+        this.solicitacaoService = new SolicitacaoService();
+        this.permissaoService = new PermissaoService();
+        this.serviceNotificacao = new NotificacaoService();
+        this.serviceUsuario = new UsuarioService();
+        this.imagemService = new ImagemService();
+
         jLabelNome.setText(serviceUsuario.getById(solicitacao.getUsuarioSolicitante().getId()).getNome());
         jLabelImagem.setText(imagemService.getImagemById(solicitacao.getImagem().getId()).getCaminho());
         jTextAreaDescricao.setText(solicitacao.getDescricao());
@@ -64,6 +70,7 @@ public class SetarPermissao extends javax.swing.JFrame {
         jTextAreaDescricao = new javax.swing.JTextArea();
 
         setTitle("Definir Permissão");
+        setResizable(false);
 
         jRadioButtonCompartilhar.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jRadioButtonCompartilhar.setText("Compartilhar");
@@ -117,32 +124,30 @@ public class SetarPermissao extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButtonConfirmar))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel3))
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelNome))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(14, 14, 14)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabelNome))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabelImagem))
-                                    .addComponent(jLabel4)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 8, Short.MAX_VALUE)))
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabelImagem))
+                            .addComponent(jLabel4))
+                        .addGap(0, 446, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(229, 229, 229)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
                     .addComponent(jRadioButtonCompartilhar)
                     .addComponent(jRadioButtonVisualizar)
                     .addComponent(jRadioButtonExcluir))
-                .addContainerGap(199, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -158,8 +163,8 @@ public class SetarPermissao extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jRadioButtonCompartilhar)
@@ -167,12 +172,13 @@ public class SetarPermissao extends javax.swing.JFrame {
                 .addComponent(jRadioButtonVisualizar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jRadioButtonExcluir)
-                .addGap(18, 18, 18)
+                .addGap(4, 4, 4)
                 .addComponent(jButtonConfirmar)
                 .addGap(7, 7, 7))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jRadioButtonCompartilharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonCompartilharActionPerformed
@@ -180,28 +186,33 @@ public class SetarPermissao extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButtonCompartilharActionPerformed
 
     private void jButtonConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonConfirmarActionPerformed
-        
+
         try {
             //pegando a permissao conforme a imagem e usuario solicitante
-            Permissao permissao = permissaoService.getPermissao(solicitacao.getImagem().getId(), solicitacao.getUsuarioSolicitante().getId());
+            Permissao permissao = permissaoService.getPermissao(solicitacao.getImagem().getId(),
+                    solicitacao.getUsuarioSolicitante().getId());
+
             //caso essa permissao já exista, iremos somente edita-la
             if (permissao != null) {
                 //setando os dados permissao
                 permissao.setCompartilhar(jRadioButtonCompartilhar.isSelected());
                 permissao.setExcluir(jRadioButtonExcluir.isSelected());
                 permissao.setVisualizar(jRadioButtonVisualizar.isSelected());
+
                 //criando o compartilhamento, ja que foi autorizado
-                permissaoService.salvarPermissao(permissao);
+                permissaoService.atualizar(permissao);
+
             } else {//caso ele não tenha uma permissao no banco
 
                 //ja que o usuario não tem uma permissao, então uma nova permissao é criada
-                Permissao newPermissao = new Permissao();
+                permissao = new Permissao();
                 //setando os dados da permissao
-                newPermissao.setUsuario(solicitacao.getUsuarioSolicitante());
-                newPermissao.setImagem(solicitacao.getImagem());
+                permissao.setUsuario(solicitacao.getUsuarioSolicitante());
+                permissao.setImagem(solicitacao.getImagem());
                 permissao.setCompartilhar(jRadioButtonCompartilhar.isSelected());
                 permissao.setExcluir(jRadioButtonExcluir.isSelected());
                 permissao.setVisualizar(jRadioButtonVisualizar.isSelected());
+
                 //criando o compartilhamento, ja que foi autorizado
                 permissaoService.salvarPermissao(permissao);
             }
@@ -209,8 +220,13 @@ public class SetarPermissao extends javax.swing.JFrame {
             //notificando o usuário que pediu a solicitacao, que ela foi aceita
             serviceNotificacao.salvar(new Notificacao(solicitacao.getUsuarioSolicitante(), "Solicitação:\n" + solicitacao.getDescricao() + "foi recebida e confirmada!"));
             solicitacaoService.excluir(solicitacao.getId());
+            
+            JOptionPane.showMessageDialog(this, "Operação bem sucedida!");
+            
+            this.setVisible(false);
+            this.dispose();
         } catch (Exception ex) {
-            Logger.getLogger(SetarPermissao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SetarPermissaoView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonConfirmarActionPerformed
 

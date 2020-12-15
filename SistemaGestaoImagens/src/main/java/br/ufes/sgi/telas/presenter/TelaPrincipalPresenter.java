@@ -1,17 +1,22 @@
 package br.ufes.sgi.telas.presenter;
 
 import br.ufes.sgi.model.Imagem;
+import br.ufes.sgi.model.Notificacao;
 import br.ufes.sgi.model.Permissao;
 import br.ufes.sgi.model.Solicitacao;
 import br.ufes.sgi.model.Usuario;
 import br.ufes.sgi.service.ImagemService;
+import br.ufes.sgi.service.NotificacaoService;
 import br.ufes.sgi.service.PermissaoService;
 import br.ufes.sgi.service.SolicitacaoService;
 import br.ufes.sgi.service.UsuarioService;
+import br.ufes.sgi.telas.view.NotificacaoView;
+import br.ufes.sgi.telas.view.SetarPermissaoView;
 import br.ufes.sgi.telas.view.TelaPrincipalView;
 import br.ufes.sgi.telas.view.imagem.ManipuladorImagem;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
@@ -27,6 +32,7 @@ public class TelaPrincipalPresenter {
     private ImagemService imagemService;
     private PermissaoService permissaoService;
     private SolicitacaoService solicitacaoService;
+    private NotificacaoService notificacaoService;
     private UsuarioService usuarioService;
 
     public TelaPrincipalPresenter(Usuario usuarioAtual) {
@@ -38,10 +44,13 @@ public class TelaPrincipalPresenter {
             this.usuarioService = new UsuarioService();
             this.permissaoService = new PermissaoService();
             this.solicitacaoService = new SolicitacaoService();
+            this.notificacaoService = new NotificacaoService();
 
             view.getTxtNomeUsuario().setText(usuarioAtual.getNome());
 
             this.configurarOpcoesPorTipoUsuario();
+
+            this.verificarNotificacao();
 
             //adicionar um método de espera aqui ou não kk
             this.carregarListaImagens();
@@ -56,6 +65,10 @@ public class TelaPrincipalPresenter {
 
             view.getBtnExcluir().addActionListener((ActionEvent e) -> {
                 excluirImagem();
+            });
+
+            view.getBtnNotificacoes().addActionListener((ActionEvent e) -> {
+                exibirNotificoes();
             });
 
             view.getLstImagens().addMouseListener(new java.awt.event.MouseAdapter() {
@@ -83,7 +96,47 @@ public class TelaPrincipalPresenter {
         }
 
     }
-    
+
+    private void verificarNotificacao() {
+        try {
+            if (usuarioAtual.isAdmin()) {
+                int qtdSol = solicitacaoService.getByIdAdmin(usuarioAtual.getId()).size();
+                view.getBtnNotificacoes().setText(Integer.toString(qtdSol));
+
+            } else {
+                int qtdSol = notificacaoService.getNotificacoesById(usuarioAtual.getId()).size();
+                view.getBtnNotificacoes().setText(Integer.toString(qtdSol));
+
+                /*
+                for (Notificacao not : notificacaoService.getNotificacoesById(usuarioAtual.getId())) {
+                    NotificacaoView nv = new NotificacaoView(not);
+                    nv.setVisible(true);
+                }
+                 */
+            }
+        } catch (Exception ex) {
+            System.out.println("Erro " + ex.getMessage());
+        }
+    }
+
+    private void exibirNotificoes() {
+        try {
+            if (usuarioAtual.isAdmin()) {
+                for (Solicitacao s : solicitacaoService.getByIdAdmin(usuarioAtual.getId())) {
+                    SetarPermissaoView stv = new SetarPermissaoView(s);
+                    stv.setVisible(true);
+                }
+            } else {
+                for (Notificacao not : notificacaoService.getNotificacoesById(usuarioAtual.getId())) {
+                    NotificacaoView nv = new NotificacaoView(not);
+                    nv.setVisible(true);
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println("Erro " + ex.getMessage());
+        }
+    }
+
     private void configurarOpcoesPorTipoUsuario() {
         if (usuarioAtual.isAdmin()) {
             view.getTxtTipoUsuario().setText("Administrador");

@@ -43,8 +43,8 @@ public class NotificacaoDAO {
         ResultSet rs = null;
         try {
 
-            ps = conn.prepareStatement("select idINotificacao, descricao FROM Notificacao inner join UsuarioLogin "
-                    + "on (Notificacao.idUsuarioLogin = Notificacao.idUsuarioLogin) where Notificacao.idUsuarioLogin = ?");
+            ps = conn.prepareStatement("select idINotificacao, descricao FROM Notificacao inner join usuario "
+                    + "on (Notificacao.idusuario = Notificacao.idusuario) where Notificacao.idusuario = ?");
             ps.setInt(1, id);
             rs = ps.executeQuery();
 

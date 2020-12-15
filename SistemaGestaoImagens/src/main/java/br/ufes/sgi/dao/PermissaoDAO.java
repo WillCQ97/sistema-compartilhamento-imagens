@@ -128,25 +128,26 @@ public class PermissaoDAO {
             ps.setInt(2, IdImagem);
 
             rs = ps.executeQuery();
+            if (rs.next()) {
+                int idPermissao = rs.getInt(1);
+                int idUser = rs.getInt(2);
+                int idImagem = rs.getInt(3);
+                boolean compartilhar = rs.getBoolean(4);
+                boolean excluir = rs.getBoolean(5);
+                boolean visualizar = rs.getBoolean(6);
 
-            int idPermissao = rs.getInt(1);
-            int idUser = rs.getInt(2);
-            int idImagem = rs.getInt(3);
-            boolean compartilhar = rs.getBoolean(4);
-            boolean excluir = rs.getBoolean(5);
-            boolean visualizar = rs.getBoolean(6);
+                UsuarioDAO usuarioDAO = new UsuarioDAO();
 
-            UsuarioDAO usuarioDAO = new UsuarioDAO();
+                Usuario usuario;
 
-            Usuario usuario;
+                usuario = usuarioDAO.getById(idUser);
 
-            usuario = usuarioDAO.getById(idUser);
+                ImagemDAO imagemDAO = new ImagemDAO();
+                Imagem img = imagemDAO.getImagemById(idImagem);
 
-            ImagemDAO imagemDAO = new ImagemDAO();
-            Imagem img = imagemDAO.getImagemById(idImagem);
-
-            Permissao p = new Permissao(idPermissao, usuario, img, visualizar, excluir, compartilhar);
-            return p;
+                return new Permissao(idPermissao, usuario, img, visualizar, excluir, compartilhar);
+            }
+            return null;
         } catch (SQLException sqle) {
             throw new Exception(sqle);
         } finally {

@@ -26,10 +26,11 @@ public class SolicitacaoDAO {
             ArrayList<Solicitacao> list = new ArrayList<>();
 
             while (rs.next()) {
+                System.out.println("Executei");
                 int idSolicitacao = rs.getInt(1);
                 int idUsuario = rs.getInt(2);
-                int idAdmin = rs.getInt(3);
-                int idImagem = rs.getInt(4);
+                int idImagem = rs.getInt(3);
+                int idAdmin = rs.getInt(4);
                 String descricao = rs.getString(5);
 
                 UsuarioDAO usuarioDAO = new UsuarioDAO();
@@ -41,6 +42,7 @@ public class SolicitacaoDAO {
 
                 list.add(new Solicitacao(idSolicitacao, usuario, admin, imagem, descricao));
             }
+            
             return list;
         } catch (SQLException sqle) {
             throw new Exception("Erro ao inserir dados " + sqle);
@@ -53,7 +55,7 @@ public class SolicitacaoDAO {
         Connection conn = ConnectionFactory.getConnection();
         PreparedStatement ps = null;
         try {
-            ps = conn.prepareStatement("delete * from Solicitacao where idSolicitacao= ?");
+            ps = conn.prepareStatement("delete from solicitacao where idSolicitacao= ?");
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException sqle) {
