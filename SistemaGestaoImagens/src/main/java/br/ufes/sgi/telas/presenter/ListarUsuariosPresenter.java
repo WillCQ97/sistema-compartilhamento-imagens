@@ -43,9 +43,11 @@ public class ListarUsuariosPresenter {
             if (tipo == ListarUsuariosEnum.COMPARTILHAR) {
                 view.getBtnCompartilhar().setVisible(true);
                 view.getBtnPedirPermissao().setVisible(false);
+                view.setTitle("Compartilhamento de Imagem");
             } else {
                 view.getBtnCompartilhar().setVisible(false);
                 view.getBtnPedirPermissao().setVisible(true);
+                view.setTitle("Solicitação de Acesso à Imagem");
             }
             preencheTabela(tipo);
 

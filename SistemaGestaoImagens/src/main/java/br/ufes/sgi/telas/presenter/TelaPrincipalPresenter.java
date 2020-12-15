@@ -83,7 +83,7 @@ public class TelaPrincipalPresenter {
         }
 
     }
-
+    
     private void configurarOpcoesPorTipoUsuario() {
         if (usuarioAtual.isAdmin()) {
             view.getTxtTipoUsuario().setText("Administrador");
@@ -205,6 +205,6 @@ public class TelaPrincipalPresenter {
     }
 
     private void excluirImagem() {
-
+        JOptionPane.showMessageDialog(view, "Funcionalidade não implementada!");
     }
 }
