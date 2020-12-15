@@ -1,4 +1,4 @@
-package br.ufes.sgi.view;
+package br.ufes.sgi.telas.view;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;

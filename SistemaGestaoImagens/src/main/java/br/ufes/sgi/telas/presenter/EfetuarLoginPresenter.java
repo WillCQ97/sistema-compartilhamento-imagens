@@ -1,8 +1,8 @@
-package br.ufes.sgi.presenter;
+package br.ufes.sgi.telas.presenter;
 
 import br.ufes.sgi.model.Usuario;
 import br.ufes.sgi.service.UsuarioService;
-import br.ufes.sgi.view.LoginView;
+import br.ufes.sgi.telas.view.LoginView;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 
@@ -17,7 +17,7 @@ public class LoginPresenter {
             this.usuarioService = new UsuarioService();
 
             if (verificarPrimeiraExecucao()) {
-                new ConfiguracaoInicialPresenter();
+                new EfetuarConfiguracaoPresenter();
 
             } else {
 

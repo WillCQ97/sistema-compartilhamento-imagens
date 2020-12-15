@@ -1,23 +1,23 @@
-package br.ufes.sgi.presenter;
+package br.ufes.sgi.telas.presenter;
 
 import br.ufes.sgi.model.Imagem;
 import br.ufes.sgi.model.Usuario;
 import br.ufes.sgi.service.ImagemService;
 import br.ufes.sgi.service.UsuarioService;
-import br.ufes.sgi.view.ConfiguracaoInicialView;
+import br.ufes.sgi.telas.view.EfetuarConfiguracaoView;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-public class ConfiguracaoInicialPresenter {
+public class EfetuarConfiguracaoPresenter {
 
-    private ConfiguracaoInicialView view;
+    private EfetuarConfiguracaoView view;
     private UsuarioService usuarioService;
     private ImagemService imagemService;
     private File diretorioImagens;
 
-    public ConfiguracaoInicialPresenter() {
+    public EfetuarConfiguracaoPresenter() {
         StringBuilder sb = new StringBuilder();
         sb.append("Detectamos que essa é a primeira execução do programa!\n");
         sb.append("É necessário que você crie um usuário que será o administrador\n");
@@ -27,7 +27,7 @@ public class ConfiguracaoInicialPresenter {
         sb.append("no sistema.\n");
         sb.append("BOA SORTE!");
 
-        this.view = new ConfiguracaoInicialView();
+        this.view = new EfetuarConfiguracaoView();
         view.getTxtCaminho().setEnabled(false);
         JOptionPane.showMessageDialog(view, sb.toString(), "Primeira Execução", JOptionPane.INFORMATION_MESSAGE);
 
