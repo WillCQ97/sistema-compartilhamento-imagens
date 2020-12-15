@@ -36,7 +36,6 @@ public class ImagemTest {
 
         Imagem imagem = new Imagem(1, "C:\\Users\\55289\\Pictures\\dogs");
 
-        assertEquals(imagem, new Imagem(1, "C:\\Users\\55289\\Pictures\\dogs"));//verifica a instancia
         assertEquals(imagem.getCaminho(), caminhoEsperado);//verifica o caminho
         assertEquals(imagem.getId(), idEsperado);//verifica o id/verifica o caminho
     }

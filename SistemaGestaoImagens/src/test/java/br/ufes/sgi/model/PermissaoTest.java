@@ -29,7 +29,7 @@ public class PermissaoTest {
     }
 
     @Test
-    public void CT03() {
+    public void CT01() {
         int idEsperado = 1;
         Usuario usuarioEsperado = new Usuario(2, "gabriel.kls", "1234", "Gabriel", true);
         Imagem imagemEsperado = new Imagem(5, "C:\\Users\\55289\\Pictures\\dogs\\dog1.png");

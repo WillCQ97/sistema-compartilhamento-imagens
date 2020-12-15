@@ -29,7 +29,7 @@ public class SolicitacaoTest {
     }
 
     @Test
-    public void CT05() {
+    public void CT01() {
         int idEsperado1 = 1;
         String usuarioEsperado1 = "gabriel.kls";
         String senhaEsperado1 = "12345";

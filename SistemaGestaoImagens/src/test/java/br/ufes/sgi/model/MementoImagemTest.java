@@ -30,7 +30,7 @@ public class MementoImagemTest {
     }
 
     @Test
-    public void CT06() throws Exception {
+    public void CT01() throws Exception {
         Imagem imagem = new Imagem(1, "C:\\Users\\55289\\Pictures\\dogs");
         ZeladorImagem zelador = ZeladorImagem.getInstancia();
         zelador.add(imagem.criar());
