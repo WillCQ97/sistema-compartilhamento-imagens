@@ -3,9 +3,11 @@ package br.ufes.sgi.telas.presenter;
 import br.ufes.sgi.model.Imagem;
 import br.ufes.sgi.model.Notificacao;
 import br.ufes.sgi.model.Permissao;
+import br.ufes.sgi.model.Solicitacao;
 import br.ufes.sgi.model.Usuario;
 import br.ufes.sgi.service.NotificacaoService;
 import br.ufes.sgi.service.PermissaoService;
+import br.ufes.sgi.service.SolicitacaoService;
 import br.ufes.sgi.service.UsuarioService;
 import br.ufes.sgi.telas.view.ListarUsuariosView;
 import java.awt.event.ActionEvent;
@@ -24,6 +26,7 @@ public class ListarUsuariosPresenter {
     private PermissaoService servicePermissao;
     private UsuarioService serviceUsuario;
     private NotificacaoService serviceNotificacao;
+    private SolicitacaoService serviceSolicitacao;
     private Imagem imagem;
 
     public ListarUsuariosPresenter(Usuario usuarioAtual, ListarUsuariosEnum tipo, Imagem imagem) {
@@ -35,6 +38,7 @@ public class ListarUsuariosPresenter {
             this.servicePermissao = new PermissaoService();
             this.serviceUsuario = new UsuarioService();
             this.serviceNotificacao = new NotificacaoService();
+            this.serviceSolicitacao = new SolicitacaoService();
 
             if (tipo == ListarUsuariosEnum.COMPARTILHAR) {
                 view.getBtnCompartilhar().setVisible(true);
@@ -83,9 +87,7 @@ public class ListarUsuariosPresenter {
     }
 
     private void compartilharImagem() {
-
         JTable tabela = view.getTblUsuarios();
-
         int[] selecao = tabela.getSelectedRows();
 
         for (int i = 0; i < selecao.length; i++) {
@@ -94,8 +96,6 @@ public class ListarUsuariosPresenter {
 
                 Permissao p = new Permissao(usuario, imagem, true, false, false);
                 servicePermissao.salvarPermissao(p);
-                System.out.println(p.toString());
-                System.out.println(servicePermissao.getPermissao(usuario.getId(), imagem.getId()));
 
                 Notificacao n = new Notificacao(usuario, "Imagem: " + imagem.getCaminho() + " compartilhada com voce.");
                 serviceNotificacao.salvar(n);
@@ -109,16 +109,27 @@ public class ListarUsuariosPresenter {
     }
 
     private void pedirPermissao() {
+        JTable tabela = view.getTblUsuarios();
         int selecao = view.getTblUsuarios().getSelectedRow();
 
         try {
+            String descricao = "Usuário " + usuarioAtual.getNome() + " solicitou acesso a imagem localizada em \n"
+                    + imagem.getCaminho() + ".";
 
-            //IMPLEMENTAR O PEDIR PERMISSAO
-            //aqui em notificacao, a gente descreve qual foi o pedido, passando o id da permissao, ai quando o admin abrir o sistema ele vai receber o notificacao
-            //serviceNotificacao.salvarById(new Notificacao(new Usuario((int) jTable1.getModel().getValueAt(selecao, 0)),
-            //       "Imagem: " + imagem.getCaminho() + " gerou um pedido de permissão pra ser visualizada"));
+            Usuario administrador = serviceUsuario.getById((int) tabela.getModel().getValueAt(selecao, 0));
+
+            Solicitacao s = new Solicitacao();
+            s.setUsuarioSolicitante(usuarioAtual);
+            s.setImagem(imagem);
+            s.setAdminSolicitado(administrador);
+            s.setDescricao(descricao);
+
+            serviceSolicitacao.salvar(s);
+
+            JOptionPane.showMessageDialog(view, "Solicitação enviada ao administrador!");
+
         } catch (Exception ex) {
-            Logger.getLogger(ListarUsuariosView.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(view, "Erro ao solicitar permissao: \n" + ex.getMessage());
         }
     }
 

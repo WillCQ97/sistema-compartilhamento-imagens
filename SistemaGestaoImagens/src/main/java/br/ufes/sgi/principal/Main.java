@@ -23,7 +23,7 @@ public class Main {
         try {
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);
-
+            /*
             File arquivo = new File(caminhoArquivoConfiguracao);
 
             Scanner scanner = new Scanner(arquivo);
@@ -34,10 +34,14 @@ public class Main {
                     statement.addBatch(linha);
                 }
             }
-
+            
             statement.executeBatch();
-
-        } catch (SQLException | FileNotFoundException ex) {
+             */
+            /*
+            statement.execute("CREATE TABLE solicitacao (idSolicitacao INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "idUsuario INTEGER, idImagem INTEGER, idAdmin INTEGER, descricao STRING);");
+             */
+        } catch (SQLException ex) {
             System.err.println(ex.getMessage());
 
         } finally {
@@ -54,7 +58,7 @@ public class Main {
     public static void main(String[] args) {
         //inicializarBancoDados("configuracao-banco.sql");
         EfetuarLoginPresenter pLogin = new EfetuarLoginPresenter();
-        
+
         /*
         try {
 
@@ -63,11 +67,11 @@ public class Main {
         } catch (Exception ex) {
             System.out.println("ERRO: " + ex.getMessage());
         }
-        */
+         */
     }
 
     private static void testarDAO() throws Exception {
-        
+
         // USUARIO DAO
         UsuarioService sUsuario = new UsuarioService();
 
@@ -101,8 +105,7 @@ public class Main {
             System.out.println(usuario.toString());
         }
         System.out.println("--\n");
-        
-        
+
         //TESTANDO IMAGEM
         ImagemService sImagem = new ImagemService();
 
@@ -117,10 +120,10 @@ public class Main {
         for (Imagem imagem : sImagem.getAll()) {
             System.out.println(imagem.toString());
         }
-        
+
         //TESTANDO PERMISSAO
         PermissaoService sPermissao = new PermissaoService();
-        
+
         var uGabriel = sUsuario.getById(1);
         System.out.println(uGabriel.toString());
 
@@ -144,8 +147,7 @@ public class Main {
         System.out.println(sPermissao.getPermissaoByUsuario(uGabriel).toString());
         System.out.println(sPermissao.getPermissaoByUsuario(uWillian).toString());
         System.out.println("-------------------------------");
-        */
-
+         */
     }
 
 }

@@ -38,7 +38,7 @@ public class TelaPrincipalPresenter {
             this.usuarioService = new UsuarioService();
             this.permissaoService = new PermissaoService();
             this.solicitacaoService = new SolicitacaoService();
-            
+
             view.getTxtNomeUsuario().setText(usuarioAtual.getNome());
 
             this.configurarOpcoesPorTipoUsuario();
@@ -124,7 +124,7 @@ public class TelaPrincipalPresenter {
                         "Acesso Negado", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
                 if (resposta == JOptionPane.YES_OPTION) {
-                    solicitarAcesso();
+                    solicitarAcesso(imagem);
                 }
 
                 view.setEnabled(true);
@@ -183,12 +183,14 @@ public class TelaPrincipalPresenter {
         }
     }
 
-    private void solicitarAcesso() {
+    private void solicitarAcesso(Imagem imagem) {
         try {
-            //iniciar a presenter com os administradores
+            new ListarUsuariosPresenter(usuarioAtual, ListarUsuariosEnum.PEDIR_PERMISSAO, imagem);
+            view.setVisible(false);
+            view.dispose();
 
         } catch (Exception e) {
-
+            JOptionPane.showMessageDialog(view, "Erro ao renderizar imagem:\n" + e.getMessage());
         }
     }
 
